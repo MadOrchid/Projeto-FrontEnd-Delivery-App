@@ -3,8 +3,11 @@ import RegisterForm from '../../components/RegisterForm';
 
 function Register() {
   return (
+    <div>
 
-    <RegisterForm />
+      <h1>PAGINA DE REGISTRO </h1>
+      <RegisterForm />
+    </div>
   );
 }
 

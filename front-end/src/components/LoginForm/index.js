@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { fetchLogin } from '../../services/fetchLogin';
 import { emailRagex, minPassword, okCode } from '../../services/utilits';
 
@@ -10,6 +10,7 @@ function LoginForm() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
+  const history = useHistory();
 
   const login = async () => {
     const data = { email, password };
@@ -22,18 +23,28 @@ function LoginForm() {
     }
   };
 
+  function handleClickRegister() {
+    history.push('/register');
+  }
+
+  /*   function handleClickProducts() {
+    history.push('/products');
+  } */
+
   useEffect(() => {
     if (emailRagex.test(email) && password.length >= minPassword) {
-      setIsLoading(true);
       setIsDisabled(false);
     } else {
-      setIsLoading(false);
       setIsDisabled(true);
     }
   }, [email, password]);
 
   return (
     <section>
+      { isLoading ? <p>Loading...</p> : '' }
+
+      <h1>Login</h1>
+
       <label htmlFor="email">
         E-mail
         <input
@@ -63,6 +74,7 @@ function LoginForm() {
         alt="Entrar"
         disabled={ isDisabled }
         data-testid="common_login__button-login"
+        onClick={ login }
       >
         Entrar
       </button>
@@ -71,6 +83,7 @@ function LoginForm() {
         type="button"
         alt="Emtrar"
         data-testid="common_login__button-register"
+        onClick={ handleClickRegister }
       >
         Ainda não tenho conta
       </button>
@@ -79,7 +92,7 @@ function LoginForm() {
         style={ { display: 'none' } }
         data-testid="common_login__element-invalid-email"
       >
-        {errorMessage}
+        {error.errorMessage}
       </p>
     </section>
   );
