@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchRegister } from '../../services/fetchtRegister';
-import { emailRagex, minName, minPassword } from '../../services/utilits';
+import { emailRagex, minName, minPassword, created } from '../../services/utilits';
 
 function RegisterForm() {
   const [name, setName] = useState('');

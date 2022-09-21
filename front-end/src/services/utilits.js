@@ -3,6 +3,7 @@ const minPassword = 6;
 const okCode = 200;
 const badReq = 400;
 const minName = 12;
+const created = 201;
 
 module.exports = {
   emailRagex,
@@ -10,4 +11,5 @@ module.exports = {
   okCode,
   badReq,
   minName,
+  created,
 };
