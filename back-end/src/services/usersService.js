@@ -21,9 +21,10 @@ const userService = {
       where: { 
         [Op.or]: [{ email }, { name }], 
       },
+      raw: true,
     });
     
-    if (user) {
+    if (user.length > 0) {
       throw new ApiError(409, 'User already registered');
     }
 
@@ -33,12 +34,13 @@ const userService = {
   create: async ({ email, password, name }) => {
     const role = 'customer';
     const md5Hash = md5(password);
-    const user = await users.create({ 
+    const userObj = { email, role, name };
+    await users.create({ 
       email, password: md5Hash, role, name,
     });
     
-    const token = jwtService.createToken(user);
-    const result = { ...user, token };
+    const token = jwtService.createToken(userObj);
+    const result = { ...userObj, token };
     return result;
   },
 };
