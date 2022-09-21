@@ -86,6 +86,19 @@ function LoginForm() {
       >
         Ainda não tenho conta
       </button>
+
+      {
+        error ? (
+          <div>
+            <p
+              className="invalid-text"
+              data-test-id="common_login__element-invalid-email"
+            >
+              {errorMessage}
+            </p>
+          </div>
+        ) : null
+      }
     </section>
   );
 }
