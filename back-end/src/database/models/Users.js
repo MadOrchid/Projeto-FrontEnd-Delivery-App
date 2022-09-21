@@ -1,5 +1,3 @@
-const sequelize = require("sequelize");
-
 const Users = (sequelize, DataTypes) => {
   const Users = sequelize.define('users', {
     id: {
@@ -17,16 +15,16 @@ const Users = (sequelize, DataTypes) => {
     tableName: 'users',
   });
 
-  //  User.associate = (db) => {
-  //    User.hasMany(db.Sales, { 
-  //       as: 'sales', 
-  //       foreignKey: 'userId' 
-  //   });
-  //   User.hasMany(db.Sales, { 
-  //     as: 'sales', 
-  //     foreignKey: 'sellerId' 
-  // });
-  //  }
+   Users.associate = (db) => {
+     Users.hasMany(db.sales, { 
+        as: 'sales', 
+        foreignKey: 'userId' 
+    });
+    Users.hasMany(db.sales, { 
+      as: 'sellers', 
+      foreignKey: 'sellerId' 
+  });
+   }
 
   return Users;
 };

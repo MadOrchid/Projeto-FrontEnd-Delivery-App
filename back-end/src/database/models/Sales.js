@@ -18,16 +18,16 @@ const Sales = (sequelize, DataTypes) => {
     tableName: 'sales',
   });
 
-  //  Sale.associate = (db) => {
-  //    Sale.belongsTo(db.Users, { 
-  //       as: 'users', 
-  //       foreignKey: 'userId',
+   Sale.associate = (db) => {
+     Sale.belongsTo(db.users, { 
+        as: 'users', 
+        foreignKey: 'userId',
 
-  //   });
+    });
 
-  //    Sale.belongsTo(db.Users, 
-  //       { as: 'users', foreignKey:'sellerId'})
-  //  }
+     Sale.belongsTo(db.users, 
+        { as: 'sellers', foreignKey:'sellerId'})
+   }
 
    
 
