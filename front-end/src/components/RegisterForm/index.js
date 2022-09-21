@@ -6,7 +6,7 @@ function RegisterForm() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+
   const [isDisabled, setIsDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
@@ -92,12 +92,18 @@ function RegisterForm() {
         Cadastrar
       </button>
 
-      <p
-        style={ { display: 'none' } }
-        data-testid="common_login__element-invalid-email"
-      >
-        {error}
-      </p>
+      {
+        error ? (
+          <div>
+            <p
+              className="invalid-text"
+              data-test-id="common_login__element-invalid-email"
+            >
+              {errorMessage}
+            </p>
+          </div>
+        ) : null
+      }
     </section>
   );
 }
