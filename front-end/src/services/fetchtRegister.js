@@ -16,3 +16,9 @@ async function fetchRegister(data) {
 }
 
 module.exports = { fetchRegister };
+
+/*
+
+ola
+
+*/
