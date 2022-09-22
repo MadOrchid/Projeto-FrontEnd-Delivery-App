@@ -89,16 +89,21 @@ function LoginForm() {
 
       {
         error ? (
-          <div>
-            <p
-              className="invalid-text"
-              data-test-id="common_login__element-invalid-email"
-            >
-              {errorMessage}
-            </p>
-          </div>
+          <p
+            className="invalid-text"
+            data-testid="common_login__element-invalid-email"
+          >
+            {errorMessage}
+          </p>
         ) : null
       }
+
+      <p
+        className="invalid-text"
+        data-testid="common_login__element-invalid-email"
+      >
+        {errorMessage}
+      </p>
     </section>
   );
 }
