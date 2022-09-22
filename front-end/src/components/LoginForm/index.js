@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { fetchLogin } from '../../services/fetchLogin';
-import { emailRagex, minPassword, okCode } from '../../services/utilits';
+import { emailRagex, minPassword } from '../../services/utilits';
+import api from '../../services/fetchtRegister';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -12,16 +12,16 @@ function LoginForm() {
   const [error, setError] = useState(false);
   const history = useHistory();
 
-  const login = async () => {
-    const data = { email, password };
-    const { status, response } = await fetchLogin(data);
-    if (status === okCode) {
-      localStorage.setItem('token', response.token);
-    } else {
-      setError(true);
-      setErrorMessage(response.message);
-    }
-  };
+  async function handleLogin() {
+    await api.post('login', {
+      email,
+      password,
+    })
+      .catch(() => {
+        setError(true);
+        setErrorMessage(true);
+      });
+  }
 
   function handleClickRegister() {
     history.push('/register');
@@ -73,7 +73,7 @@ function LoginForm() {
         alt="Entrar"
         disabled={ isDisabled }
         data-testid="common_login__button-login"
-        onClick={ login }
+        onClick={ handleLogin }
       >
         Entrar
       </button>

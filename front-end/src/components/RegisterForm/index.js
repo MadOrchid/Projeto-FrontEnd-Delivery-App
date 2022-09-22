@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { fetchRegister } from '../../services/fetchtRegister';
-import { emailRagex, minName, minPassword, created } from '../../services/utilits';
+import { emailRagex, minName, minPassword } from '../../services/utilits';
+import api from '../../services/fetchtRegister';
 
 function RegisterForm() {
   const [name, setName] = useState('');
@@ -11,8 +11,9 @@ function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
 
-  const register = async () => {
+  /* const register = async () => {
     const data = { name, email, password };
+    console.log(data);
     const { status, responseData } = await fetchRegister(data);
 
     if (status === created) {
@@ -21,7 +22,19 @@ function RegisterForm() {
       setError(true);
       setErrorMessage(responseData.message);
     }
-  };
+  }; */
+
+  async function handleSingIn() {
+    await api.post('user', {
+      name,
+      email,
+      password,
+    })
+      .catch(() => {
+        setError(true);
+        setErrorMessage(true);
+      });
+  }
 
   useEffect(() => {
     if (name.length >= minName && emailRagex.test(email)
@@ -86,7 +99,7 @@ function RegisterForm() {
         alt="Cadastrar"
         data-testid="common_register__button-register"
         disabled={ isDisabled }
-        onClick={ register }
+        onClick={ handleSingIn }
       >
         Cadastrar
       </button>

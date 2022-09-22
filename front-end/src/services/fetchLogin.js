@@ -1,4 +1,4 @@
-const url = 'http//localhost:3001';
+/* const url = 'http//localhost:3001';
 
 async function fetchLogin(data) {
   try {
@@ -16,3 +16,4 @@ async function fetchLogin(data) {
 }
 
 module.exports = { fetchLogin };
+ */
