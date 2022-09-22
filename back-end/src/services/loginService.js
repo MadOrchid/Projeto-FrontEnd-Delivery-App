@@ -1,7 +1,7 @@
 const md5 = require('md5');
 const Joi = require('joi');
 const ApiError = require('../middlewares/ApiError');
-const { users } = require('../database/models');
+const { User } = require('../database/models');
 const jwtService = require('../helpers/jwt'); 
 const { runSchema } = require('./validationService');
 
@@ -16,7 +16,7 @@ const loginService = {
 
   login: async ({ email, password }) => {
     const md5Hash = md5(password);
-    const user = await users.findOne({ 
+    const user = await User.findOne({ 
       where: { email, password: md5Hash },
       attributes: { exclude: ['password', 'id'] },
       raw: true });

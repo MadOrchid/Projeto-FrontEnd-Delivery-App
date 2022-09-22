@@ -2,7 +2,7 @@ const md5 = require('md5');
 const Joi = require('joi');
 const { Op } = require('sequelize');
 const ApiError = require('../middlewares/ApiError');
-const { users } = require('../database/models');
+const { User } = require('../database/models');
 const jwtService = require('../helpers/jwt'); 
 const { runSchema } = require('./validationService');
 
@@ -17,7 +17,7 @@ const userService = {
   ),
 
   checkIfExist: async ({ email, name }) => {
-    const user = await users.findAll({ 
+    const user = await User.findAll({ 
       where: { 
         [Op.or]: [{ email }, { name }], 
       },
@@ -35,7 +35,7 @@ const userService = {
     const role = 'customer';
     const md5Hash = md5(password);
     const userObj = { email, role, name };
-    await users.create({ 
+    await User.create({ 
       email, password: md5Hash, role, name,
     });
     
