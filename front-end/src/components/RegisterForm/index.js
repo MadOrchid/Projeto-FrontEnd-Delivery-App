@@ -38,12 +38,11 @@ function RegisterForm() {
     - 8: common_register__input-password
     - 9: common_register__button-register
     - 10: common_register__element-invalid_register [Elemento oculto (Mensagens de erro)]
-  */
+  { isLoading ? <p>Loading...</p> : '' }
+    */
 
   return (
     <section>
-      { isLoading ? <p>Loading...</p> : '' }
-
       <h1>Cadastro</h1>
 
       <label htmlFor="name">

@@ -1,22 +1,22 @@
-const url = 'http://localhost:3001';
+import axios from 'axios';
 
-async function fetchRegister(data) {
-  try {
-    const response = await fetch(`${url}/register`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-    const { status } = response;
-    const responseData = await response.json();
-    return { status, responseData };
-  } catch (er) {
-    const responseData = await response.json();
-    return { responseData };
-  }
-}
+const erro = 401;
 
-module.exports = { fetchRegister };
+const api = axios.create({
+  baseURL: 'http://localhost:3001',
+});
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === erro) {
+      return Promise.reject(error);
+    }
+  },
+);
 
-/*
-ola
-*/
+export const register = async (endpoint, body) => {
+  const { data } = await api.post(endpoint, body);
+  return data;
+};
+
+export default { api };
