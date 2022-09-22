@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { fetchRegister } from '../../services/fetchtRegister';
-import { emailRagex, minName, minPassword, created } from '../../services/utilits';
+import { emailRagex, minName, minPassword } from '../../services/utilits';
+import api from '../../services/fetchtRegister';
 
 function RegisterForm() {
   const [name, setName] = useState('');
@@ -11,10 +11,11 @@ function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
 
+  /*
   const register = async () => {
     const data = { name, email, password };
+    console.log(data);
     const { status, responseData } = await fetchRegister(data);
-
     if (status === created) {
       localStorage.setItem('token', responseData.token);
     } else {
@@ -22,6 +23,19 @@ function RegisterForm() {
       setErrorMessage(responseData.message);
     }
   };
+   */
+
+  async function handleSingIn() {
+    await api.post('user', {
+      name,
+      email,
+      password,
+    })
+      .catch(() => {
+        setError(true);
+        setErrorMessage(true);
+      });
+  }
 
   useEffect(() => {
     if (name.length >= minName && emailRagex.test(email)
@@ -38,12 +52,11 @@ function RegisterForm() {
     - 8: common_register__input-password
     - 9: common_register__button-register
     - 10: common_register__element-invalid_register [Elemento oculto (Mensagens de erro)]
-  */
+  { isLoading ? <p>Loading...</p> : '' }
+    */
 
   return (
     <section>
-      { isLoading ? <p>Loading...</p> : '' }
-
       <h1>Cadastro</h1>
 
       <label htmlFor="name">
@@ -87,7 +100,7 @@ function RegisterForm() {
         alt="Cadastrar"
         data-testid="common_register__button-register"
         disabled={ isDisabled }
-        onClick={ register }
+        onClick={ handleSingIn }
       >
         Cadastrar
       </button>

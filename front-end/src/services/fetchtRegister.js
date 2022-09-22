@@ -1,22 +1,7 @@
-const url = 'http://localhost:3001';
+import axios from 'axios';
 
-async function fetchRegister(data) {
-  try {
-    const response = await fetch(`${url}/register`, {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-    const { status } = response;
-    const responseData = await response.json();
-    return { status, responseData };
-  } catch (er) {
-    const responseData = await response.json();
-    return { responseData };
-  }
-}
+const api = axios.create({
+  baseURL: 'http://localhost:3001',
+});
 
-module.exports = { fetchRegister };
-
-/*
-ola
-*/
+export default api;
