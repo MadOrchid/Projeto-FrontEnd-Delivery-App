@@ -110,7 +110,7 @@ function RegisterForm() {
           <div>
             <p
               className="invalid-text"
-              data-test-id="common_login__element-invalid-email"
+              data-testid="common_register__element-invalid_register"
             >
               {errorMessage}
             </p>
