@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { emailRagex, minName, minPassword } from '../../services/utilits';
 import api from '../../services/fetchtRegister';
+import { emailRagex, minName, minPassword } from '../../services/utilits';
 
 function RegisterForm() {
   const [name, setName] = useState('');

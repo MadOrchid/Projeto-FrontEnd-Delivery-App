@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { emailRagex, minPassword } from '../../services/utilits';
 import api from '../../services/fetchtRegister';
+import { emailRagex, minPassword } from '../../services/utilits';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -21,15 +21,12 @@ function LoginForm() {
         setError(true);
         setErrorMessage(true);
       });
+    history.push('/customer/products');
   }
 
   function handleClickRegister() {
     history.push('/register');
   }
-
-  /*   function handleClickProducts() {
-    history.push('/products');
-  } */
 
   useEffect(() => {
     if (emailRagex.test(email) && password.length >= minPassword) {
