@@ -1,27 +1,30 @@
-const Products = (sequelize, DataTypes) => {
-  const Product = sequelize.define('products', {
-    id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+'use strict';
+
+const ProductModel = (sequelize, DataTypes) => {
+  const Product = sequelize.define(
+    'Product',
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      price: {
+        type: DataTypes.DECIMAL,
+      },
+      urlImage: DataTypes.STRING,
     },
-    price: DataTypes.DECIMAL,
-    name: DataTypes.STRING,
-    url_image: DataTypes.STRING,
-  }, {
-    underscored: true,
-    timestamps: false,
-    tableName: 'products',
-  });
-
-  Product.associate = (db) => {
-    Product.hasMany(db.SalesProducts, { 
-      as: 'salesProducts', 
-      foreignKey: 'productId' 
-    });
-  }
-
+    {
+      timestamps: false,
+      tableName: 'products',
+      underscored: true,
+    }
+  );
   return Product;
 };
 
-module.exports = Products;
+module.exports = ProductModel;
