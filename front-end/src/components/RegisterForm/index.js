@@ -11,18 +11,19 @@ function RegisterForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
 
-  /* const register = async () => {
+  /*
+  const register = async () => {
     const data = { name, email, password };
     console.log(data);
     const { status, responseData } = await fetchRegister(data);
-
     if (status === created) {
       localStorage.setItem('token', responseData.token);
     } else {
       setError(true);
       setErrorMessage(responseData.message);
     }
-  }; */
+  };
+   */
 
   async function handleSingIn() {
     await api.post('user', {
