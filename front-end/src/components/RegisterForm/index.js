@@ -12,21 +12,7 @@ function RegisterForm() {
   const [error, setError] = useState(false);
   const history = useHistory();
 
-  /*
-    const register = async () => {
-      const data = { name, email, password };
-      console.log(data);
-      const { status, responseData } = await fetchRegister(data);
-      if (status === created) {
-        localStorage.setItem('token', responseData.token);
-      } else {
-        setError(true);
-        setErrorMessage(responseData.message);
-      }
-    };
-  */
-
-  async function handleSingIn() {
+  async function handleRegister() {
     const { data } = await api.post('user', {
       name,
       email,
@@ -48,6 +34,10 @@ function RegisterForm() {
       setIsDisabled(true);
     }
   }, [name, email, password]);
+
+  /*
+    { isLoading ? <p>Loading...</p> : '' }
+  */
 
   return (
     <section>
@@ -94,7 +84,7 @@ function RegisterForm() {
         alt="Cadastrar"
         data-testid="common_register__button-register"
         disabled={ isDisabled }
-        onClick={ handleSingIn }
+        onClick={ handleRegister }
       >
         Cadastrar
       </button>
@@ -104,7 +94,7 @@ function RegisterForm() {
           <div>
             <p
               className="invalid-text"
-              data-testid="common_register__element-invalid_register"
+              data-test-id="common_login__element-invalid-email"
             >
               {errorMessage}
             </p>

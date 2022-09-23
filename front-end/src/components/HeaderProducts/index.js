@@ -41,7 +41,7 @@ function HearderProducts() {
             data-testid="customer_products__element-navbar-link-logout"
             onClick={ () => { history.push('/login'); } }
           >
-            Sair
+            Sair customer
           </button>
         </li>
       </ul>
