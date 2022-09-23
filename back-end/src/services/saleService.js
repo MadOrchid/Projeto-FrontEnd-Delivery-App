@@ -23,6 +23,7 @@ const saleService = {
     const sellerId = await saleService.findUSer(sellerName);
     const status = 'Pendente';
     const saleDate = moment().format();
+    // Falta pegar o id da venda + array de produtos para montar a salesProducts
     await Sale.create(
       { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, saleDate, status },
     );
