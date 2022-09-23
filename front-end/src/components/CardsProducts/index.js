@@ -1,5 +1,4 @@
 import React from 'react';
-
 /*
   - 15: customer_products__element-card-title-<id>
   - 16: customer_products__element-card-price-<id>
@@ -18,6 +17,7 @@ import React from 'react';
 } */
 
 function CardsProducts() {
+  // const [valueTotal, setValueTotal] = useState(0.00);
   return (
     <section>
       <h1>CardsProducts</h1>
@@ -41,6 +41,7 @@ function CardsProducts() {
               value="+"
               alt="Adicionar produto"
               data-testid={ `customer_products__button-card-add-item-${item.id}` }
+              onClick={ () => { setValueTotal(valueTotal + Number(item.price) ) } }
             />
             <p data-testid={ `customer_products__input-card-quantity-${item.id}` }>0</p>
             <input
@@ -48,6 +49,7 @@ function CardsProducts() {
               value="-"
               alt="Adicionar produto"
               data-testid={ `customer_products__button-card-rm-item-${item.id}` }
+              onClick={ () => { setValueTotal(valueTotal - Number(item.price) ) } }
             />
           </>
         )) */
@@ -59,7 +61,8 @@ function CardsProducts() {
         alt="Ver Carrinho"
         data-testid="customer_products__checkout-bottom-value"
       >
-        Ver Carrinho
+        Ver Carrinho: 0.00
+        { /* valueTotal */ }
       </button>
     </section>
   );
