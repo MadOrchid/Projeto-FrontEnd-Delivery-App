@@ -2,7 +2,54 @@ import React from 'react';
 
 function CardsProducts() {
   return (
-    <h1>CardsProducts</h1>
+    <section>
+      <h1>CardsProducts</h1>
+      {
+      /*
+        data.formap(element => {
+
+        });
+
+      - 15: customer_products__element-card-title-<id>
+      - 16: customer_products__element-card-price-<id>
+      - 17: customer_products__img-card-bg-image-<id>
+      - 18: customer_products__button-card-add-item-<id>
+      - 19: customer_products__button-card-rm-item-<id>
+      - 20: customer_products__input-card-quantity-<id>
+      - 21: customer_products__checkout-bottom-value
+      */
+      }
+      <h3 data-testid="customer_products__element-card-title-">valor</h3>
+      <img
+        src="endereço"
+        alt="imagem da bebida"
+        data-testid="customer_products__img-card-bg-image-"
+      />
+      <h4 data-testid="customer_products__element-card-title-">nome</h4>
+      <input
+        type="button"
+        value="+"
+        alt="Adicionar produto"
+        data-testid="customer_products__button-card-add-item-"
+      />
+      <p data-testid="customer_products__input-card-quantity-">quantidade</p>
+      <input
+        type="button"
+        value="-"
+        alt="Adicionar produto"
+        data-testid="customer_products__button-card-rm-item-"
+      />
+
+      <br />
+      <br />
+      <button
+        type="button"
+        alt="Ver Carrinho"
+        data-testid="customer_products__checkout-bottom-value"
+      >
+        Ver Carrinho
+      </button>
+    </section>
   );
 }
 

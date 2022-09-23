@@ -1,30 +1,48 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 function HearderProducts() {
-  // const history = useHistory();
+  const data = JSON.parse(localStorage.getItem('data'));
+  const saveNameUser = data.name;
+  const history = useHistory();
 
   return (
-    <nav>
+    <nav style={ { display: 'inline-block' } }>
       <ul>
-        <li
-          data-testid="customer_products__element-navbar-link-products"
-        >
-          PRODUTOS
+        <li>
+          <button
+            type="button"
+            alt="Produtos"
+            data-testid="customer_products__element-navbar-link-products"
+            onClick={ () => { history.push('products'); } }
+          >
+            PRODUTOS
+          </button>
         </li>
-        <li
-          data-testid="customer_products__element-navbar-link-orders"
-        >
-          MEUS PEDIDOS
+        <li>
+          <button
+            type="button"
+            alt="Produtos"
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => { history.push('orders'); } }
+          >
+            MEUS PEDIDOS
+          </button>
         </li>
         <li
           data-testid="customer_products__element-navbar-user-full-name"
         >
-          Nome do usuario!!!
+          { saveNameUser }
         </li>
-        <li
-          data-testid="customer_products__element-navbar-link-logout"
-        >
-          Sair
+        <li>
+          <button
+            type="button"
+            alt="Produtos"
+            data-testid="customer_products__element-navbar-link-logout"
+            onClick={ () => { history.push('/login'); } }
+          >
+            Sair
+          </button>
         </li>
       </ul>
     </nav>

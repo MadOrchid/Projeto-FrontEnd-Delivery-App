@@ -13,7 +13,7 @@ function LoginForm() {
   const history = useHistory();
 
   async function handleLogin() {
-    await api.post('login', {
+    const { data } = await api.post('login', {
       email,
       password,
     })
@@ -21,6 +21,7 @@ function LoginForm() {
         setError(true);
         setErrorMessage(true);
       });
+    localStorage.setItem('data', JSON.stringify(data));
     history.push('/customer/products');
   }
 

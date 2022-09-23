@@ -1,6 +1,6 @@
 import React from 'react';
 import CardsProducts from '../../components/CardsProducts';
-// import HeaderProducts from '../../components/HeaderProducts';
+import HeaderProducts from '../../components/HeaderProducts';
 
 function Products() {
   /*
@@ -18,6 +18,7 @@ function Products() {
     */
   return (
     <section>
+      <HeaderProducts />
       <CardsProducts />
     </section>
   );
