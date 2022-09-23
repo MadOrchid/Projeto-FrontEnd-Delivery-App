@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 /*
   - 15: customer_products__element-card-title-<id>
   - 16: customer_products__element-card-price-<id>
@@ -18,6 +19,7 @@ import React from 'react';
 
 function CardsProducts() {
   // const [valueTotal, setValueTotal] = useState(0.00);
+  const history = useHistory();
   return (
     <section>
       <h1>CardsProducts</h1>
@@ -60,6 +62,7 @@ function CardsProducts() {
         type="button"
         alt="Ver Carrinho"
         data-testid="customer_products__checkout-bottom-value"
+        onClick={ () => { history.push('checkout'); } }
       >
         Ver Carrinho: 0.00
         { /* valueTotal */ }
