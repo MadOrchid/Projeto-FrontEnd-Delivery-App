@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import api from '../../services/fetchtRegister';
+import { api } from '../../services/fetchtRegister';
 /*
   - 15: customer_products__element-card-title-<id>
   - 16: customer_products__element-card-price-<id>
@@ -14,6 +14,7 @@ import api from '../../services/fetchtRegister';
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
   const [products, setProducts] = useState([]);
+  // const [quantity, setQuantity] = useState([].length(products.length));
   const history = useHistory();
 
   async function handleCards() {
@@ -25,9 +26,45 @@ function CardsProducts() {
     return data;
   }
 
+  /*
+    updateProduct = (productUpdate) => {
+      const { cartItems } = this.state;
+      const productNewList = cartItems
+        .filter((element) => (element.id === productUpdate.id ? productUpdate : element));
+      this.setState({ cartItems: productNewList });
+    }
+  */
+
+  function productDecrease(index, price) {
+    setValueTotal(valueTotal > 0 ? valueTotal - Number(price) : 0);
+    const updateProducts = products
+      .map((element) => {
+        if (element.id === index) {
+          element.qtd = element.qtd > 0 ? element.qtd - 1 : 0;
+          return element;
+        }
+        return element;
+      });
+    setProducts(updateProducts);
+  }
+
+  function productIncrease(index, price) {
+    setValueTotal(valueTotal + Number(price));
+    const updateProducts = products
+      .map((element) => {
+        if (element.id === index) {
+          element.qtd += 1;
+          return element;
+        }
+        return element;
+      });
+    setProducts(updateProducts);
+  }
+
   useEffect(() => {
     const updateProduct = async () => {
       const result = await handleCards();
+      result.forEach((element) => { element.qtd = 0; });
       setProducts(result);
       console.log(result);
       return result;
@@ -56,18 +93,25 @@ function CardsProducts() {
         value="+"
         alt="Adicionar produto"
         data-testid={ `customer_products__button-card-add-item-${item.id}` }
-        onClick={ () => { setValueTotal(valueTotal + Number(item.price)); } }
+        onClick={ () => productIncrease(item.id, item.price) }
       />
-      <p data-testid={ `customer_products__input-card-quantity-${item.id}` }>0</p>
+      <p
+        data-testid={ `customer_products__input-card-quantity-${item.id}` }
+      >
+        { Number(item.qtd) }
+      </p>
       <input
         type="button"
         value="-"
         alt="Adicionar produto"
         data-testid={ `customer_products__button-card-rm-item-${item.id}` }
-        onClick={ () => { setValueTotal(valueTotal - Number(item.price)); } }
+        onClick={ () => productDecrease(item.id, item.price) }
       />
     </section>
   ));
+
+  useEffect(() => {
+  }, []);
 
   return (
     <section>
@@ -78,11 +122,12 @@ function CardsProducts() {
       <button
         type="button"
         alt="Ver Carrinho"
-        data-testid="customer_products__checkout-bottom-value"
+        // data-testid="customer_products__checkout-bottom-value"
+        data-testid="customer_products__button-cart"
         onClick={ () => { history.push('checkout'); } }
       >
         Ver Carrinho:
-        { valueTotal }
+        { valueTotal.toFixed(2) }
       </button>
     </section>
   );

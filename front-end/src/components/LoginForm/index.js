@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import api from '../../services/fetchtRegister';
+import { useHistory /* , useNavigate */ } from 'react-router-dom';
+import { api } from '../../services/fetchtRegister';
 import { emailRagex, minPassword } from '../../services/utilits';
 
 function LoginForm() {
@@ -10,16 +10,18 @@ function LoginForm() {
   const [isDisabled, setIsDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
+  // const [user, setUser] = useState(null);
   const history = useHistory();
+  // const navigate = useNavigate();
 
   async function handleLogin() {
     const { data } = await api.post('login', {
       email,
       password,
     })
-      .catch(() => {
+      .catch((e) => {
         setError(true);
-        setErrorMessage(true);
+        setErrorMessage(e.message);
       });
     localStorage.setItem('data', JSON.stringify(data));
     history.push('/customer/products');

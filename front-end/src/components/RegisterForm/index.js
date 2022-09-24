@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import api from '../../services/fetchtRegister';
+import { api } from '../../services/fetchtRegister';
 import { emailRagex, minName, minPassword } from '../../services/utilits';
 
 function RegisterForm() {
@@ -18,9 +18,9 @@ function RegisterForm() {
       email,
       password,
     })
-      .catch(() => {
+      .catch((e) => {
         setError(true);
-        setErrorMessage(true);
+        setErrorMessage(e.message);
       });
     localStorage.setItem('data', JSON.stringify(data));
     history.push('/customer/products');
@@ -91,14 +91,12 @@ function RegisterForm() {
 
       {
         error ? (
-          <div>
-            <p
-              className="invalid-text"
-              data-test-id="common_login__element-invalid-email"
-            >
-              {errorMessage}
-            </p>
-          </div>
+          <p
+            className="invalid-text"
+            data-testid="common_register__element-invalid_register"
+          >
+            {errorMessage}
+          </p>
         ) : null
       }
     </section>
