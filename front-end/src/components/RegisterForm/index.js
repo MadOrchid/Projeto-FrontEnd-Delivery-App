@@ -22,7 +22,7 @@ function RegisterForm() {
         setError(true);
         setErrorMessage(e.message);
       });
-    localStorage.setItem('data', JSON.stringify(data));
+    localStorage.setItem('user', JSON.stringify(data));
     history.push('/customer/products');
   }
 

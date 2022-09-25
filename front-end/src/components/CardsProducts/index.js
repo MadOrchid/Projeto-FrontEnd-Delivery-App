@@ -13,8 +13,8 @@ import { api } from '../../services/fetchtRegister';
 
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
+  // const [quantity, setQuantity] = useState(0);
   const [products, setProducts] = useState([]);
-  // const [quantity, setQuantity] = useState([].length(products.length));
   const history = useHistory();
 
   async function handleCards() {
@@ -26,30 +26,21 @@ function CardsProducts() {
     return data;
   }
 
-  /*
-    updateProduct = (productUpdate) => {
-      const { cartItems } = this.state;
-      const productNewList = cartItems
-        .filter((element) => (element.id === productUpdate.id ? productUpdate : element));
-      this.setState({ cartItems: productNewList });
-    }
-  */
-
   function productDecrease(index, price) {
-    setValueTotal(valueTotal > 0 ? valueTotal - Number(price) : 0);
     const updateProducts = products
       .map((element) => {
         if (element.id === index) {
-          element.qtd = element.qtd > 0 ? element.qtd - 1 : 0;
+          element.qtd = element.qtd <= 0 ? 0 : element.qtd - 1;
           return element;
         }
         return element;
       });
     setProducts(updateProducts);
+    setValueTotal(valueTotal <= 0.00 ? 0 : valueTotal - Number(price));
+    // setQuantity(quantity > 0 ? quantity - 1 : 0);
   }
 
   function productIncrease(index, price) {
-    setValueTotal(valueTotal + Number(price));
     const updateProducts = products
       .map((element) => {
         if (element.id === index) {
@@ -59,6 +50,8 @@ function CardsProducts() {
         return element;
       });
     setProducts(updateProducts);
+    setValueTotal(valueTotal + Number(price));
+    // setQuantity(quantity + 1);
   }
 
   useEffect(() => {
@@ -75,43 +68,43 @@ function CardsProducts() {
   const criarCard = () => products.map((item) => (
     <section key={ item.id }>
       { console.log('"teste de item"', item) }
-      <div data-testid={ `customer_products__element-card-price-${item.id}` }>
-        {item.price}
-      </div>
+      <h2 data-testid={ `customer_products__element-card-title-${item.id}` }>
+        {item.name}
+      </h2>
+      <h3 data-testid={ `customer_products__element-card-price-${item.id}` }>
+        {`${item.price.toString().replace('.', ',')}`}
+      </h3>
       <img
         src={ item.urlImage }
-        alt="imagem da bebida"
+        alt={ item.name }
         data-testid={ `customer_products__img-card-bg-image-${item.id}` }
+        height="250px"
       />
-      <h4
-        data-testid={ `customer_products__element-card-title-${item.id}` }
-      >
-        {item.name}
-      </h4>
-      <input
+      <button
         type="button"
-        value="+"
         alt="Adicionar produto"
         data-testid={ `customer_products__button-card-add-item-${item.id}` }
         onClick={ () => productIncrease(item.id, item.price) }
-      />
-      <p
-        data-testid={ `customer_products__input-card-quantity-${item.id}` }
       >
-        { Number(item.qtd) }
-      </p>
+        +
+      </button>
       <input
+        data-testid={ `customer_products__input-card-quantity-${item.id}` }
+        type="number"
+        min={ 0 }
+        value={ Number(item.qtd) /* quantity */ }
+      />
+      <button
         type="button"
         value="-"
-        alt="Adicionar produto"
+        alt="Remover produto"
         data-testid={ `customer_products__button-card-rm-item-${item.id}` }
         onClick={ () => productDecrease(item.id, item.price) }
-      />
+      >
+        -
+      </button>
     </section>
   ));
-
-  useEffect(() => {
-  }, []);
 
   return (
     <section>
@@ -122,12 +115,13 @@ function CardsProducts() {
       <button
         type="button"
         alt="Ver Carrinho"
-        // data-testid="customer_products__checkout-bottom-value"
-        data-testid="customer_products__button-cart"
         onClick={ () => { history.push('checkout'); } }
+        data-testid="customer_products__button-cart"
       >
         Ver Carrinho:
-        { valueTotal.toFixed(2) }
+        <span data-testid="customer_products__checkout-bottom-value">
+          { `${valueTotal.toFixed(2).toString().replace('.', ',')}` }
+        </span>
       </button>
     </section>
   );
