@@ -14,17 +14,23 @@ function LoginForm() {
   const history = useHistory();
   // const navigate = useNavigate();
 
+  const rota = {
+    administrator: 'admin/manage',
+    customer: 'customer/products',
+    seller: 'seller/orders',
+  };
+
   async function handleLogin() {
     const { data } = await api.post('login', {
       email,
       password,
     })
-      .catch((e) => {
+      .catch(() => {
         setError(true);
-        setErrorMessage(e.message);
+        setErrorMessage(true);
       });
-    localStorage.setItem('user', JSON.stringify(data));
-    history.push('/customer/products');
+    localStorage.setItem('data', JSON.stringify(data));
+    history.push(`/${rota[data.role]}`);
   }
 
   function handleClickRegister() {

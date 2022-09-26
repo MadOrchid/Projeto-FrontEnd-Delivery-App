@@ -55,7 +55,7 @@ module.exports = {
     defaultDB,
   },
   puppeteer: {
-    timeout: 10000,
+    timeout: 90000,
     snapshots: PUPPETEER_SNAPSHOTS || false,
   },
   frontEnd: {
