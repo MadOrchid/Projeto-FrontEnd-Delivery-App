@@ -14,11 +14,13 @@ import { api } from '../../services/fetchtRegister';
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
   // const [quantity, setQuantity] = useState(0);
+  const [isDisabled, setIsDisabled] = useState();
   const [products, setProducts] = useState([]);
   const history = useHistory();
+  const { token } = JSON.parse(localStorage.getItem('user'));
 
   async function handleCards() {
-    const { data } = await api.get('product')
+    const { data } = await api.get('product', { headers: { Authorization: token } })
       .catch((e) => {
         throw e.message;
       });
@@ -26,7 +28,30 @@ function CardsProducts() {
     return data;
   }
 
-  function productDecrease(index, price) {
+  const sumTotalPrice = (list) => {
+    setIsDisabled(valueTotal);
+    console.log('Valor Total', valueTotal);
+    const newList = list
+      .reduce((a, c) => a + Number(c.price) * Number(c.qtd), 0);
+    setValueTotal(newList <= 0.00 ? 0.00 : newList);
+  };
+
+  function handleQuantity({ target }, id) {
+    const { value } = target;
+    if (Number(value) <= 0) { setValueTotal(0); }
+    const updateQuantity = products
+      .map((element) => {
+        if (element.id === id) {
+          element.qtd = Number(value);
+          return element;
+        }
+        return element;
+      });
+    setProducts(updateQuantity);
+    sumTotalPrice(updateQuantity);
+  }
+
+  function productDecrease(index) {
     const updateProducts = products
       .map((element) => {
         if (element.id === index) {
@@ -36,11 +61,10 @@ function CardsProducts() {
         return element;
       });
     setProducts(updateProducts);
-    setValueTotal(valueTotal <= 0.00 ? 0 : valueTotal - Number(price));
-    // setQuantity(quantity > 0 ? quantity - 1 : 0);
+    sumTotalPrice(updateProducts);
   }
 
-  function productIncrease(index, price) {
+  function productIncrease(index) {
     const updateProducts = products
       .map((element) => {
         if (element.id === index) {
@@ -50,8 +74,7 @@ function CardsProducts() {
         return element;
       });
     setProducts(updateProducts);
-    setValueTotal(valueTotal + Number(price));
-    // setQuantity(quantity + 1);
+    sumTotalPrice(updateProducts);
   }
 
   useEffect(() => {
@@ -84,7 +107,7 @@ function CardsProducts() {
         type="button"
         alt="Adicionar produto"
         data-testid={ `customer_products__button-card-add-item-${item.id}` }
-        onClick={ () => productIncrease(item.id, item.price) }
+        onClick={ () => productIncrease(item.id) }
       >
         +
       </button>
@@ -92,14 +115,15 @@ function CardsProducts() {
         data-testid={ `customer_products__input-card-quantity-${item.id}` }
         type="number"
         min={ 0 }
-        value={ Number(item.qtd) /* quantity */ }
+        onChange={ (e) => handleQuantity(e, item.id) }
+        value={ item.qtd }
       />
       <button
         type="button"
         value="-"
         alt="Remover produto"
         data-testid={ `customer_products__button-card-rm-item-${item.id}` }
-        onClick={ () => productDecrease(item.id, item.price) }
+        onClick={ () => productDecrease(item.id) }
       >
         -
       </button>
@@ -117,6 +141,7 @@ function CardsProducts() {
         alt="Ver Carrinho"
         onClick={ () => { history.push('checkout'); } }
         data-testid="customer_products__button-cart"
+        disabled={ !isDisabled }
       >
         Ver Carrinho:
         <span data-testid="customer_products__checkout-bottom-value">
