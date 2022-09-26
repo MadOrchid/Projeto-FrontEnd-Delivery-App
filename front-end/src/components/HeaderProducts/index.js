@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 function HearderProducts() {
-  const data = JSON.parse(localStorage.getItem('data'));
+  const data = JSON.parse(localStorage.getItem('user'));
   const saveNameUser = data.name;
   const history = useHistory();
 
@@ -39,9 +39,12 @@ function HearderProducts() {
             type="button"
             alt="Produtos"
             data-testid="customer_products__element-navbar-link-logout"
-            onClick={ () => { history.push('/login'); } }
+            onClick={ () => {
+              localStorage.clear();
+              history.push('/login');
+            } }
           >
-            Sair
+            Sair customer
           </button>
         </li>
       </ul>

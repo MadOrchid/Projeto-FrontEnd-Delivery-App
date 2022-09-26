@@ -24,7 +24,7 @@ function RoleRedirect() {
 
   return (
     <>
-      <h1>REDIREC</h1>
+      <h1>REDIRECT</h1>
 
       <div>
         {redirect ? (<Redirect to={ route } />) : null }
