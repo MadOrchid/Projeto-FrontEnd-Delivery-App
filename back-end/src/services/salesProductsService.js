@@ -1,14 +1,13 @@
 const { SalesProducts } = require('../database/models');
 
 const salesProductsServices = {
-  create: async ({ products, saleId }) => {
-    const addProducts = products.map((product) => ({
-      productId: product.id,
-      quantity: product.quantity,
+  create: async (products, saleId) => {
+    const addProducts = products.map(({ productId, quantity }) => ({
       saleId,
+      productId,
+      quantity,
     }));
-    const saleProducts = await SalesProducts.bulkCreate(addProducts);
-    return saleProducts;
+    await SalesProducts.bulkCreate(addProducts);
   },
 };
 
