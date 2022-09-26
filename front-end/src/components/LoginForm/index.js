@@ -30,6 +30,7 @@ function LoginForm() {
         setErrorMessage(true);
       });
     localStorage.setItem('data', JSON.stringify(data));
+    localStorage.setItem('user', JSON.stringify(data));
     history.push(`/${rota[data.role]}`);
   }
 

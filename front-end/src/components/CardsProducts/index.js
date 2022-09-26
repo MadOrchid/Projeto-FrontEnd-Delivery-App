@@ -22,7 +22,7 @@ function CardsProducts() {
       .catch((e) => {
         throw e.message;
       });
-    console.log('handleCards', data);
+    // console.log('handleCards', data);
     return data;
   }
 
@@ -59,7 +59,7 @@ function CardsProducts() {
       const result = await handleCards();
       result.forEach((element) => { element.qtd = 0; });
       setProducts(result);
-      console.log(result);
+      // console.log(result);
       return result;
     };
     updateProduct();
@@ -67,7 +67,7 @@ function CardsProducts() {
 
   const criarCard = () => products.map((item) => (
     <section key={ item.id }>
-      { console.log('"teste de item"', item) }
+      {/* { console.log('"teste de item"', item) } */}
       <h2 data-testid={ `customer_products__element-card-title-${item.id}` }>
         {item.name}
       </h2>
