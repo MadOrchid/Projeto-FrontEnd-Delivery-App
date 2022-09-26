@@ -3,10 +3,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const ApiError = require('../middlewares/ApiError');
 
-const fileSecret = fs.readFile('../jwt.evalutaion.key', {
-  encoding: 'utf8',
-  flag: 'r',
-});
+const fileSecret = fs.readFileSync('jwt.evaluation.key', 'utf-8');
 
 const secret = process.env.JWT_SECRET || fileSecret;
 
