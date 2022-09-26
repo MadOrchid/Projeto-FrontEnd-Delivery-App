@@ -24,6 +24,7 @@ const saleService = {
     );
     const { id } = dataValues;
     await salesProductsServices.create(products, id);
+    return id;
   },
 
   findById: async (id) => {
@@ -34,11 +35,10 @@ const saleService = {
     },
     { model: Product,
       as: 'products',
-      through: { attributes: [] },
-   }],
-  });
+    }] });
   const { dataValues } = sale;
-    return dataValues;
+  
+  return dataValues;
   },
 };
 
