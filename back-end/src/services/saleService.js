@@ -1,6 +1,6 @@
 const moment = require('moment');
 const { Sale } = require('../database/models');
-const { User } = require('../database/models');
+const { User, Product } = require('../database/models');
 const salesProductsServices = require('./salesProductsService');
 
 const saleService = {
@@ -24,6 +24,21 @@ const saleService = {
     );
     const { id } = dataValues;
     await salesProductsServices.create(products, id);
+  },
+
+  findById: async (id) => {
+    const sale = await Sale.findByPk(id, { include: [{ 
+      model: User,
+      as: 'user', 
+      attributes: { exclude: ['password'] },
+    },
+    { model: Product,
+      as: 'products',
+      through: { attributes: [] },
+   }],
+  });
+  const { dataValues } = sale;
+    return dataValues;
   },
 };
 
