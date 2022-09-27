@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import ContextGlobal from '../../context/ContextGlobal';
 import { api } from '../../services/fetchtRegister';
-// import addToCart from '../../context/Cart';
-import updateToCart from '../../context/Cart';
 /*
   - 15: customer_products__element-card-title-<id>
   - 16: customer_products__element-card-price-<id>
@@ -15,20 +14,47 @@ import updateToCart from '../../context/Cart';
 
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
-  // const [quantity, setQuantity] = useState(0);
+  const [isDisabled, setIsDisabled] = useState();
   const [products, setProducts] = useState([]);
   const history = useHistory();
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  const { setCart, setTotal } = useContext(ContextGlobal);
 
   async function handleCards() {
-    const { data } = await api.get('product')
+    const { data } = await api.get('product', { headers: { Authorization: token } })
       .catch((e) => {
         throw e.message;
       });
-    // console.log('handleCards', data);
+    console.log('handleCards', data);
     return data;
   }
 
-  function productDecrease(index, price) {
+  const sumTotalPrice = (list) => {
+    setIsDisabled(valueTotal);
+    console.log('Valor Total', valueTotal);
+    const newList = list
+      .reduce((a, c) => a + Number(c.price) * Number(c.qtd), 0);
+    setValueTotal(newList <= 0.00 ? 0.00 : newList);
+    if (valueTotal > 0 || valueTotal > 0.00) return setIsDisabled(false);
+    return setIsDisabled(true);
+  };
+
+  function handleQuantity({ target }, id) {
+    const { value } = target;
+    if (Number(value) <= 0) { setValueTotal(0); }
+    const updateQuantity = products
+      .map((element) => {
+        if (element.id === id) {
+          element.qtd = Number(value);
+          return element;
+        }
+        return element;
+      });
+    setProducts(updateQuantity);
+    sumTotalPrice(updateQuantity);
+  }
+
+  function productDecrease(index) {
     const updateProducts = products
       .map((element) => {
         if (element.id === index) {
@@ -38,10 +64,10 @@ function CardsProducts() {
         return element;
       });
     setProducts(updateProducts);
-    setValueTotal(valueTotal <= 0.00 ? 0 : valueTotal - Number(price));
+    sumTotalPrice(updateProducts);
   }
 
-  function productIncrease(index, price) {
+  function productIncrease(index) {
     const updateProducts = products
       .map((element) => {
         if (element.id === index) {
@@ -51,8 +77,7 @@ function CardsProducts() {
         return element;
       });
     setProducts(updateProducts);
-    setValueTotal(valueTotal + Number(price));
-    // setQuantity(quantity + 1);
+    sumTotalPrice(updateProducts);
   }
 
   useEffect(() => {
@@ -60,20 +85,21 @@ function CardsProducts() {
       const result = await handleCards();
       result.forEach((element) => { element.qtd = 0; });
       setProducts(result);
-      // console.log(result);
+      console.log(result);
       return result;
     };
     updateProduct();
   }, []);
 
-/*   useEffect(() => {
-    const cart = products.filter((item) => item.qtd !== 0);
-    updateToCart(cart);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [valueTotal]); */
+  useEffect(() => {
+    const cart = products.filter((itemCart) => itemCart.qtd !== 0);
+    setTotal(valueTotal);
+    setCart(cart);
+  }, [valueTotal]);
 
   const criarCard = () => products.map((item) => (
     <section key={ item.id }>
+      { console.log('"teste de item"', item) }
       <h2 data-testid={ `customer_products__element-card-title-${item.id}` }>
         {item.name}
       </h2>
@@ -90,7 +116,7 @@ function CardsProducts() {
         type="button"
         alt="Adicionar produto"
         data-testid={ `customer_products__button-card-add-item-${item.id}` }
-        onClick={ () => productIncrease(item.id, item.price) }
+        onClick={ () => productIncrease(item.id) }
       >
         +
       </button>
@@ -98,14 +124,15 @@ function CardsProducts() {
         data-testid={ `customer_products__input-card-quantity-${item.id}` }
         type="number"
         min={ 0 }
-        value={ Number(item.qtd) /* quantity */ }
+        onChange={ (e) => handleQuantity(e, item.id) }
+        value={ item.qtd }
       />
       <button
         type="button"
         value="-"
         alt="Remover produto"
         data-testid={ `customer_products__button-card-rm-item-${item.id}` }
-        onClick={ () => productDecrease(item.id, item.price) }
+        onClick={ () => productDecrease(item.id) }
       >
         -
       </button>
@@ -123,6 +150,7 @@ function CardsProducts() {
         alt="Ver Carrinho"
         onClick={ () => { history.push('checkout'); } }
         data-testid="customer_products__button-cart"
+        disabled={ isDisabled }
       >
         Ver Carrinho:
         <span data-testid="customer_products__checkout-bottom-value">

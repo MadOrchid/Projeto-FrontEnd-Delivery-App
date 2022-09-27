@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
-import CartContext from '../../context/Cart';
+import ContextGlobal from '../../context/ContextGlobal';
 import { getKey } from '../../services/LocalStorage';
 
 function Checkout() {
-  console.log(useContext(CartContext));
-  const cart = useContext(CartContext);
-  const [sellers, setSellers] = useState([]);
-  const [products, setProducts] = useState([]);
+  const { cart, total } = useContext(ContextGlobal);
+  // const [sellers, setSellers] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [sale, setSalve] = useState({
     sellerId: '',
     userId: getKey('user').id,
@@ -18,7 +17,9 @@ function Checkout() {
     saleDate: new Date(),
     status: 'Pendente',
   });
-  console.log([cart]);
+  console.log('"AAAAAAAAAAAAAAAHHHHHH"', total);
+
+  setSalve(...sale, sale.totalPrice = total);
 
   const history = useHistory();
 
