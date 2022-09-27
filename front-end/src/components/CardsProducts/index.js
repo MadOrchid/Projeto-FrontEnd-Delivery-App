@@ -20,7 +20,6 @@ function CardsProducts() {
   const { token } = JSON.parse(localStorage.getItem('user'));
   const { setCart, setTotal } = useContext(ContextGlobal);
 
-
   async function handleCards() {
     const { data } = await api.get('product', { headers: { Authorization: token } })
       .catch((e) => {
@@ -86,7 +85,6 @@ function CardsProducts() {
       const result = await handleCards();
       result.forEach((element) => { element.qtd = 0; });
       setProducts(result);
-      console.log(result);
       return result;
     };
     updateProduct();
@@ -100,7 +98,6 @@ function CardsProducts() {
 
   const criarCard = () => products.map((item) => (
     <section key={ item.id }>
-      { console.log('"teste de item"', item) }
       <h2 data-testid={ `customer_products__element-card-title-${item.id}` }>
         {item.name}
       </h2>
