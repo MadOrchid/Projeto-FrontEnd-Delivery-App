@@ -20,6 +20,7 @@ function CardsProducts() {
   const { token } = JSON.parse(localStorage.getItem('user'));
   const { setCart, setTotal } = useContext(ContextGlobal);
 
+
   async function handleCards() {
     const { data } = await api.get('product', { headers: { Authorization: token } })
       .catch((e) => {
