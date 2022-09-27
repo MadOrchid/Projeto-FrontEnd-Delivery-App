@@ -13,7 +13,6 @@ import { api } from '../../services/fetchtRegister';
 
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
-  // const [quantity, setQuantity] = useState(0);
   const [isDisabled, setIsDisabled] = useState();
   const [products, setProducts] = useState([]);
   const history = useHistory();
@@ -34,6 +33,8 @@ function CardsProducts() {
     const newList = list
       .reduce((a, c) => a + Number(c.price) * Number(c.qtd), 0);
     setValueTotal(newList <= 0.00 ? 0.00 : newList);
+    if (valueTotal > 0 || valueTotal > 0.00) return setIsDisabled(false);
+    return setIsDisabled(true);
   };
 
   function handleQuantity({ target }, id) {
@@ -141,7 +142,7 @@ function CardsProducts() {
         alt="Ver Carrinho"
         onClick={ () => { history.push('checkout'); } }
         data-testid="customer_products__button-cart"
-        disabled={ !isDisabled }
+        disabled={ isDisabled }
       >
         Ver Carrinho:
         <span data-testid="customer_products__checkout-bottom-value">
