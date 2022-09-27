@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { api } from '../../services/fetchtRegister';
+// import addToCart from '../../context/Cart';
+import updateToCart from '../../context/Cart';
 /*
   - 15: customer_products__element-card-title-<id>
   - 16: customer_products__element-card-price-<id>
@@ -37,7 +39,6 @@ function CardsProducts() {
       });
     setProducts(updateProducts);
     setValueTotal(valueTotal <= 0.00 ? 0 : valueTotal - Number(price));
-    // setQuantity(quantity > 0 ? quantity - 1 : 0);
   }
 
   function productIncrease(index, price) {
@@ -65,9 +66,14 @@ function CardsProducts() {
     updateProduct();
   }, []);
 
+/*   useEffect(() => {
+    const cart = products.filter((item) => item.qtd !== 0);
+    updateToCart(cart);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [valueTotal]); */
+
   const criarCard = () => products.map((item) => (
     <section key={ item.id }>
-      {/* { console.log('"teste de item"', item) } */}
       <h2 data-testid={ `customer_products__element-card-title-${item.id}` }>
         {item.name}
       </h2>

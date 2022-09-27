@@ -13,4 +13,14 @@ const createSession = async (email, password) => {
   }
 };
 
-export { api, createSession };
+const saveSale = async (sale, token) => {
+  try {
+    const { status, data } = await axios
+      .post(`${url}/sale`, sale, { headers: { authorization: token } });
+    return { status, data };
+  } catch ({ response: { status, data } }) {
+    return { status, data };
+  }
+};
+
+export { api, createSession, saveSale };

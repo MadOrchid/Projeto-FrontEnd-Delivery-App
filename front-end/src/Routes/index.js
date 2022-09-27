@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import CartProvider from '../context/Cart';
 import Admin from '../pages/Admin';
 import Checkout from '../pages/Checkout';
 import Login from '../pages/Login';
@@ -18,10 +17,8 @@ function Rotas() {
       <Route exact path="/register" component={ Register } />
       <Route exact path="/admin/manage" component={ Admin } />
       <Route exact path="/seller/orders" component={ Seller } />
-      <CartProvider>
-        <Route exact path="/customer/products" component={ Products } />
-        <Route exact path="/customer/checkout" component={ Checkout } />
-      </CartProvider>
+      <Route exact path="/customer/products" component={ Products } />
+      <Route exact path="/customer/checkout" component={ Checkout } />
     </Switch>
   );
 }

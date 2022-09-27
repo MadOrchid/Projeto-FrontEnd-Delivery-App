@@ -2,12 +2,14 @@ import React from 'react';
 import './App.css';
 import Routes from './Routes';
 // import Provider from './context/Provider';
+import CartProvider from './context/Cart';
 
 function App() {
   return (
-    // <Provider>
-    <Routes />
-    // </Provider>
+    <CartProvider>
+      <Routes />
+    </CartProvider>
+
   );
 }
 
