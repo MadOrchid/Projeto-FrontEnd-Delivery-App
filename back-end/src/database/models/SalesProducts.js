@@ -35,6 +35,7 @@ const SalesProductsModel = (sequelize, DataTypes) => {
       otherKey: 'productId',
       as: 'products',
     });
+  
   };
   return SalesProducts;
 };
