@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import ContextGlobal from '../../context/ContextGlobal';
 import { api } from '../../services/fetchtRegister';
 /*
   - 15: customer_products__element-card-title-<id>
@@ -17,6 +18,8 @@ function CardsProducts() {
   const [products, setProducts] = useState([]);
   const history = useHistory();
   const { token } = JSON.parse(localStorage.getItem('user'));
+  const { setCart, setTotal } = useContext(ContextGlobal);
+
 
   async function handleCards() {
     const { data } = await api.get('product', { headers: { Authorization: token } })
@@ -88,6 +91,12 @@ function CardsProducts() {
     };
     updateProduct();
   }, []);
+
+  useEffect(() => {
+    const cart = products.filter((itemCart) => itemCart.qtd !== 0);
+    setTotal(valueTotal);
+    setCart(cart);
+  }, [valueTotal]);
 
   const criarCard = () => products.map((item) => (
     <section key={ item.id }>
