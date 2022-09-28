@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ContextGlobal from '../../context/ContextGlobal';
@@ -14,12 +15,11 @@ import { api } from '../../services/fetchtRegister';
 
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
-  const [isDisabled, setIsDisabled] = useState();
+  const [isDisabled, setIsDisabled] = useState(true);
   const [products, setProducts] = useState([]);
   const history = useHistory();
   const { token } = JSON.parse(localStorage.getItem('user'));
   const { setCart, setTotal } = useContext(ContextGlobal);
-
 
   async function handleCards() {
     const { data } = await api.get('product', { headers: { Authorization: token } })
@@ -36,8 +36,6 @@ function CardsProducts() {
     const newList = list
       .reduce((a, c) => a + Number(c.price) * Number(c.qtd), 0);
     setValueTotal(newList <= 0.00 ? 0.00 : newList);
-    if (valueTotal > 0 || valueTotal > 0.00) return setIsDisabled(false);
-    return setIsDisabled(true);
   };
 
   function handleQuantity({ target }, id) {
@@ -86,7 +84,6 @@ function CardsProducts() {
       const result = await handleCards();
       result.forEach((element) => { element.qtd = 0; });
       setProducts(result);
-      console.log(result);
       return result;
     };
     updateProduct();
@@ -96,11 +93,12 @@ function CardsProducts() {
     const cart = products.filter((itemCart) => itemCart.qtd !== 0);
     setTotal(valueTotal);
     setCart(cart);
+    if (valueTotal !== 0) return setIsDisabled(false);
+    return setIsDisabled(true);
   }, [valueTotal]);
 
   const criarCard = () => products.map((item) => (
     <section key={ item.id }>
-      { console.log('"teste de item"', item) }
       <h2 data-testid={ `customer_products__element-card-title-${item.id}` }>
         {item.name}
       </h2>

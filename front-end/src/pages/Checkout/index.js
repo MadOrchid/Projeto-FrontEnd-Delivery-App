@@ -2,13 +2,13 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
 import ContextGlobal from '../../context/ContextGlobal';
-import { getKey } from '../../services/LocalStorage';
+// import { getKey } from '../../services/LocalStorage';
 
 function Checkout() {
-  const { cart, total } = useContext(ContextGlobal);
-  // const [sellers, setSellers] = useState([]);
+  const { cart, total, removeFromCart } = useContext(ContextGlobal);
+  const [sellers] = useState([]);
   // const [products, setProducts] = useState([]);
-  const [sale, setSalve] = useState({
+  /* const [sale, setSalve] = useState({
     sellerId: '',
     userId: getKey('user').id,
     totalPrice: 0,
@@ -16,10 +16,8 @@ function Checkout() {
     deliveryNumber: '',
     saleDate: new Date(),
     status: 'Pendente',
-  });
-  console.log('"AAAAAAAAAAAAAAAHHHHHH"', total);
-
-  setSalve(...sale, sale.totalPrice = total);
+  }); */
+  console.log('"CART PAPAI"', cart);
 
   const history = useHistory();
 
@@ -28,20 +26,19 @@ function Checkout() {
   };
 
   const handleSubmit = () => {
-    history.push('/customer/orders');
+    history.push('orders/1');
   };
 
   return (
     <>
       <HearderProducts />
       <h3>Finalizar Pedido</h3>
+
       <section>
-        {cart && cart
-          .filter((item) => (item.quantity > 0))
+        {cart.length > 0 && cart
           .map((item, index) => (
             <div
               key={ item.id }
-              className={ style.cartItem }
             >
               <h3
                 data-testid={
@@ -51,7 +48,6 @@ function Checkout() {
                 Item:
                 {' '}
                 { index + 1 }
-
               </h3>
               <h3
                 data-testid={ `customer_checkout__element-order-table-name-${index}` }
@@ -66,7 +62,7 @@ function Checkout() {
               >
                 Quantidade:
                 {' '}
-                { item.quantity }
+                { item.qtd }
 
               </h3>
               <h3
@@ -84,14 +80,13 @@ function Checkout() {
                 }
               >
                 Subtotal:  R$
-                { item.subTotal.toFixed(2).replace(/\./, ',') }
-
+                { (item.price * item.qtd).toFixed(2).replace(/\./, ',') }
               </h3>
               <button
                 data-testid={ `customer_checkout__element-order-table-remove-${index}` }
                 type="button"
                 onClick={ () => {
-                  removeItemFromCart(item);
+                  removeFromCart(item);
                 } }
               >
                 REMOVE
@@ -126,7 +121,7 @@ function Checkout() {
             onChange={ handleChange }
           />
           <input
-            data-testid="customer_checkout__input-addressNumber"
+            data-testid="customer_checkout__input-address-number"
             placeholder="Número de entrega"
             type="text"
             name="deliveryNumber"
@@ -136,7 +131,7 @@ function Checkout() {
             data-testid="customer_checkout__element-order-total-price"
           >
             Total: R$
-            { sale.totalPrice.toFixed(2).replace(/\./, ',') }
+            { total.toFixed(2).replace(/\./, ',') }
           </h3>
           <button
             type="button"
