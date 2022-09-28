@@ -121,7 +121,7 @@ function Checkout() {
             onChange={ handleChange }
           />
           <input
-            data-testid="customer_checkout__input-addressNumber"
+            data-testid="customer_checkout__input-address-number"
             placeholder="Número de entrega"
             type="text"
             name="deliveryNumber"
