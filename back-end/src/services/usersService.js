@@ -31,6 +31,22 @@ const userService = {
   return true;
   },
 
+  listSellers: async () => {
+    const users = await User.findAll({ 
+      where: { 
+        role: 'seller', 
+      },
+      attributes: { exclude: ['password'] },
+      raw: true,
+    });
+    
+    // if (user.length > 0) {
+    //   throw new ApiError(409, 'User already registered');
+    // }
+
+  return users;
+  },
+
   create: async ({ email, password, name }) => {
     const role = 'customer';
     const md5Hash = md5(password);

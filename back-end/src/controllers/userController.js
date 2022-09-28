@@ -9,6 +9,12 @@ const userController = {
 
     res.status(201).json(result);
   },
+
+  listSellers: async (req, res) => {
+    const result = await userService.listSellers();
+
+    res.status(200).json(result);
+  },
 };
 
 module.exports = userController;
