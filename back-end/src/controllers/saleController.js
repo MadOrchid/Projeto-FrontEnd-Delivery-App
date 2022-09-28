@@ -11,6 +11,12 @@ const saleController = {
     const result = await saleService.findById(id);
     return res.status(200).json(result);
   },
+
+  findSaleByUserId: async (req, res) => {
+    const { id } = req.params;
+    const result = await saleService.findUserById(id);
+    return res.status(200).json(result);
+  },
 };
 
 module.exports = saleController;

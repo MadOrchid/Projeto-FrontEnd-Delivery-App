@@ -14,7 +14,6 @@ const createSession = async (email, password) => {
 };
 
 const saveSale = async (token, obj) => {
-  console.log('bodyReq', obj);
   const data = await api.post('sale', obj, { headers: { Authorization: token } })
 
     .then((response) => {
@@ -31,5 +30,6 @@ async function getSeller() {
   const { data } = await api.get('/user/sellers');
   return data;
 }
+
 
 export { api, createSession, saveSale, getSeller };

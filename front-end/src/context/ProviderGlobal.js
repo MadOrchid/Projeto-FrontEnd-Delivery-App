@@ -6,6 +6,8 @@ import ContextGlobal from './ContextGlobal';
 export default function ProviderGlobal({ children }) {
   const [cart, setCart] = useState({});
   const [total, setTotal] = useState(0);
+  const [order, setOrder] = useState([]);
+  const [orders, setOrders] = useState([]);
   const { Provider } = ContextGlobal;
 
   function removeFromCart(product) {
@@ -53,8 +55,12 @@ export default function ProviderGlobal({ children }) {
   const value = {
     cart,
     total,
+    order,
+    orders,
     setCart,
     setTotal,
+    setOrder,
+    setOrders,
     removeFromCart,
     updateToCart,
     clearCart,
