@@ -15,7 +15,7 @@ import { api } from '../../services/fetchtRegister';
 
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
-  const [isDisabled, setIsDisabled] = useState();
+  const [isDisabled, setIsDisabled] = useState(true);
   const [products, setProducts] = useState([]);
   const history = useHistory();
   const { token } = JSON.parse(localStorage.getItem('user'));
@@ -36,8 +36,6 @@ function CardsProducts() {
     const newList = list
       .reduce((a, c) => a + Number(c.price) * Number(c.qtd), 0);
     setValueTotal(newList <= 0.00 ? 0.00 : newList);
-    if (valueTotal > 0 || valueTotal > 0.00) return setIsDisabled(false);
-    return setIsDisabled(true);
   };
 
   function handleQuantity({ target }, id) {
@@ -95,6 +93,8 @@ function CardsProducts() {
     const cart = products.filter((itemCart) => itemCart.qtd !== 0);
     setTotal(valueTotal);
     setCart(cart);
+    if (valueTotal !== 0) return setIsDisabled(false);
+    return setIsDisabled(true);
   }, [valueTotal]);
 
   const criarCard = () => products.map((item) => (
