@@ -17,7 +17,7 @@ function Checkout() {
     saleDate: new Date(),
     status: 'Pendente',
   }); */
-  console.log('"AAAAAAAAAAAAAAAHHHHHH"', cart);
+  console.log('"CART PAPAI"', cart);
 
   const history = useHistory();
 
@@ -26,7 +26,7 @@ function Checkout() {
   };
 
   const handleSubmit = () => {
-    history.push('/customer/orders');
+    history.push('orders/1');
   };
 
   return (
