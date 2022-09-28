@@ -31,5 +31,4 @@ async function getSeller() {
   return data;
 }
 
-
 export { api, createSession, saveSale, getSeller };
