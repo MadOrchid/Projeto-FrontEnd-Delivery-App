@@ -1,7 +1,7 @@
 function getKey(key) {
   const json = localStorage.getItem(key);
   const data = JSON.parse(json);
-  // console.log(data);
+  console.log(data);
   return data;
 }
 

@@ -15,7 +15,9 @@ function OrdersClient() {
   useEffect(() => {
     const updateOrders = async () => {
       const { token } = getKey('user');
-      const data = await api.get('saleUser/3', { headers: { Authorization: token } });
+      const { data } = await api
+        .get('sale/user/3', { headers: { Authorization: token } });
+      console.log(data);
       setOrders(data);
     };
     updateOrders();
@@ -29,8 +31,8 @@ function OrdersClient() {
 
           <button
             type="button"
-            key={ sale }
-            data-testid="customer_orderselement-order-id "
+            key={ sale.id }
+            data-testid={ `customer_orderselement-order-id-${sale.id}` }
             onClick={ () => history.push('/customer/orders/10') }
           >
             <h3
