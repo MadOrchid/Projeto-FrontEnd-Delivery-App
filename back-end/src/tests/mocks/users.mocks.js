@@ -51,6 +51,15 @@ const loginMock = {
 	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJDbGllbnRlIFrDqSBCaXJpdGEiLCJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciJ9LCJpYXQiOjE2NjQzOTM0NDV9.iVh2oJkl1g8brAyivrt-MM8MOqICDXYBOVL3llLOste"
 };
 
+const sellersMock = [
+	{
+		"id": 2,
+		"name": "Fulana Pereira",
+		"email": "fulana@deliveryapp.com",
+		"role": "seller"
+	}
+]
+
 module.exports = {
   userValid,
   userNotValid,
@@ -60,5 +69,6 @@ module.exports = {
   findSellersMock,
   tokenMock,
   loginMock,
-  userBdLoginResponse
+  userBdLoginResponse,
+	sellersMock
 };
