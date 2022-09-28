@@ -19,6 +19,8 @@ describe("Login service:", () => {
       .onCall(0)
       .resolves(userBdLoginResponse)
       .onCall(1)
+      .resolves(null)
+      .onCall(2)
       .resolves(null);
   });
   afterEach(() => {
