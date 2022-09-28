@@ -13,14 +13,23 @@ const createSession = async (email, password) => {
   }
 };
 
-const saveSale = async (sale, token) => {
-  try {
-    const { status, data } = await axios
-      .post(`${url}/sale`, sale, { headers: { authorization: token } });
-    return { status, data };
-  } catch ({ response: { status, data } }) {
-    return { status, data };
-  }
+const saveSale = async (token, obj) => {
+  console.log('bodyReq', obj);
+  const data = await api.post('sale', obj, { headers: { Authorization: token } })
+
+    .then((response) => {
+      console.log(response);
+      return response.data.id;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return data;
 };
 
-export { api, createSession, saveSale };
+async function getSeller() {
+  const { data } = await api.get('/user/sellers');
+  return data;
+}
+
+export { api, createSession, saveSale, getSeller };

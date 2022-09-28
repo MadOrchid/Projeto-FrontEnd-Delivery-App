@@ -1,32 +1,41 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
 import ContextGlobal from '../../context/ContextGlobal';
-// import { getKey } from '../../services/LocalStorage';
+import { getSeller, saveSale } from '../../services/fetchtRegister';
+import { getKey } from '../../services/LocalStorage';
 
 function Checkout() {
   const { cart, total, removeFromCart } = useContext(ContextGlobal);
-  const [sellers] = useState([]);
+  const [sellers, setSeller] = useState([]);
   // const [products, setProducts] = useState([]);
-  /* const [sale, setSalve] = useState({
-    sellerId: '',
-    userId: getKey('user').id,
-    totalPrice: 0,
+  const [sale, setSale] = useState({
+    sellerName: '',
+    userName: getKey('user').name,
+    totalPrice: total,
     deliveryAddress: '',
     deliveryNumber: '',
-    saleDate: new Date(),
-    status: 'Pendente',
-  }); */
-  console.log('"CART PAPAI"', cart);
+    products: cart.map((p) => ({
+      productId: p.id,
+      quantity: p.qtd,
+    })),
+  });
 
   const history = useHistory();
 
-  const handleChange = () => {
+  useEffect(() => {
+    const updateSellers = async () => {
+      const data = await getSeller();
+      setSeller(data);
+      setSale({ ...sale, sellerName: data[0].name });
+    };
+    updateSellers();
+  }, []);
 
-  };
-
-  const handleSubmit = () => {
-    history.push('orders/1');
+  const handleSubmit = async () => {
+    const { token } = getKey('user');
+    const id = await saveSale(token, sale);
+    history.push(`/customer/orders/${id}`);
   };
 
   return (
@@ -100,13 +109,13 @@ function Checkout() {
           <select
             data-testid="customer_checkout__select-seller"
             name="sellerId"
-            onChange={ handleChange }
-            onClick={ handleChange }
+            onChange={ (e) => setSale({ ...sale, sellerName: e.target.value }) }
           >
+
             {sellers && sellers.map((seller) => (
               <option
-                key={ seller.id }
-                value={ seller.id }
+                key={ seller }
+                value={ seller }
               >
                 {seller.name}
               </option>
@@ -118,14 +127,14 @@ function Checkout() {
             placeholder="Endereço de entrega"
             type="text"
             name="deliveryAddress"
-            onChange={ handleChange }
+            onChange={ (e) => setSale({ ...sale, deliveryAddress: e.target.value }) }
           />
           <input
             data-testid="customer_checkout__input-address-number"
             placeholder="Número de entrega"
             type="text"
             name="deliveryNumber"
-            onChange={ handleChange }
+            onChange={ (e) => setSale({ ...sale, deliveryNumber: e.target.value }) }
           />
           <h3
             data-testid="customer_checkout__element-order-total-price"

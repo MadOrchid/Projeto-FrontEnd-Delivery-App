@@ -19,6 +19,7 @@ function Rotas() {
       <Route exact path="/seller/orders" component={ Seller } />
       <Route exact path="/customer/products" component={ Products } />
       <Route exact path="/customer/checkout" component={ Checkout } />
+
     </Switch>
   );
 }
