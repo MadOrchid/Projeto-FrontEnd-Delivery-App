@@ -8,5 +8,6 @@ sale.use(authController.validateToken);
 
 sale.post('/', saleController.create);
 sale.get('/:id', saleController.findById);
+sale.get('/user/:id', saleController.findSaleByUserId);
 
 module.exports = sale;

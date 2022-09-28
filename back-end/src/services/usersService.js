@@ -39,12 +39,7 @@ const userService = {
       attributes: { exclude: ['password'] },
       raw: true,
     });
-    
-    // if (user.length > 0) {
-    //   throw new ApiError(409, 'User already registered');
-    // }
-
-  return users;
+    return users;
   },
 
   create: async ({ email, password, name }) => {

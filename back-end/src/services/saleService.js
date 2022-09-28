@@ -42,8 +42,19 @@ const saleService = {
   },
 
   findByUserId: async (id) => {
-    //Achar vendas por usuário
-    return id;
+    const [sale] = await Sale.findAll({
+      where: { userId: id },
+      include: [{ 
+      model: User,
+      as: 'user', 
+      attributes: { exclude: ['password'] },
+    },
+    { model: Product,
+      as: 'products',
+    }] });
+  const { dataValues } = sale;
+  
+  return dataValues;
   },
 };
 
