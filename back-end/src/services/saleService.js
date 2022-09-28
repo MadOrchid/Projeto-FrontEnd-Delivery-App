@@ -1,6 +1,6 @@
 const moment = require('moment');
+const { Op } = require('sequelize');
 const ApiError = require('../middlewares/ApiError');
-// const { Op } = require('sequelize');
 const { Sale } = require('../database/models');
 const { User, Product } = require('../database/models');
 const salesProductsServices = require('./salesProductsService');
@@ -45,7 +45,7 @@ const saleService = {
 
   findByUserId: async (id) => {
     const sale = await Sale.findAll({
-      where: { userId: id },
+      where: { [Op.or]: [{ userId: id }, { sellerId: id }] },
       include: [{ 
       model: User,
       as: 'user', 
@@ -54,10 +54,10 @@ const saleService = {
     { model: Product,
       as: 'products',
     }] });
-  if (!sale) throw new ApiError(404, 'User not found');  
-  const { dataValues } = sale;
 
-  return dataValues;
+  if (!sale) throw new ApiError(404, 'User not found');  
+
+  return sale;
   },
 
 };

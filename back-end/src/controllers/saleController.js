@@ -14,7 +14,7 @@ const saleController = {
 
   findSaleByUserId: async (req, res) => {
     const { id } = req.params;
-    const result = await saleService.findUserById(id);
+    const result = await saleService.findByUserId(id);
     return res.status(200).json(result);
   },
 };
