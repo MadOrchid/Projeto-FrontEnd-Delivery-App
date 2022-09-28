@@ -40,6 +40,11 @@ const saleService = {
   
   return dataValues;
   },
+
+  findByUserId: async (id) => {
+    //Achar vendas por usuário
+    return id;
+  },
 };
 
 module.exports = saleService;
