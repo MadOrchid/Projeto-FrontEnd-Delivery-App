@@ -2,10 +2,22 @@ const moment = require('moment');
 const { Op } = require('sequelize');
 const ApiError = require('../middlewares/ApiError');
 const { Sale } = require('../database/models');
+const Joi = require('joi');
 const { User, Product } = require('../database/models');
 const salesProductsServices = require('./salesProductsService');
+const { runSchema } = require('./validationService');
 
 const saleService = {
+  validateSale: runSchema(
+    Joi.object({
+      userId: Joi.number().integer().required(),
+      sellerId: Joi.number().integer().required(),
+      totalPrice: Joi.number().required(),
+      deliveryNumber: Joi.number().required(),
+      deliveryAddress: Joi.string().required(),
+    }),
+  ),
+
   findUSer: async (name) => {
     const user = await User.findOne({
       where: { name },
@@ -21,6 +33,7 @@ const saleService = {
   createOrder: async (
     { sale, products }) => {
     const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber } = sale;
+    //  await serviceSale.validateSale(sale);
     // let userId = 0;
     // if ([userId].includes(sale)) {
     //   userId = sale.userId

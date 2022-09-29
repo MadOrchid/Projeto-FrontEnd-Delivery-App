@@ -12,7 +12,7 @@ function Checkout() {
   const [sale, setSale] = useState({
     userId: getKey('keyUser'),
     sellerId: 2,
-    totalPrice: total.toFixed(2).replace(/\./, ','),
+    totalPrice: Number(total.toFixed(2)),
     deliveryAddress: '',
     deliveryNumber: '',
     /* products: cart.map((p) => ({

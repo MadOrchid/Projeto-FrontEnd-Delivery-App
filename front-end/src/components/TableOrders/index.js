@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TableOrders({order}) {
+function TableOrders() {
   return (
     <table>
       <thead>
