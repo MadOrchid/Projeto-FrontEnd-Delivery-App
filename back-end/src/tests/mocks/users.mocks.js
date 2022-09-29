@@ -51,6 +51,16 @@ const loginMock = {
 	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJDbGllbnRlIFrDqSBCaXJpdGEiLCJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciJ9LCJpYXQiOjE2NjQzOTM0NDV9.iVh2oJkl1g8brAyivrt-MM8MOqICDXYBOVL3llLOste"
 };
 
+const loginBody = {
+	"email": "zebirita@email.com",
+	"password": "$#zebirita#$"
+}
+
+const invalidBody = {
+	"email": "zebirita@email.com",
+	"password": "$#zebirita#"
+}
+
 const sellersMock = [
 	{
 		"id": 2,
@@ -70,5 +80,7 @@ module.exports = {
   tokenMock,
   loginMock,
   userBdLoginResponse,
-	sellersMock
+	sellersMock,
+	loginBody,
+	invalidBody
 };
