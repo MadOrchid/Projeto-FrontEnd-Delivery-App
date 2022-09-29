@@ -82,10 +82,20 @@ const fetchedSale = {
 	]
 }
 
+const resultSale = {"id": 1,
+"userId": 3,
+"sellerId": 2,
+"totalPrice": "38.50",
+"deliveryAddress": "Rua do teste",
+"deliveryNumber": "123",
+"saleDate": "2022-09-28T20:18:00.000Z",
+"status": "Pendente"}
+
 
 
 module.exports = {
   saleBody,
   saleArgs,
-  fetchedSale
+  fetchedSale,
+	resultSale
 };
