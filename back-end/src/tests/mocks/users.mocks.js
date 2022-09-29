@@ -70,6 +70,14 @@ const sellersMock = [
 	}
 ]
 
+const createdUserMock = {
+		"email": "userteste@deliveryapp.com",
+		"role": "customer",
+		"name": "User de teste",
+		tokenMock
+	}
+
+
 module.exports = {
   userValid,
   userNotValid,
@@ -82,5 +90,6 @@ module.exports = {
   userBdLoginResponse,
 	sellersMock,
 	loginBody,
-	invalidBody
+	invalidBody,
+	createdUserMock
 };
