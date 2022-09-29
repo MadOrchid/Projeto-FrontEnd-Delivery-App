@@ -14,10 +14,10 @@ const createSession = async (email, password) => {
 };
 
 const saveSale = async (token, obj) => {
+  console.log(obj);
   const data = await api.post('sale', obj, { headers: { Authorization: token } })
-
     .then((response) => {
-      console.log(response);
+      console.log('responseeeeee', response);
       return response.data.id;
     })
     .catch((error) => {

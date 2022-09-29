@@ -8,17 +8,17 @@ import { getKey } from '../../services/LocalStorage';
 function Checkout() {
   const { cart, total, removeFromCart } = useContext(ContextGlobal);
   const [sellers, setSeller] = useState([]);
-  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [sale, setSale] = useState({
-    sellerName: '',
-    userName: getKey('user').name,
-    totalPrice: total,
+    userId: getKey('keyUser'),
+    sellerId: 2,
+    totalPrice: total.toFixed(2).replace(/\./, ','),
     deliveryAddress: '',
     deliveryNumber: '',
-    products: cart.map((p) => ({
+    /* products: cart.map((p) => ({
       productId: p.id,
       quantity: p.qtd,
-    })),
+    })), */
   });
 
   const history = useHistory();
@@ -27,14 +27,21 @@ function Checkout() {
     const updateSellers = async () => {
       const data = await getSeller();
       setSeller(data);
-      setSale({ ...sale, sellerName: data[0].name });
+      setSale({ ...sale, sellerId: data[0].id });
     };
     updateSellers();
   }, []);
 
+  useEffect(() => {
+    const updateProducts = cart
+      .map((element) => ({ productId: element.id, quantity: element.qtd }));
+    setProducts(updateProducts);
+  }, [cart]);
+
   const handleSubmit = async () => {
     const { token } = getKey('user');
-    const id = await saveSale(token, sale);
+    const id = await saveSale(token, { sale, products });
+    console.log('"O ID do bixinho"', id);
     history.push(`/customer/orders/${id}`);
   };
 
@@ -109,13 +116,12 @@ function Checkout() {
           <select
             data-testid="customer_checkout__select-seller"
             name="sellerId"
-            onChange={ (e) => setSale({ ...sale, sellerName: e.target.value }) }
+            onChange={ (e) => setSale({ ...sale, sellerId: Number(e.target.value) }) }
           >
-
             {sellers && sellers.map((seller) => (
               <option
-                key={ seller }
-                value={ seller }
+                key={ seller.id }
+                value={ seller.id }
               >
                 {seller.name}
               </option>

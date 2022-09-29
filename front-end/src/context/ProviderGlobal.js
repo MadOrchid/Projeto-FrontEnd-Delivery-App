@@ -4,7 +4,7 @@ import { setKey } from '../services/LocalStorage';
 import ContextGlobal from './ContextGlobal';
 
 export default function ProviderGlobal({ children }) {
-  const [cart, setCart] = useState({});
+  const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
   const [order, setOrder] = useState([]);
   const [orders, setOrders] = useState([]);

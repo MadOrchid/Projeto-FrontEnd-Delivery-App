@@ -12,13 +12,21 @@ const saleService = {
       attributes: { exclude: ['password'] },
       raw: true,
     });
+    if (!user) {
+      throw new ApiError(404, 'User not found');
+    } 
     return user.id;
   },
 
   createOrder: async (
-    { userName, sellerName, totalPrice, deliveryAddress, deliveryNumber, products }) => {
-    const userId = await saleService.findUSer(userName);
-    const sellerId = await saleService.findUSer(sellerName);
+    { sale, products }) => {
+    const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber } = sale;
+    // let userId = 0;
+    // if ([userId].includes(sale)) {
+    //   userId = sale.userId
+    // } else {
+    //   userId = await saleService.findUSer(userName);
+    // }
     const status = 'Pendente';
     const saleDate = moment().format();
     const { dataValues } = await Sale.create(

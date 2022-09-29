@@ -28,7 +28,7 @@ const userService = {
       throw new ApiError(409, 'User already registered');
     }
 
-  return true;
+  return user.id;
   },
 
   listSellers: async () => {
@@ -39,10 +39,6 @@ const userService = {
       attributes: { exclude: ['password'] },
       raw: true,
     });
-    
-    // if (user.length > 0) {
-    //   throw new ApiError(409, 'User already registered');
-    // }
 
   return users;
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TableOrders() {
+function TableOrders({order}) {
   return (
     <table>
       <thead>
@@ -10,6 +10,13 @@ function TableOrders() {
         <th>Valor Unitário</th>
         <th>Sub-total</th>
       </thead>
+      <tbody>
+        <tr>
+          <tb>
+            a
+          </tb>
+        </tr>
+      </tbody>
     </table>
   );
 }
