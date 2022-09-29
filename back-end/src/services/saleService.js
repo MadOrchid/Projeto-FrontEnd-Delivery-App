@@ -1,8 +1,8 @@
 const moment = require('moment');
 const { Op } = require('sequelize');
+const Joi = require('joi');
 const ApiError = require('../middlewares/ApiError');
 const { Sale } = require('../database/models');
-const Joi = require('joi');
 const { User, Product } = require('../database/models');
 const salesProductsServices = require('./salesProductsService');
 const { runSchema } = require('./validationService');
@@ -76,9 +76,24 @@ const saleService = {
       as: 'products',
     }] });
 
-  if (!sale) throw new ApiError(404, 'User not found');  
+  if (!sale) throw new ApiError(404, 'Sale not found');  
 
   return sale;
+  },
+
+  orderUpdateStatus: async ({ id, status }) => {
+    const sale = await Sale.findByPk(id);
+    if (!sale) throw new ApiError(404, 'User not found');
+  
+    const [updated] = await Sale.update(
+      {
+        status,
+      },
+      {
+        where: { id },
+      },
+  );
+   return updated;
   },
 
 };

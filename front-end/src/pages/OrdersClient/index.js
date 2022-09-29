@@ -8,15 +8,15 @@ import { getKey } from '../../services/LocalStorage';
 function OrdersClient() {
   const { orders, setOrders } = useContext(ContextGlobal);
   // const [saleData, setSalesData] = useState([]);
-  const date = new Date();
-
+  const newData = new Date();
   const history = useHistory();
 
   useEffect(() => {
     const updateOrders = async () => {
       const { token } = getKey('user');
+      const id = getKey('keyUser');
       const { data } = await api
-        .get('sale/user/3', { headers: { Authorization: token } });
+        .get(`sale/user/${id}`, { headers: { Authorization: token } });
       console.log(data);
       setOrders(data);
     };
@@ -32,24 +32,28 @@ function OrdersClient() {
           <button
             type="button"
             key={ sale.id }
-            data-testid={ `customer_orderselement-order-id-${sale.id}` }
-            onClick={ () => history.push('/customer/orders/10') }
+            onClick={ () => history.push(`/customer/orders/${sale.id}`) }
           >
-            <h3
-              data-testid="customer_orderselement-delivery-status"
-            >
+            <p data-testid={ `customer_orderselement-order-id-${sale.id}` }>
               Pedido
-            </h3>
-            <p
-              data-testid=" customer_orderselement-order-date-"
+              {sale.id}
+            </p>
+            <h2
+              data-testid={ `customer_orderselement-delivery-status-${sale.id}` }
             >
-              {new Intl.DateTimeFormat('pt-BR').format(date)}
+              {sale.status}
+            </h2>
+            <p
+              data-testid={ ` customer_orderselement-order-date-${sale.id}` }
+            >
+              {new Intl.DateTimeFormat('pt-BR').format(newData)}
             </p>
             <p
-              data-testid="customer_orderselement-card-price"
+              data-testid={ `customer_orderselement-card-price-${sale.id}` }
             >
               Total:
               {' '}
+              {sale.totalPrice}
             </p>
           </button>
         ))}
