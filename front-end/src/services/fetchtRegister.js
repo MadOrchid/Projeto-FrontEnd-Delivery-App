@@ -26,9 +26,15 @@ const saveSale = async (token, obj) => {
   return data;
 };
 
+async function updateStatus({ token, status, id }) {
+  const { data } = await api
+    .put(`sale/${id}`, { status }, { headers: { Authorization: token } });
+  return data;
+}
+
 async function getSeller() {
   const { data } = await api.get('/user/sellers');
   return data;
 }
 
-export { api, createSession, saveSale, getSeller };
+export { api, createSession, saveSale, getSeller, updateStatus };

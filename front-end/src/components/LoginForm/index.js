@@ -31,7 +31,6 @@ function LoginForm() {
         setErrorMessage(true);
       });
     const { id, ...Obj } = data;
-    console.log('SOCORROOOOOOOOOOOOOOOO', data);
     setKey('user', Obj);
     setKey('keyUser', id);
     history.push(`/${rota[data.role]}`);

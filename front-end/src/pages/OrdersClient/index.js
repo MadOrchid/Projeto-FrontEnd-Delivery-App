@@ -6,9 +6,8 @@ import { api } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersClient() {
-  const { orders, setOrders } = useContext(ContextGlobal);
+  const { orders, setOrders, setOrder } = useContext(ContextGlobal);
   // const [saleData, setSalesData] = useState([]);
-  const newData = new Date();
   const history = useHistory();
 
   useEffect(() => {
@@ -17,11 +16,17 @@ function OrdersClient() {
       const id = getKey('keyUser');
       const { data } = await api
         .get(`sale/user/${id}`, { headers: { Authorization: token } });
-      console.log(data);
       setOrders(data);
     };
     updateOrders();
   }, []);
+
+  function dateConvert(date) {
+    const TEN = 10;
+    const dateUSA = new Date(date.substring(0, TEN));
+    return new Intl.DateTimeFormat('pt-BR')
+      .format(dateUSA);
+  }
 
   return (
     <>
@@ -32,11 +37,16 @@ function OrdersClient() {
           <button
             type="button"
             key={ sale.id }
-            onClick={ () => history.push(`/customer/orders/${sale.id}`) }
+            onClick={ () => {
+              setOrder(sale);
+              history.push(`/customer/orders/${sale.id}`);
+            } }
           >
-            <p data-testid={ `customer_orderselement-order-id-${sale.id}` }>
+            <p>
               Pedido
-              {sale.id}
+              <span data-testid={ `customer_orderselement-order-id-${sale.id}` }>
+                { sale.id }
+              </span>
             </p>
             <h2
               data-testid={ `customer_orderselement-delivery-status-${sale.id}` }
@@ -44,16 +54,17 @@ function OrdersClient() {
               {sale.status}
             </h2>
             <p
-              data-testid={ ` customer_orderselement-order-date-${sale.id}` }
+              data-testid={ `customer_orderselement-order-date-${sale.id}` }
             >
-              {new Intl.DateTimeFormat('pt-BR').format(newData)}
+              { dateConvert(sale.saleDate) }
             </p>
-            <p
-              data-testid={ `customer_orderselement-card-price-${sale.id}` }
-            >
+            <p>
               Total:
               {' '}
-              {sale.totalPrice}
+              R$
+              <span data-testid={ `customer_orderselement-card-price-${sale.id}` }>
+                { sale.totalPrice }
+              </span>
             </p>
           </button>
         ))}

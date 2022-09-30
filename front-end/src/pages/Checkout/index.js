@@ -6,8 +6,8 @@ import { getSeller, saveSale } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function Checkout() {
-  const { cart, total, removeFromCart } = useContext(ContextGlobal);
-  const [sellers, setSeller] = useState([]);
+  const { cart, total, removeFromCart, sellers, setSeller } = useContext(ContextGlobal);
+  // const [sellers, setSeller] = useState([]);
   const [products, setProducts] = useState([]);
   const [sale, setSale] = useState({
     userId: getKey('keyUser'),
@@ -41,7 +41,6 @@ function Checkout() {
   const handleSubmit = async () => {
     const { token } = getKey('user');
     const id = await saveSale(token, { sale, products });
-    console.log('"O ID do bixinho"', id);
     history.push(`/customer/orders/${id}`);
   };
 
@@ -90,13 +89,19 @@ function Checkout() {
                 { item.price.replace(/\./, ',') }
 
               </h3>
-              <h3
-                data-testid={
-                  `customer_checkout__element-order-table-sub-total-${index}`
-                }
-              >
-                Subtotal:  R$
-                { (item.price * item.qtd).toFixed(2).replace(/\./, ',') }
+              <h3>
+                Subtotal:
+                {' '}
+                R$
+                <span
+                  data-testid={
+                    `customer_checkout__element-order-table-sub-total-${index}`
+                  }
+                >
+                  {
+                    (item.price * item.qtd).toFixed(2).toString().replace(/\./, ',')
+                  }
+                </span>
               </h3>
               <button
                 data-testid={ `customer_checkout__element-order-table-remove-${index}` }
