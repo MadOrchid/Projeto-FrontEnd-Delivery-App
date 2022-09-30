@@ -20,9 +20,11 @@ function OrdersSellerDetails() {
   useEffect(() => {
     const updateOrder = async () => {
       const { token } = getKey('user');
-      const { hash } = history.location;
+      const { pathname } = history.location;
+      const getId = pathname.match(/(\d+)/);
+      console.log('ID', getId);
       const { data } = await api
-        .get(`sale/${hash}`, { headers: { Authorization: token } });
+        .get(`sale/${getId[0]}`, { headers: { Authorization: token } });
       setOrder(data);
     };
     updateOrder();
@@ -42,7 +44,7 @@ function OrdersSellerDetails() {
         </h3>
 
         <h3 data-testid={ OrderDate }>
-          {new Intl.DateTimeFormat('pt-BR').format(newData)}
+          {}
         </h3>
 
         <h3 data-testid={ Status }>
@@ -71,7 +73,7 @@ function OrdersSellerDetails() {
         Total:
         {' '}
         <span data-testid={ TotalPrice }>
-          {order.totalPrice.toString().replace('.', ',')}
+          {order.totalPrice}
         </span>
       </h2>
     </>

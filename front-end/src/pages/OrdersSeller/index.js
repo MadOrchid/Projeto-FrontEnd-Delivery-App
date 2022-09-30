@@ -1,12 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import HearderProducts from '../../components/HeaderProducts';
+import ContextGlobal from '../../context/ContextGlobal';
+import { api } from '../../services/fetchtRegister';
+import { getKey } from '../../services/LocalStorage';
 
 function OrdersSeller() {
+  const { orders, setOrders } = useContext(ContextGlobal);
+  const id = getKey('keyUser');
+  const { token } = getKey('user');
+
   useEffect(() => {
     const updateOrder = async () => {
-      const { token } = getKey('user');
       const { data } = await api
-        .get(`sale/${id}`, { headers: { Authorization: token } });
+        .get(`sale/user/${id}`, { headers: { Authorization: token } });
       setOrders(data);
     };
     updateOrder();
@@ -17,52 +23,54 @@ function OrdersSeller() {
       <HearderProducts />
       <h1>Detalhes do Pedido</h1>
       <section>
-        <h3>
-          Pedido:
-          {' '}
-          <span
-            data-testid={ `seller_orders__element-order-id-${id}` }
-          >
-            { order.id }
-          </span>
-        </h3>
+        { orders.map((order) => (
+          <>
+            <h3>
+              Pedido:
+              {' '}
+              <span
+                data-testid={ `seller_orders__element-order-id-${id}` }
+              >
+                { order.id }
+              </span>
+            </h3>
 
-        <h3
-          data-testid={ `seller_orders__element-order-date-${id}` }
-        >
-          {new Intl.DateTimeFormat('pt-BR').format(newData)}
-        </h3>
+            <h3
+              data-testid={ `seller_orders__element-order-date-${order.id}` }
+            >
+              {' DATA '}
+            </h3>
 
-        <h3 data-testid={ Status }>
-          { order.status }
-        </h3>
-
-        <button
-          type="button"
-          data-testid={ PreparingCheck }
-          onClick={ () => {} }
-        >
-          PREPARANDO PEDIDO
-        </button>
-
-        <button
-          type="button"
-          data-testid={ DispatchCheck }
-          onClick={ () => {} }
-        >
-          SAIU PARA ENTREGA
-        </button>
+            <h3
+              data-testid={ `seller_orders__element-delivery-status-${id}` }
+            >
+              { order.status }
+            </h3>
+            <p>
+              {' R$ '}
+              <span data-testid={ `seller_orders__element-card-price-${order.id}` }>
+                { order.totalPrice }
+              </span>
+            </p>
+            <p
+              data-testid={ `seller_orders__element-card-address-${order.id}` }
+            >
+              Endereço:
+              { order.deliveryAddress }
+              ,
+              {order.deliveryNumber}
+            </p>
+          </>
+        ))}
       </section>
-
-      <h2>
-        Total:
-        {' '}
-        <span data-testid={ TotalPrice }>
-          {order.totalPrice.toString().replace('.', ',')}
-        </span>
-      </h2>
     </>
   );
 }
 
 export default OrdersSeller;
+
+/*
+  <button>
+
+  </button>
+*/

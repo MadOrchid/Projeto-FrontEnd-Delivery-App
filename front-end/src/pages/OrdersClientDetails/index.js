@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import HearderProducts from '../../components/HeaderProducts';
 import TableOrders from '../../components/TableOrders';
 import ContextGlobal from '../../context/ContextGlobal';
-import { getSeller } from '../../services/fetchtRegister';
+import { getSeller, updateStatus } from '../../services/fetchtRegister';
 
 function OrdersClientDetails() {
   const { order, setSeller } = useContext(ContextGlobal);
@@ -67,7 +67,7 @@ function OrdersClientDetails() {
         <button
           type="button"
           data-testid={ DeliveryCheck }
-          onClick={ () => {} }
+          onClick={ () => updateStatus({ token, id: order.id, status: 'Entregue' }) }
         >
           MARCAR COMO ENTREGUE
         </button>
