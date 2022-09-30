@@ -47,6 +47,7 @@ function OrdersClientDetails() {
             { seller.name }
           </span>
         </h3>
+
         <h3
           data-testid="customer_order_details__element-order-details-label-order-date"
         >
