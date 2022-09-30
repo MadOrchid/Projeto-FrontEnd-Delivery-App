@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
-// import TableSaller from '../../components/TableSaller';
+import TableSaller from '../../components/TableSaller';
 import ContextGlobal from '../../context/ContextGlobal';
 import { api, updateStatus } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
@@ -15,6 +15,7 @@ function OrdersSellerDetails() {
   const TotalPrice = 'seller_order_details__element-order-total-price';
 
   const { order, setOrder } = useContext(ContextGlobal);
+  const { status, setStatus } = useState('');
   const history = useHistory();
   const { token } = getKey('user');
 
@@ -22,10 +23,10 @@ function OrdersSellerDetails() {
     const updateOrder = async () => {
       const { pathname } = history.location;
       const getId = pathname.match(/(\d+)/);
-      console.log('ID', getId);
       const { data } = await api
         .get(`sale/${getId[0]}`, { headers: { Authorization: token } });
       setOrder(data);
+      setStatus(data.status);
     };
     updateOrder();
   }, []);
@@ -45,12 +46,15 @@ function OrdersSellerDetails() {
           {}
         </h3>
 
-        <h3 data-testid={ Status }>{ order.status }</h3>
+        <h3 data-testid={ Status }>{ status }</h3>
 
         <button
           type="button"
           data-testid={ PreparingCheck }
-          onClick={ () => updateStatus({ id: order.id, status: 'Preparando ', token }) }
+          onClick={ () => {
+            updateStatus({ id: order.id, status: 'Preparando ', token });
+            setStatus('Preparando');
+          } }
         >
           PREPARANDO PEDIDO
         </button>
@@ -65,13 +69,13 @@ function OrdersSellerDetails() {
           SAIU PARA ENTREGA
         </button>
       </section>
-      {/* <TableSaller /> */}
+      <TableSaller />
 
       <h2>
         Total:
         {' '}
         <span data-testid={ TotalPrice }>
-          {order.totalPrice}
+          { order.totalPrice.toString().replace('.', ',') }
         </span>
       </h2>
     </>

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
 import TableOrders from '../../components/TableOrders';
 import ContextGlobal from '../../context/ContextGlobal';
@@ -6,8 +7,9 @@ import { getSeller, updateStatus } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersClientDetails() {
-  const { order, setSellers } = useContext(ContextGlobal);
+  const { order, setOrder, setSellers } = useContext(ContextGlobal);
   const [seller, setSeller] = useState({ name: '' });
+  const [status, setStatus] = useState('');
   const newData = new Date();
   const { token } = getKey('user');
   const style = {
@@ -23,6 +25,7 @@ function OrdersClientDetails() {
   const Status = 'customer_order_details__element-order-details-label-delivery-status';
   const TotalPrice = 'customer_order_details__element-order-total-price';
   const DeliveryCheck = 'customer_order_details__button-delivery-check';
+  const history = useHistory();
 
   useEffect(() => {
     const updateSellers = async () => {
@@ -31,6 +34,18 @@ function OrdersClientDetails() {
       setSeller(data.find((s) => s.id === order.sellerId));
     };
     updateSellers();
+  }, []);
+
+  useEffect(() => {
+    const updateOrder = async () => {
+      const { pathname } = history.location;
+      const getId = pathname.match(/(\d+)/);
+      const { data } = await api
+        .get(`sale/${getId[0]}`, { headers: { Authorization: token } });
+      setOrder(data);
+      setStatus(data.status);
+    };
+    updateOrder();
   }, []);
 
   return (
@@ -63,13 +78,16 @@ function OrdersClientDetails() {
         </h3>
 
         <h3 data-testid={ `${Status}-${order.id}` }>
-          { order.status }
+          { status }
         </h3>
 
         <button
           type="button"
           data-testid={ DeliveryCheck }
-          onClick={ () => updateStatus({ token, id: order.id, status: 'Entregue' }) }
+          onClick={ () => {
+            updateStatus({ token, id: order.id, status: 'Entregue' });
+            setStatus('Entregue');
+          } }
         >
           MARCAR COMO ENTREGUE
         </button>
@@ -80,7 +98,8 @@ function OrdersClientDetails() {
         Total:
         {' '}
         <span data-testid={ TotalPrice }>
-          {order.totalPrice.toString().replace('.', ',')}
+          { console.log(order) }
+          { order.totalPrice.replace('.', ',') }
         </span>
       </h2>
     </>

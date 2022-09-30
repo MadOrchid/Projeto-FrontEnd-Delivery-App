@@ -13,7 +13,7 @@ function HearderProducts() {
           type="button"
           alt="Produtos"
           data-testid="customer_products__element-navbar-link-products"
-          onClick={ () => { history.push('products'); } }
+          onClick={ () => { history.push('/customer/products'); } }
         >
           PRODUTOS
         </button>
@@ -37,7 +37,7 @@ function HearderProducts() {
         type="button"
         alt="Produtos"
         data-testid="customer_products__element-navbar-link-products"
-        onClick={ () => { history.push('products'); } }
+        onClick={ () => { history.push('/seller/orders'); } }
       >
         PEDIDOS
       </button>

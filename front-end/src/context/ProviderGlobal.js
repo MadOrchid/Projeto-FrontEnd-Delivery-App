@@ -52,6 +52,13 @@ export default function ProviderGlobal({ children }) {
     setKey('carrinho', cart);
   }
 
+  function dateConvert(date) {
+    const TEN = 10;
+    const dateUSA = new Date(date.substring(0, TEN));
+    return new Intl.DateTimeFormat('pt-BR')
+      .format(dateUSA);
+  }
+
   const value = {
     cart,
     total,
@@ -66,6 +73,7 @@ export default function ProviderGlobal({ children }) {
     removeFromCart,
     updateToCart,
     clearCart,
+    dateConvert,
   };
 
   return <Provider value={ value }>{children}</Provider>;

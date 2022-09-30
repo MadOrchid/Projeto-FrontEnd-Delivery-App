@@ -43,7 +43,7 @@ function TableSaller() {
             <td
               data-testid={ UnitPrice }
             >
-              { ord.price }
+              { ord.price.toString().replace('.', ',') }
             </td>
             <td
               data-testid={ SubTotal }

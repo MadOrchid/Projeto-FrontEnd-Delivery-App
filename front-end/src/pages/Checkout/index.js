@@ -6,7 +6,7 @@ import { getSeller, saveSale } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function Checkout() {
-  const { cart, total, removeFromCart, sellers, setSeller } = useContext(ContextGlobal);
+  const { cart, total, removeFromCart, sellers, setSellers } = useContext(ContextGlobal);
   // const [sellers, setSeller] = useState([]);
   const [products, setProducts] = useState([]);
   const [sale, setSale] = useState({
@@ -26,7 +26,7 @@ function Checkout() {
   useEffect(() => {
     const updateSellers = async () => {
       const data = await getSeller();
-      setSeller(data);
+      setSellers(data);
       setSale({ ...sale, sellerId: data[0].id });
     };
     updateSellers();

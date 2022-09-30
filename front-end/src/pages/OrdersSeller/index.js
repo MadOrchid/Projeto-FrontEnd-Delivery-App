@@ -6,7 +6,7 @@ import { api } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersSeller() {
-  const { orders, setOrders, setOrder } = useContext(ContextGlobal);
+  const { orders, setOrders, setOrder, dateConvert } = useContext(ContextGlobal);
   const id = getKey('keyUser');
   const { token } = getKey('user');
   const history = useHistory();
@@ -28,10 +28,10 @@ function OrdersSeller() {
         { orders.map((order) => (
           <button
             type="button"
-            key={ sale.id }
+            key={ order.id }
             onClick={ () => {
-              setOrder(sale);
-              history.push(`/sale/orders/${sale.id}`);
+              setOrder(order);
+              history.push(`/seller/orders/${order.id}`);
             } }
           >
             <h3>
@@ -47,7 +47,7 @@ function OrdersSeller() {
             <h3
               data-testid={ `seller_orders__element-order-date-${order.id}` }
             >
-              {' DATA '}
+              { dateConvert(order.saleDate) }
             </h3>
 
             <h3

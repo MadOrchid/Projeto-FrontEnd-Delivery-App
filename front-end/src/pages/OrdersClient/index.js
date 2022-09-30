@@ -6,7 +6,7 @@ import { api } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersClient() {
-  const { orders, setOrders, setOrder } = useContext(ContextGlobal);
+  const { orders, setOrders, setOrder, dateConvert } = useContext(ContextGlobal);
   // const [saleData, setSalesData] = useState([]);
   const history = useHistory();
 
@@ -27,13 +27,6 @@ function OrdersClient() {
     };
     updateOrders();
   }, []);
-
-  function dateConvert(date) {
-    const TEN = 10;
-    const dateUSA = new Date(date.substring(0, TEN));
-    return new Intl.DateTimeFormat('pt-BR')
-      .format(dateUSA);
-  }
 
   return (
     <>
