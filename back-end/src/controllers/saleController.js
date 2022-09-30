@@ -10,7 +10,7 @@ const saleController = {
     const { id } = req.params;
     const { status } = req.body;
     await saleService.orderUpdateStatus({ id, status });
-    return res.status(200).json({ message: 'updated'});
+    return res.status(200).json({ message: 'updated' });
   },
 
   findById: async (req, res) => {

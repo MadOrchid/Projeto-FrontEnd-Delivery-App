@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
 import TableSaller from '../../components/TableSaller';
 import ContextGlobal from '../../context/ContextGlobal';
-import { api } from '../../services/fetchtRegister';
+import { api, updateStatus } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersSellerDetails() {
@@ -16,10 +16,10 @@ function OrdersSellerDetails() {
 
   const { order, setOrder } = useContext(ContextGlobal);
   const history = useHistory();
+  const { token } = getKey('user');
 
   useEffect(() => {
     const updateOrder = async () => {
-      const { token } = getKey('user');
       const { pathname } = history.location;
       const getId = pathname.match(/(\d+)/);
       console.log('ID', getId);
@@ -54,7 +54,7 @@ function OrdersSellerDetails() {
         <button
           type="button"
           data-testid={ PreparingCheck }
-          onClick={ () => {} }
+          onClick={ () => updateStatus({ id: order.id, status: 'Preparando ', token }) }
         >
           PREPARANDO PEDIDO
         </button>
@@ -62,7 +62,9 @@ function OrdersSellerDetails() {
         <button
           type="button"
           data-testid={ DispatchCheck }
-          onClick={ () => {} }
+          onClick={ () => updateStatus({
+            id: order.id, status: 'Em Trânsito', token,
+          }) }
         >
           SAIU PARA ENTREGA
         </button>
