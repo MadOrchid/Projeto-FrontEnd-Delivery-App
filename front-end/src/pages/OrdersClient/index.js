@@ -50,7 +50,8 @@ function OrdersClient() {
             } }
           >
             <p>
-              Pedido
+              Pedido:
+              {' '}
               <span data-testid={ `customer_orders__element-order-id-${sale.id}` }>
                 { sale.id }
               </span>
@@ -67,8 +68,7 @@ function OrdersClient() {
             </p>
             <p>
               Total:
-              {' '}
-              R$
+              {' R$ '}
               <span data-testid={ `customer_orders__element-card-price-${sale.id}` }>
                 { sale.totalPrice }
               </span>

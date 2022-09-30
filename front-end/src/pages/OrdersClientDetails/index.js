@@ -15,6 +15,13 @@ function OrdersClientDetails() {
     backgroundColor: 'pink',
   };
 
+  const OrderId = 'customer_order_details__element-order-details-label-order-id';
+  const SellerName = 'customer_order_details__element-order-details-label-seller-name';
+  const OrderDate = 'customer_order_details__element-order-details-label-order-date';
+  const Status = 'customer_order_details__element-order-details-label-delivery-status';
+  const TotalPrice = 'customer_order_details__element-order-total-price';
+  const DeliveryCheck = 'customer_order_details__button-delivery-check';
+
   useEffect(() => {
     const updateSellers = async () => {
       const data = await getSeller();
@@ -33,37 +40,33 @@ function OrdersClientDetails() {
           Pedido:
           {' '}
           <span
-            data-testid="customer_order_details__element-order-details-label-order-id"
+            data-testid={ OrderId }
           >
             { order.id }
           </span>
         </h3>
+
         <h3>
           P. Vend:
           {' '}
           <span
-            data-testid="customer_order_details__element-order-details-label-seller-name"
+            data-testid={ SellerName }
           >
             { seller.name }
           </span>
         </h3>
 
-        <h3
-          data-testid="customer_order_details__element-order-details-label-order-date"
-        >
+        <h3 data-testid={ OrderDate }>
           {new Intl.DateTimeFormat('pt-BR').format(newData)}
         </h3>
-        <h3
-          data-testid={
-            `customer_order_details__element-order-
-            details-label-delivery-status-${order.id}`
-          }
-        >
+
+        <h3 data-testid={ `${Status}-${order.id}` }>
           { order.status }
         </h3>
+
         <button
           type="button"
-          data-testid="customer_order_details__button-delivery-check"
+          data-testid={ DeliveryCheck }
           onClick={ () => {} }
         >
           MARCAR COMO ENTREGUE
@@ -74,7 +77,7 @@ function OrdersClientDetails() {
       <h2>
         Total:
         {' '}
-        <span data-testid="customer_order_details__element-order-total-price">
+        <span data-testid={ TotalPrice }>
           {order.totalPrice.toString().replace('.', ',')}
         </span>
       </h2>

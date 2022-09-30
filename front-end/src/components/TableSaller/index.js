@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import ContextGlobal from '../../context/ContextGlobal';
 
-function TableOrders() {
+function TableSaller() {
   const { order } = useContext(ContextGlobal);
   const { products } = order;
 
-  const ItemNumber = 'customer_order_details__element-order-table-item-number';
-  const TableName = 'customer_order_details__element-order-table-name';
-  const UnitPrice = 'customer_order_details__element-order-table-unit-price';
-  const SubTotal = 'customer_order_details__element-order-table-sub-total';
-  const TableQuantity = 'customer_order_details__element-order-table-quantity';
+  const ItemNumber = 'seller_order_details__element-order-table-item-number';
+  const TableName = 'seller_order_details__element-order-table-name';
+  const TableQuantity = 'seller_order_details__element-order-table-quantity';
+  const UnitPrice = 'seller_order_details__element-order-table-unit-price';
+  const SubTotal = 'seller_order_details__element-order-table-sub-total';
 
   return (
     <table style={ { width: '750px' } }>
@@ -26,37 +26,27 @@ function TableOrders() {
         { products.map((ord, index) => (
           <tr key={ index }>
             <td
-              data-testid={
-                `${ItemNumber}-${index}`
-              }
+              data-testid={ ItemNumber }
             >
               { index + 1 }
             </td>
             <td
-              data-testid={
-                `${TableName}-${index}`
-              }
+              data-testid={ TableName }
             >
               {ord.name}
             </td>
             <td
-              data-testid={
-                `${TableQuantity}-${index}`
-              }
+              data-testid={ TableQuantity }
             >
               { ord.SalesProducts.quantity }
             </td>
             <td
-              data-testid={
-                `${UnitPrice}-${index}`
-              }
+              data-testid={ UnitPrice }
             >
               { ord.price }
             </td>
             <td
-              data-testid={
-                `${SubTotal}-${index}`
-              }
+              data-testid={ SubTotal }
             >
               {
                 (ord.SalesProducts.quantity * ord.price)
@@ -70,4 +60,4 @@ function TableOrders() {
   );
 }
 
-export default TableOrders;
+export default TableSaller;
