@@ -2,14 +2,14 @@ import React, { useContext } from 'react';
 import ContextGlobal from '../../context/ContextGlobal';
 
 function TableSaller() {
-  const { order } = useContext(ContextGlobal);
-  const { products } = order;
-
   const ItemNumber = 'seller_order_details__element-order-table-item-number';
   const TableName = 'seller_order_details__element-order-table-name';
   const TableQuantity = 'seller_order_details__element-order-table-quantity';
   const UnitPrice = 'seller_order_details__element-order-table-unit-price';
   const SubTotal = 'seller_order_details__element-order-table-sub-total';
+  const { order } = useContext(ContextGlobal);
+  const { products } = order;
+  console.log(order);
 
   return (
     <table style={ { width: '750px' } }>

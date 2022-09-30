@@ -2,14 +2,13 @@ import React, { useContext } from 'react';
 import ContextGlobal from '../../context/ContextGlobal';
 
 function TableOrders() {
-  const { order } = useContext(ContextGlobal);
-  const { products } = order;
-
   const ItemNumber = 'customer_order_details__element-order-table-item-number';
   const TableName = 'customer_order_details__element-order-table-name';
   const UnitPrice = 'customer_order_details__element-order-table-unit-price';
   const SubTotal = 'customer_order_details__element-order-table-sub-total';
   const TableQuantity = 'customer_order_details__element-order-table-quantity';
+  const { order } = useContext(ContextGlobal);
+  const { products } = order;
 
   return (
     <table style={ { width: '750px' } }>
@@ -25,39 +24,19 @@ function TableOrders() {
       <tbody style={ { textAlign: 'center' } }>
         { products.map((ord, index) => (
           <tr key={ index }>
-            <td
-              data-testid={
-                `${ItemNumber}-${index}`
-              }
-            >
+            <td data-testid={ `${ItemNumber}-${index}` }>
               { index + 1 }
             </td>
-            <td
-              data-testid={
-                `${TableName}-${index}`
-              }
-            >
-              {ord.name}
+            <td data-testid={ `${TableName}-${index}` }>
+              { ord.name }
             </td>
-            <td
-              data-testid={
-                `${TableQuantity}-${index}`
-              }
-            >
+            <td data-testid={ `${TableQuantity}-${index}` }>
               { ord.SalesProducts.quantity }
             </td>
-            <td
-              data-testid={
-                `${UnitPrice}-${index}`
-              }
-            >
+            <td data-testid={ `${UnitPrice}-${index}` }>
               { ord.price }
             </td>
-            <td
-              data-testid={
-                `${SubTotal}-${index}`
-              }
-            >
+            <td data-testid={ `${SubTotal}-${index}` }>
               {
                 (ord.SalesProducts.quantity * ord.price)
                   .toFixed(2).toString().replace('.', ',')

@@ -3,11 +3,13 @@ import HearderProducts from '../../components/HeaderProducts';
 import TableOrders from '../../components/TableOrders';
 import ContextGlobal from '../../context/ContextGlobal';
 import { getSeller, updateStatus } from '../../services/fetchtRegister';
+import { getKey } from '../../services/LocalStorage';
 
 function OrdersClientDetails() {
-  const { order, setSeller } = useContext(ContextGlobal);
-  const [seller, setSellers] = useState({ name: '' });
+  const { order, setSellers } = useContext(ContextGlobal);
+  const [seller, setSeller] = useState({ name: '' });
   const newData = new Date();
+  const { token } = getKey('user');
   const style = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -25,8 +27,8 @@ function OrdersClientDetails() {
   useEffect(() => {
     const updateSellers = async () => {
       const data = await getSeller();
-      setSeller(data);
-      setSellers(data.find((s) => s.id === order.sellerId));
+      setSellers(data);
+      setSeller(data.find((s) => s.id === order.sellerId));
     };
     updateSellers();
   }, []);

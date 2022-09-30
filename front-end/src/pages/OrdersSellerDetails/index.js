@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
-import TableSaller from '../../components/TableSaller';
+// import TableSaller from '../../components/TableSaller';
 import ContextGlobal from '../../context/ContextGlobal';
 import { api, updateStatus } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
@@ -38,18 +38,14 @@ function OrdersSellerDetails() {
         <h3>
           Pedido:
           {' '}
-          <span data-testid={ OrderId }>
-            { order.id }
-          </span>
+          <span data-testid={ OrderId }>{ order.id }</span>
         </h3>
 
         <h3 data-testid={ OrderDate }>
           {}
         </h3>
 
-        <h3 data-testid={ Status }>
-          { order.status }
-        </h3>
+        <h3 data-testid={ Status }>{ order.status }</h3>
 
         <button
           type="button"
@@ -69,7 +65,7 @@ function OrdersSellerDetails() {
           SAIU PARA ENTREGA
         </button>
       </section>
-      <TableSaller />
+      {/* <TableSaller /> */}
 
       <h2>
         Total:

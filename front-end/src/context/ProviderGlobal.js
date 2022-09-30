@@ -8,7 +8,7 @@ export default function ProviderGlobal({ children }) {
   const [total, setTotal] = useState(0);
   const [order, setOrder] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [sellers, setSeller] = useState([]);
+  const [sellers, setSellers] = useState([]);
   const { Provider } = ContextGlobal;
 
   function removeFromCart(product) {
@@ -45,7 +45,6 @@ export default function ProviderGlobal({ children }) {
       setCart(copyCart);
     }
     setKey('carrinho', cart);
-    console.log(cart);
   }
 
   function clearCart() {
@@ -63,7 +62,7 @@ export default function ProviderGlobal({ children }) {
     setTotal,
     setOrder,
     setOrders,
-    setSeller,
+    setSellers,
     removeFromCart,
     updateToCart,
     clearCart,

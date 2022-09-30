@@ -70,7 +70,7 @@ function OrdersClient() {
               Total:
               {' R$ '}
               <span data-testid={ `customer_orders__element-card-price-${sale.id}` }>
-                { sale.totalPrice }
+                { sale.totalPrice.toString().replace('.', ',') }
               </span>
             </p>
           </button>

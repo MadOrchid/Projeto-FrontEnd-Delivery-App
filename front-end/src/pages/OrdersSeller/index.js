@@ -1,13 +1,15 @@
 import React, { useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
 import ContextGlobal from '../../context/ContextGlobal';
 import { api } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersSeller() {
-  const { orders, setOrders } = useContext(ContextGlobal);
+  const { orders, setOrders, setOrder } = useContext(ContextGlobal);
   const id = getKey('keyUser');
   const { token } = getKey('user');
+  const history = useHistory();
 
   useEffect(() => {
     const updateOrder = async () => {
@@ -24,7 +26,14 @@ function OrdersSeller() {
       <h1>Detalhes do Pedido</h1>
       <section>
         { orders.map((order) => (
-          <>
+          <button
+            type="button"
+            key={ sale.id }
+            onClick={ () => {
+              setOrder(sale);
+              history.push(`/sale/orders/${sale.id}`);
+            } }
+          >
             <h3>
               Pedido:
               {' '}
@@ -60,7 +69,7 @@ function OrdersSeller() {
               ,
               {order.deliveryNumber}
             </p>
-          </>
+          </button>
         ))}
       </section>
     </>
@@ -70,7 +79,5 @@ function OrdersSeller() {
 export default OrdersSeller;
 
 /*
-  <button>
 
-  </button>
 */
