@@ -7,25 +7,23 @@ import { getSeller, updateStatus } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersClientDetails() {
-  const { order, setOrder, setSellers } = useContext(ContextGlobal);
-  const [seller, setSeller] = useState({ name: '' });
-  const [status, setStatus] = useState('');
-  const newData = new Date();
-  const { token } = getKey('user');
-  const style = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '750px',
-    backgroundColor: 'pink',
-  };
-
   const OrderId = 'customer_order_details__element-order-details-label-order-id';
   const SellerName = 'customer_order_details__element-order-details-label-seller-name';
   const OrderDate = 'customer_order_details__element-order-details-label-order-date';
   const Status = 'customer_order_details__element-order-details-label-delivery-status';
   const TotalPrice = 'customer_order_details__element-order-total-price';
   const DeliveryCheck = 'customer_order_details__button-delivery-check';
+  const { order, setOrder, setSellers } = useContext(ContextGlobal);
+  const [seller, setSeller] = useState({ name: '' });
+  const [status, setStatus] = useState('');
+  const { token } = getKey('user');
   const history = useHistory();
+  const style = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '750px',
+    backgroundColor: 'pink',
+  };
 
   useEffect(() => {
     const updateSellers = async () => {
@@ -74,7 +72,7 @@ function OrdersClientDetails() {
         </h3>
 
         <h3 data-testid={ OrderDate }>
-          {new Intl.DateTimeFormat('pt-BR').format(newData)}
+          { dateConvert(order.saleDate) }
         </h3>
 
         <h3 data-testid={ `${Status}-${order.id}` }>
@@ -99,7 +97,7 @@ function OrdersClientDetails() {
         {' '}
         <span data-testid={ TotalPrice }>
           { console.log(order) }
-          { order.totalPrice.replace('.', ',') }
+          { order.totalPrice.toString().replace('.', ',') }
         </span>
       </h2>
     </>
