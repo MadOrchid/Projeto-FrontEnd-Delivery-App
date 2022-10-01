@@ -34,7 +34,7 @@ function TableOrders() {
               { ord.SalesProducts.quantity }
             </td>
             <td data-testid={ `${UnitPrice}-${index}` }>
-              { ord.price }
+              { `R$ ${ord.price.toString().replace('.', ',')}` }
             </td>
             <td data-testid={ `${SubTotal}-${index}` }>
               {
