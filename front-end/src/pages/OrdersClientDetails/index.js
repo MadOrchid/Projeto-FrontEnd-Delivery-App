@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
 import TableOrders from '../../components/TableOrders';
 import ContextGlobal from '../../context/ContextGlobal';
-import { getSeller, updateStatus } from '../../services/fetchtRegister';
+import { api, getSeller, updateStatus } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersClientDetails() {
@@ -13,9 +13,10 @@ function OrdersClientDetails() {
   const Status = 'customer_order_details__element-order-details-label-delivery-status';
   const TotalPrice = 'customer_order_details__element-order-total-price';
   const DeliveryCheck = 'customer_order_details__button-delivery-check';
-  const { order, setOrder, setSellers } = useContext(ContextGlobal);
+  const { order, setOrder, setSellers, dateConvert } = useContext(ContextGlobal);
   const [seller, setSeller] = useState({ name: '' });
   const [status, setStatus] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
   const { token } = getKey('user');
   const history = useHistory();
   const style = {
@@ -25,25 +26,35 @@ function OrdersClientDetails() {
     backgroundColor: 'pink',
   };
 
-  useEffect(() => {
-    const updateSellers = async () => {
-      const data = await getSeller();
-      setSellers(data);
-      setSeller(data.find((s) => s.id === order.sellerId));
-    };
-    updateSellers();
-  }, []);
+  const updateSellers = async () => {
+    const data = await getSeller();
+    setSellers(data);
+    setSeller(data.find((s) => s.id === order.sellerId));
+  };
+
+  const updateOrder = async () => {
+    const { pathname } = history.location;
+    const getId = pathname.match(/(\d+)/);
+    const { data } = await api
+      .get(`sale/${getId[0]}`, { headers: { Authorization: token } });
+    setOrder(data);
+    console.log(data);
+    setStatus(data.status);
+  };
+
+  const disabledButtonStatus = () => {
+    console.log('status de state', status);
+    console.log('status de state', order.status);
+    if (status === 'Em Trânsito' || order.status === 'Em Trânsito') {
+      return setIsDisabled(false);
+    }
+    setIsDisabled(true);
+  };
 
   useEffect(() => {
-    const updateOrder = async () => {
-      const { pathname } = history.location;
-      const getId = pathname.match(/(\d+)/);
-      const { data } = await api
-        .get(`sale/${getId[0]}`, { headers: { Authorization: token } });
-      setOrder(data);
-      setStatus(data.status);
-    };
+    updateSellers();
     updateOrder();
+    disabledButtonStatus();
   }, []);
 
   return (
@@ -51,27 +62,20 @@ function OrdersClientDetails() {
       <HearderProducts />
       <h1>Detalhes do Pedido</h1>
       <section style={ style }>
-        <h3>
+        <h3 data-testid={ OrderId }>
           Pedido:
           {' '}
-          <span
-            data-testid={ OrderId }
-          >
-            { order.id }
-          </span>
+          { order.id }
         </h3>
 
-        <h3>
+        <h3 data-testid={ SellerName }>
           P. Vend:
           {' '}
-          <span
-            data-testid={ SellerName }
-          >
-            { seller.name }
-          </span>
+          { seller.name }
         </h3>
 
         <h3 data-testid={ OrderDate }>
+          { console.log(order) }
           { dateConvert(order.saleDate) }
         </h3>
 
@@ -86,6 +90,7 @@ function OrdersClientDetails() {
             updateStatus({ token, id: order.id, status: 'Entregue' });
             setStatus('Entregue');
           } }
+          disabled={ isDisabled }
         >
           MARCAR COMO ENTREGUE
         </button>
@@ -93,7 +98,7 @@ function OrdersClientDetails() {
       <TableOrders />
 
       <h2>
-        Total:
+        Total: R$
         {' '}
         <span data-testid={ TotalPrice }>
           { console.log(order) }
