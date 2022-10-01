@@ -79,7 +79,9 @@ function OrdersClientDetails() {
           { dateConvert(order.saleDate) }
         </h3>
 
-        <h3 data-testid={ `${Status}-${order.id}` }>
+        <h3 data-testid={ Status }>
+          Status:
+          {' '}
           { status }
         </h3>
 
