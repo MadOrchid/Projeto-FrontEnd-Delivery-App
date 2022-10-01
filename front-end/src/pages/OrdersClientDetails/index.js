@@ -75,7 +75,6 @@ function OrdersClientDetails() {
         </h3>
 
         <h3 data-testid={ OrderDate }>
-          { console.log(order) }
           { dateConvert(order.saleDate) }
         </h3>
 

@@ -26,31 +26,31 @@ function TableSaller() {
         { products.map((ord, index) => (
           <tr key={ index }>
             <td
-              data-testid={ ItemNumber }
+              data-testid={ `${ItemNumber}-${index}` }
             >
               { index + 1 }
             </td>
             <td
-              data-testid={ TableName }
+              data-testid={ `${TableName}-${index}` }
             >
               {ord.name}
             </td>
             <td
-              data-testid={ TableQuantity }
+              data-testid={ `${TableQuantity}-${index}` }
             >
               { ord.SalesProducts.quantity }
             </td>
             <td
-              data-testid={ UnitPrice }
+              data-testid={ `${UnitPrice}-${index}` }
             >
               { ord.price.toString().replace('.', ',') }
             </td>
             <td
-              data-testid={ SubTotal }
+              data-testid={ `${SubTotal}-${index}` }
             >
               {
-                (ord.SalesProducts.quantity * ord.price)
-                  .toFixed(2).toString().replace('.', ',')
+                `R$ ${(ord.SalesProducts.quantity * ord.price)
+                  .toFixed(2).toString().replace('.', ',')}`
               }
             </td>
           </tr>
