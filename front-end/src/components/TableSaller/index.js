@@ -9,7 +9,6 @@ function TableSaller() {
   const SubTotal = 'seller_order_details__element-order-table-sub-total';
   const { order } = useContext(ContextGlobal);
   const { products } = order;
-  console.log(order);
 
   return (
     <table style={ { width: '750px' } }>

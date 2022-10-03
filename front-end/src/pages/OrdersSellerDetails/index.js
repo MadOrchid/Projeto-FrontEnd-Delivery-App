@@ -16,8 +16,16 @@ function OrdersSellerDetails() {
 
   const { order, setOrder } = useContext(ContextGlobal);
   const [status, setStatus] = useState('');
+  const [disabled, setDisabled] = useState(true);
   const history = useHistory();
   const { token } = getKey('user');
+
+  const disabledButtonStatus = () => {
+    if (status === 'Preparando' || order.status === 'Preparando') {
+      return setDisabled(false);
+    }
+    setDisabled(true);
+  };
 
   useEffect(() => {
     const updateOrder = async () => {
@@ -30,6 +38,8 @@ function OrdersSellerDetails() {
     };
     updateOrder();
   }, []);
+
+  useEffect(() => disabledButtonStatus(), [status]);
 
   return (
     <>
@@ -62,6 +72,7 @@ function OrdersSellerDetails() {
         <button
           type="button"
           data-testid={ DispatchCheck }
+          disabled={ disabled }
           onClick={ () => updateStatus({
             id: order.id, status: 'Em Trânsito', token,
           }) }
