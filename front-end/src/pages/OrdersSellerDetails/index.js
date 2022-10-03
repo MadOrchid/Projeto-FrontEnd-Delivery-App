@@ -42,8 +42,10 @@ function OrdersSellerDetails() {
       setStatus(data.status);
     };
     updateOrder();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => disabledButtonStatus(), [status, order]);
 
   return (
