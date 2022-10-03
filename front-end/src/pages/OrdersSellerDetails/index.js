@@ -15,16 +15,16 @@ function OrdersSellerDetails() {
   const TotalPrice = 'seller_order_details__element-order-total-price';
 
   const { order, setOrder } = useContext(ContextGlobal);
-  const { status, setStatus } = useState('');
+  const [status, setStatus] = useState('');
   const history = useHistory();
   const { token } = getKey('user');
 
   useEffect(() => {
     const updateOrder = async () => {
       const { pathname } = history.location;
-      const getId = pathname.match(/(\d+)/);
+      const [getId] = pathname.match(/(\d+)/);
       const { data } = await api
-        .get(`sale/${getId[0]}`, { headers: { Authorization: token } });
+        .get(`sale/${getId}`, { headers: { Authorization: token } });
       setOrder(data);
       setStatus(data.status);
     };
@@ -39,7 +39,7 @@ function OrdersSellerDetails() {
         <h3>
           Pedido:
           {' '}
-          <span data-testid={ OrderId }>{ order.id }</span>
+          <span data-testid={ OrderId }>{ !!order.id && order.id }</span>
         </h3>
 
         <h3 data-testid={ OrderDate }>
@@ -75,7 +75,7 @@ function OrdersSellerDetails() {
         Total:
         {' '}
         <span data-testid={ TotalPrice }>
-          { order.totalPrice.toString().replace('.', ',') }
+          { !!order.totalPrice && order.totalPrice.toString().replace('.', ',') }
         </span>
       </h2>
     </>
