@@ -19,6 +19,9 @@ function OrdersClientDetails() {
   const [isDisabled, setIsDisabled] = useState(true);
   const { token } = getKey('user');
   const history = useHistory();
+  const { pathname } = history.location;
+  const [getId] = pathname.match(/(\d+)/);
+
   const style = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -26,25 +29,7 @@ function OrdersClientDetails() {
     backgroundColor: 'pink',
   };
 
-  const updateSellers = async () => {
-    const data = await getSeller();
-    setSellers(data);
-    setSeller(data.find((s) => s.id === order.sellerId));
-  };
-
-  const updateOrder = async () => {
-    const { pathname } = history.location;
-    const getId = pathname.match(/(\d+)/);
-    const { data } = await api
-      .get(`sale/${getId[0]}`, { headers: { Authorization: token } });
-    setOrder(data);
-    console.log(data);
-    setStatus(data.status);
-  };
-
   const disabledButtonStatus = () => {
-    console.log('status de state', status);
-    console.log('status de state', order.status);
     if (status === 'Em Trânsito' || order.status === 'Em Trânsito') {
       return setIsDisabled(false);
     }
@@ -52,10 +37,19 @@ function OrdersClientDetails() {
   };
 
   useEffect(() => {
-    updateSellers();
-    updateOrder();
-    disabledButtonStatus();
+    const updateStates = async () => {
+      const { data } = await api
+        .get(`sale/${getId}`, { headers: { Authorization: token } });
+      setOrder(data);
+      setStatus(data.status);
+      const result = await getSeller();
+      setSellers(result);
+      setSeller(result.find((s) => s.id === data.sellerId));
+    };
+    updateStates();
   }, []);
+
+  useEffect(() => disabledButtonStatus(), [status]);
 
   return (
     <>
@@ -65,7 +59,7 @@ function OrdersClientDetails() {
         <h3 data-testid={ OrderId }>
           Pedido:
           {' '}
-          { order.id }
+          { order !== undefined && order.id }
         </h3>
 
         <h3 data-testid={ SellerName }>
@@ -75,7 +69,7 @@ function OrdersClientDetails() {
         </h3>
 
         <h3 data-testid={ OrderDate }>
-          { dateConvert(order.saleDate) }
+          { !!order.saleDate && dateConvert(order.saleDate) }
         </h3>
 
         <h3 data-testid={ Status }>
@@ -102,8 +96,7 @@ function OrdersClientDetails() {
         Total: R$
         {' '}
         <span data-testid={ TotalPrice }>
-          { console.log(order) }
-          { order.totalPrice.toString().replace('.', ',') }
+          { !!order.totalPrice && order.totalPrice.toString().replace('.', ',') }
         </span>
       </h2>
     </>

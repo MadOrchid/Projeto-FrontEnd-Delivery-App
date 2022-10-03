@@ -6,7 +6,7 @@ import ContextGlobal from './ContextGlobal';
 export default function ProviderGlobal({ children }) {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState({});
   const [orders, setOrders] = useState([]);
   const [sellers, setSellers] = useState([]);
   const { Provider } = ContextGlobal;
