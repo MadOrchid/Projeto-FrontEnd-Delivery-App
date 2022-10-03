@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory /* , useNavigate */ } from 'react-router-dom';
 import { api } from '../../services/fetchtRegister';
+import { setKey } from '../../services/LocalStorage';
 import { emailRagex, minPassword } from '../../services/utilits';
 
 function LoginForm() {
@@ -29,7 +30,9 @@ function LoginForm() {
         setError(true);
         setErrorMessage(true);
       });
-    localStorage.setItem('user', JSON.stringify(data));
+    const { id, ...Obj } = data;
+    setKey('user', Obj);
+    setKey('keyUser', id);
     history.push(`/${rota[data.role]}`);
   }
 
