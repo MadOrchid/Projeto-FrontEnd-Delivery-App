@@ -14,9 +14,7 @@ ul {
   align-items: center;
 }
 
-button {
-  cursor: pointer;
-}
+button { cursor: pointer; }
 
 li[alt="Nome do usuario"] {
   font-size: large;
