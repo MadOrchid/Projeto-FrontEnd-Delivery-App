@@ -1,13 +1,11 @@
 const userValid = {
   "email": "adm@deliveryapp.com",
   "password": "--adm2@21!!--",
-  "name": "Delivery App Admin"
 };
 
 const userNotValid = {
   "email": "admdeliveryapp.com",
   "password": "--adm2@21!!--",
-  "name": "Delivery App Admin"
 };
 
 const validUserRegister = {
@@ -31,10 +29,67 @@ const validUserRegisterResponseNoToken = {
 	"name": "User de teste",
 };
 
+const findSellersMock = {
+		"id": 2,
+		"name": "Fulana Pereira",
+		"email": "fulana@deliveryapp.com",
+		"role": "seller"
+	};
+
+userBdLoginResponse = {
+  name: "Cliente Zé Birita",
+  email: "zebirita@email.com",
+  role: "customer",
+}
+
+const tokenMock ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJDbGllbnRlIFrDqSBCaXJpdGEiLCJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciJ9LCJpYXQiOjE2NjQzOTM0NDV9.iVh2oJkl1g8brAyivrt-MM8MOqICDXYBOVL3llLOste";
+
+const loginMock = {
+	"name": "Cliente Zé Birita",
+	"email": "zebirita@email.com",
+	"role": "customer",
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Im5hbWUiOiJDbGllbnRlIFrDqSBCaXJpdGEiLCJlbWFpbCI6InplYmlyaXRhQGVtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciJ9LCJpYXQiOjE2NjQzOTM0NDV9.iVh2oJkl1g8brAyivrt-MM8MOqICDXYBOVL3llLOste"
+};
+
+const loginBody = {
+	"email": "zebirita@email.com",
+	"password": "$#zebirita#$"
+}
+
+const invalidBody = {
+	"email": "zebirita@email.com",
+	"password": "$#zebirita#"
+}
+
+const sellersMock = [
+	{
+		"id": 2,
+		"name": "Fulana Pereira",
+		"email": "fulana@deliveryapp.com",
+		"role": "seller"
+	}
+]
+
+const createdUserMock = {
+		"email": "userteste@deliveryapp.com",
+		"role": "customer",
+		"name": "User de teste",
+		tokenMock
+	}
+
+
 module.exports = {
   userValid,
   userNotValid,
   validUserRegister,
   validUserRegisterResponse,
-  validUserRegisterResponseNoToken
+  validUserRegisterResponseNoToken,
+  findSellersMock,
+  tokenMock,
+  loginMock,
+  userBdLoginResponse,
+	sellersMock,
+	loginBody,
+	invalidBody,
+	createdUserMock
 };

@@ -39,8 +39,7 @@ const userService = {
       attributes: { exclude: ['password'] },
       raw: true,
     });
-
-  return users;
+    return users;
   },
 
   create: async ({ email, password, name }) => {

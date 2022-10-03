@@ -65,8 +65,8 @@ const saleService = {
   },
 
   findByUserId: async (id) => {
-    const sale = await Sale.findAll({
-      where: { [Op.or]: [{ userId: id }, { sellerId: id }] },
+    const [sale] = await Sale.findAll({
+      where: { userId: id },
       include: [{ 
       model: User,
       as: 'user', 
@@ -75,10 +75,9 @@ const saleService = {
     { model: Product,
       as: 'products',
     }] });
-
-  if (!sale) throw new ApiError(404, 'Sale not found');  
-
-  return sale;
+  const { dataValues } = sale;
+  
+  return dataValues;
   },
 
   orderUpdateStatus: async ({ id, status }) => {
