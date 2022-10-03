@@ -29,11 +29,7 @@ function OrdersSellerDetails() {
       return setIsDisabled(false);
     }
     setDisabled(true);
-<<<<<<< HEAD
-    console.log('TESTE');
-=======
     setIsDisabled(true);
->>>>>>> 41a2192f90df4ad8499c732f2a2bc4cf69bbdd30
   };
 
   useEffect(() => {
@@ -58,11 +54,12 @@ function OrdersSellerDetails() {
         <h3>
           Pedido:
           {' '}
-          { console.log(order) }
           <span data-testid={ OrderId }>{ !!order.id && order.id }</span>
         </h3>
 
-        <h3 data-testid={ OrderDate }>{dateConvert(order.saleDate)}</h3>
+        <h3 data-testid={ OrderDate }>
+          { !!order.saleDate && dateConvert(order.saleDate) }
+        </h3>
 
         <h3 data-testid={ Status }>{ status }</h3>
 
