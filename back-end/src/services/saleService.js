@@ -1,5 +1,4 @@
 const moment = require('moment');
-const { Op } = require('sequelize');
 const Joi = require('joi');
 const ApiError = require('../middlewares/ApiError');
 const { Sale } = require('../database/models');
@@ -33,13 +32,6 @@ const saleService = {
   createOrder: async (
     { sale, products }) => {
     const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber } = sale;
-    //  await serviceSale.validateSale(sale);
-    // let userId = 0;
-    // if ([userId].includes(sale)) {
-    //   userId = sale.userId
-    // } else {
-    //   userId = await saleService.findUSer(userName);
-    // }
     const status = 'Pendente';
     const saleDate = moment().format();
     const { dataValues } = await Sale.create(
