@@ -4,16 +4,6 @@ import { useHistory } from 'react-router-dom';
 import ContextGlobal from '../../context/ContextGlobal';
 import { api } from '../../services/fetchtRegister';
 
-/*
-  - 15: customer_products__element-card-title-<id>
-  - 16: customer_products__element-card-price-<id>
-  - 17: customer_products__img-card-bg-image-<id>
-  - 18: customer_products__button-card-add-item-<id>
-  - 19: customer_products__button-card-rm-item-<id>
-  - 20: customer_products__input-card-quantity-<id>
-  - 21: customer_products__checkout-bottom-value
-*/
-
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
   const [isDisabled, setIsDisabled] = useState(true);

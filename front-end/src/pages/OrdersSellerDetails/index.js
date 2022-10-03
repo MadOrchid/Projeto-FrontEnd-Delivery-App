@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
@@ -42,10 +43,8 @@ function OrdersSellerDetails() {
       setStatus(data.status);
     };
     updateOrder();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => disabledButtonStatus(), [status, order]);
 
   return (
