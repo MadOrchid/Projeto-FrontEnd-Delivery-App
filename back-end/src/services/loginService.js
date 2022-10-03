@@ -18,7 +18,7 @@ const loginService = {
     const md5Hash = md5(password);
     const user = await User.findOne({ 
       where: { email, password: md5Hash },
-      attributes: { exclude: ['password', 'id'] },
+      attributes: { exclude: ['password'] },
       raw: true });
     
     if (!user) {

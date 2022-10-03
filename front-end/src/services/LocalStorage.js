@@ -6,6 +6,7 @@ function getKey(key) {
 }
 
 function setKey(key, value) {
+  console.log('Chave do bixinho', value);
   const json = JSON.stringify(value);
   localStorage.setItem(key, json);
 }

@@ -1,32 +1,46 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
 import ContextGlobal from '../../context/ContextGlobal';
-// import { getKey } from '../../services/LocalStorage';
+import { getSeller, saveSale } from '../../services/fetchtRegister';
+import { getKey } from '../../services/LocalStorage';
 
 function Checkout() {
-  const { cart, total, removeFromCart } = useContext(ContextGlobal);
-  const [sellers] = useState([]);
-  // const [products, setProducts] = useState([]);
-  /* const [sale, setSalve] = useState({
-    sellerId: '',
-    userId: getKey('user').id,
-    totalPrice: 0,
+  const { cart, total, removeFromCart, sellers, setSellers } = useContext(ContextGlobal);
+  const [products, setProducts] = useState([]);
+  const [sale, setSale] = useState({
+    userId: getKey('keyUser'),
+    sellerId: 2,
+    totalPrice: Number(total.toFixed(2)),
     deliveryAddress: '',
     deliveryNumber: '',
-    saleDate: new Date(),
-    status: 'Pendente',
-  }); */
-  console.log('"CART PAPAI"', cart);
+    /* products: cart.map((p) => ({
+      productId: p.id,
+      quantity: p.qtd,
+    })), */
+  });
 
   const history = useHistory();
 
-  const handleChange = () => {
+  useEffect(() => {
+    const updateSellers = async () => {
+      const data = await getSeller();
+      setSellers(data);
+      setSale({ ...sale, sellerId: data[0].id });
+    };
+    updateSellers();
+  }, []);
 
-  };
+  useEffect(() => {
+    const updateProducts = cart
+      .map((element) => ({ productId: element.id, quantity: element.qtd }));
+    setProducts(updateProducts);
+  }, [cart]);
 
-  const handleSubmit = () => {
-    history.push('orders/1');
+  const handleSubmit = async () => {
+    const { token } = getKey('user');
+    const id = await saveSale(token, { sale, products });
+    history.push(`/customer/orders/${id}`);
   };
 
   return (
@@ -74,13 +88,19 @@ function Checkout() {
                 { item.price.replace(/\./, ',') }
 
               </h3>
-              <h3
-                data-testid={
-                  `customer_checkout__element-order-table-sub-total-${index}`
-                }
-              >
-                Subtotal:  R$
-                { (item.price * item.qtd).toFixed(2).replace(/\./, ',') }
+              <h3>
+                Subtotal:
+                {' '}
+                R$
+                <span
+                  data-testid={
+                    `customer_checkout__element-order-table-sub-total-${index}`
+                  }
+                >
+                  {
+                    (item.price * item.qtd).toFixed(2).toString().replace(/\./, ',')
+                  }
+                </span>
               </h3>
               <button
                 data-testid={ `customer_checkout__element-order-table-remove-${index}` }
@@ -100,8 +120,7 @@ function Checkout() {
           <select
             data-testid="customer_checkout__select-seller"
             name="sellerId"
-            onChange={ handleChange }
-            onClick={ handleChange }
+            onChange={ (e) => setSale({ ...sale, sellerId: Number(e.target.value) }) }
           >
             {sellers && sellers.map((seller) => (
               <option
@@ -118,14 +137,14 @@ function Checkout() {
             placeholder="Endereço de entrega"
             type="text"
             name="deliveryAddress"
-            onChange={ handleChange }
+            onChange={ (e) => setSale({ ...sale, deliveryAddress: e.target.value }) }
           />
           <input
             data-testid="customer_checkout__input-address-number"
             placeholder="Número de entrega"
             type="text"
             name="deliveryNumber"
-            onChange={ handleChange }
+            onChange={ (e) => setSale({ ...sale, deliveryNumber: e.target.value }) }
           />
           <h3
             data-testid="customer_checkout__element-order-total-price"

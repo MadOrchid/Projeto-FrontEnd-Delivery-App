@@ -28,7 +28,7 @@ const userService = {
       throw new ApiError(409, 'User already registered');
     }
 
-  return true;
+  return user.id;
   },
 
   listSellers: async () => {
@@ -46,12 +46,12 @@ const userService = {
     const role = 'customer';
     const md5Hash = md5(password);
     const userObj = { email, role, name };
-    await User.create({ 
+    const { dataValues } = await User.create({ 
       email, password: md5Hash, role, name,
     });
-    
+    const { id } = dataValues;
     const token = jwtService.createToken(userObj);
-    const result = { ...userObj, token };
+    const result = { ...userObj, token, id };
     return result;
   },
 };
