@@ -17,6 +17,7 @@ function OrdersSellerDetails() {
   const { order, setOrder } = useContext(ContextGlobal);
   const [status, setStatus] = useState('Pendente');
   const [disabled, setDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
   const history = useHistory();
   const { token } = getKey('user');
 
@@ -24,7 +25,11 @@ function OrdersSellerDetails() {
     if (status === 'Preparando' || order.status === 'Preparando') {
       return setDisabled(false);
     }
+    if (status === 'Pendente' || order.status === 'Pendente') {
+      return setIsDisabled(false);
+    }
     setDisabled(true);
+    setIsDisabled(true);
   };
 
   useEffect(() => {
@@ -60,10 +65,12 @@ function OrdersSellerDetails() {
 
         <button
           type="button"
+          disabled={ isDisabled }
           data-testid={ PreparingCheck }
           onClick={ () => {
             updateStatus({ id: order.id, status: 'Preparando', token });
             setStatus('Preparando');
+            setIsDisabled(true);
           } }
         >
           PREPARANDO PEDIDO
@@ -78,6 +85,7 @@ function OrdersSellerDetails() {
               id: order.id, status: 'Em Trânsito', token,
             });
             setStatus('Em Trânsito');
+            setIsDisabled(true);
           } }
         >
           SAIU PARA ENTREGA

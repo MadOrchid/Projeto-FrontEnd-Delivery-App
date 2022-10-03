@@ -84,6 +84,7 @@ function OrdersClientDetails() {
           onClick={ () => {
             updateStatus({ token, id: order.id, status: 'Entregue' });
             setStatus('Entregue');
+            setIsDisabled(true);
           } }
           disabled={ isDisabled }
         >
