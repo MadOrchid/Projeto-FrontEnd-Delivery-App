@@ -14,7 +14,7 @@ function OrdersSellerDetails() {
   const DispatchCheck = 'seller_order_details__button-dispatch-check';
   const TotalPrice = 'seller_order_details__element-order-total-price';
 
-  const { order, setOrder } = useContext(ContextGlobal);
+  const { order, setOrder, dateConvert } = useContext(ContextGlobal);
   const [status, setStatus] = useState('Pendente');
   const [disabled, setDisabled] = useState(true);
   const history = useHistory();
@@ -25,6 +25,7 @@ function OrdersSellerDetails() {
       return setDisabled(false);
     }
     setDisabled(true);
+    console.log('TESTE');
   };
 
   useEffect(() => {
@@ -49,12 +50,11 @@ function OrdersSellerDetails() {
         <h3>
           Pedido:
           {' '}
+          { console.log(order) }
           <span data-testid={ OrderId }>{ !!order.id && order.id }</span>
         </h3>
 
-        <h3 data-testid={ OrderDate }>
-          {}
-        </h3>
+        <h3 data-testid={ OrderDate }>{dateConvert(order.saleDate)}</h3>
 
         <h3 data-testid={ Status }>{ status }</h3>
 
