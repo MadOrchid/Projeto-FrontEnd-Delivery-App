@@ -15,7 +15,7 @@ function OrdersSellerDetails() {
   const TotalPrice = 'seller_order_details__element-order-total-price';
 
   const { order, setOrder } = useContext(ContextGlobal);
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState('Pendente');
   const [disabled, setDisabled] = useState(true);
   const history = useHistory();
   const { token } = getKey('user');
@@ -39,7 +39,7 @@ function OrdersSellerDetails() {
     updateOrder();
   }, []);
 
-  useEffect(() => disabledButtonStatus(), [status]);
+  useEffect(() => disabledButtonStatus(), [status, order]);
 
   return (
     <>
@@ -62,7 +62,7 @@ function OrdersSellerDetails() {
           type="button"
           data-testid={ PreparingCheck }
           onClick={ () => {
-            updateStatus({ id: order.id, status: 'Preparando ', token });
+            updateStatus({ id: order.id, status: 'Preparando', token });
             setStatus('Preparando');
           } }
         >
@@ -73,9 +73,12 @@ function OrdersSellerDetails() {
           type="button"
           data-testid={ DispatchCheck }
           disabled={ disabled }
-          onClick={ () => updateStatus({
-            id: order.id, status: 'Em Trânsito', token,
-          }) }
+          onClick={ () => {
+            updateStatus({
+              id: order.id, status: 'Em Trânsito', token,
+            });
+            setStatus('Em Trânsito');
+          } }
         >
           SAIU PARA ENTREGA
         </button>
