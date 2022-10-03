@@ -38,7 +38,7 @@ function OrdersSeller() {
               Pedido:
               {' '}
               <span
-                data-testid={ `seller_orders__element-order-id-${id}` }
+                data-testid={ `seller_orders__element-order-id-${order.id}` }
               >
                 { order.id }
               </span>
