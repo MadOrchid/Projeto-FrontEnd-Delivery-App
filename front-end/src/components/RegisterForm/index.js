@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { api } from '../../services/fetchtRegister';
 import { emailRagex, minName, minPassword } from '../../services/utilits';
+import '../../styles/components/register-form.css';
 
 function RegisterForm() {
   const [name, setName] = useState('');
@@ -40,9 +41,7 @@ function RegisterForm() {
   */
 
   return (
-    <section>
-      <h1>Cadastro</h1>
-
+    <section id="containerRegister">
       <label htmlFor="name">
         Nome
         <input
@@ -52,6 +51,7 @@ function RegisterForm() {
           value={ name }
           data-testid="common_register__input-name"
           onChange={ (e) => setName(e.target.value) }
+          placeholder="Seu Nome"
         />
       </label>
 
@@ -64,6 +64,7 @@ function RegisterForm() {
           value={ email }
           data-testid="common_register__input-email"
           onChange={ (e) => setEmail(e.target.value) }
+          placeholder="email@trybirita.com.br"
         />
       </label>
 
@@ -76,6 +77,7 @@ function RegisterForm() {
           value={ password }
           data-testid="common_register__input-password"
           onChange={ (e) => setPassword(e.target.value) }
+          placeholder="***********"
         />
       </label>
 

@@ -1,0 +1,79 @@
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  background: #dd7d27;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+button {
+  cursor: pointer;
+}
+
+li[alt="Nome do usuario"] {
+  font-size: large;
+  background-color: #6e2b04;
+  text-align: center;
+  align-items: center;
+  line-height: 60px;
+  color: white;
+  padding: 0px 20px;
+  text-shadow: 2px 2px 5px #373737;
+}
+
+button[alt="Sair customer"] {
+  height: 60px;
+  border: none;
+  background: #056cf9;
+  cursor: pointer;
+  color: white;
+  padding: 0 50px;
+  opacity: 0.8;
+  font-size: large;
+  transition: 0.5s;
+}
+
+button[alt="MEUS PEDIDOS"] {
+  height: 60px;
+  border: none;
+  background: transparent;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 0 50px;
+  opacity: 0.8;
+  color: white;
+  transition: 0.5s;
+}
+
+button[alt="Produtos"] {
+  height: 60px;
+  border: none;
+  background: #d9ca25;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0 50px;
+  opacity: 0.8;
+  transition: 0.5s;
+}
+
+button[alt="Produtos"]:hover, button[alt="MEUS PEDIDOS"]:hover, button[alt="Sair customer"]:hover {
+ opacity: 1;
+ transition: 0.5s;
+ text-shadow: 2px 2px 5px #373737;
+}
+
+button[alt="MEUS PEDIDOS"]:hover, button[alt="Sair customer"]:hover {
+  text-shadow: 2px 2px 5px #373737;
+}
+
+button[alt="Produtos"]:hover {
+ text-shadow: 2px 2px 5px #9e9e9e;
+}
