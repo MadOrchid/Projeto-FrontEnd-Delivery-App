@@ -51,7 +51,7 @@ function OrdersSeller() {
             </h3>
 
             <h3
-              data-testid={ `seller_orders__element-delivery-status-${id}` }
+              data-testid={ `seller_orders__element-delivery-status-${order.id}` }
             >
               { order.status }
             </h3>
