@@ -1,8 +1,15 @@
 import React from 'react';
+import HeaderProducts from '../../components/HeaderProducts';
+import FromAdmin from '../../components/FromAdmin';
+import TableUser from '../../components/TableUsers';
 
 function Admin() {
   return (
-    <h1>PAGINA Admin</h1>
+    <>
+      <HeaderProducts />
+      <FromAdmin />
+      <TableUser />
+    </>
   );
 }
 

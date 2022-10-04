@@ -1,5 +1,6 @@
 const moment = require('moment');
 const Joi = require('joi');
+const { Op } = require('sequelize');
 const ApiError = require('../middlewares/ApiError');
 const { Sale } = require('../database/models');
 const { User, Product } = require('../database/models');
@@ -51,14 +52,21 @@ const saleService = {
     { model: Product,
       as: 'products',
     }] });
+
+  if (!sale) throw new ApiError(404, 'Sale not found');
   const { dataValues } = sale;
   
   return dataValues;
   },
 
   findByUserId: async (id) => {
-    const [sale] = await Sale.findAll({
-      where: { userId: id },
+    const user = await User.findByPk(id);
+    if (!user) throw new ApiError(404, 'User not found');
+
+    const sale = await Sale.findAll({
+      where: {
+        [Op.or]: [{ userId: id }, { sellerId: id }],
+      },
       include: [{ 
       model: User,
       as: 'user', 
@@ -67,14 +75,13 @@ const saleService = {
     { model: Product,
       as: 'products',
     }] });
-  const { dataValues } = sale;
   
-  return dataValues;
+  return sale;
   },
 
   orderUpdateStatus: async ({ id, status }) => {
     const sale = await Sale.findByPk(id);
-    if (!sale) throw new ApiError(404, 'User not found');
+    if (!sale) throw new ApiError(404, 'Sale not found');
   
     const [updated] = await Sale.update(
       {

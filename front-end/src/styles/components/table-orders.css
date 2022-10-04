@@ -1,0 +1,76 @@
+main.table {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 46vh;
+  margin-top: 100px;
+}
+
+main.table section {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+  border-bottom: 2px solid #dd7d27;
+  align-items: center;
+}
+
+h3#orderId {
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+h3#sellerName {
+  font-weight: 500;
+}
+
+h3#status {
+  background: chartreuse;
+  line-height: 2;
+  margin: 12px 0;
+  width: 168px;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 12px;
+}
+
+button#deliveryCheck {
+  border: none;
+  background: #dd7d27;
+  font-size: initial;
+  font-weight: 700;
+  width: 262px;
+  height: fit-content;
+  /* line-height: 3; */
+  padding: 9px;
+  border-radius: 12px;
+  color: white;
+}
+
+.table table {
+    width: 100%;
+}
+
+main td#subTotal {
+    border-radius: 0px 8px 8px 0px;
+}
+
+div#father {
+    position: relative;
+    height: 80vh;
+}
+
+h1#tittleTable {
+    position: absolute;
+    top: -60px;
+    left: 100px;
+    font-size: x-large;
+}
+
+main th { flex-grow: 0.8; }
+main tr :nth-child(1) { flex-grow: 0.1; }
+main tr :nth-child(2) { flex-grow: 10; }
+main tr :nth-child(3) { flex-grow: 0.7; }
+main tr :nth-child(4) { flex-grow: 0.7; }
+main tr :nth-child(5) { flex-grow: 0.7; }

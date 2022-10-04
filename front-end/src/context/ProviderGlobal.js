@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { setKey } from '../services/LocalStorage';
+import { getUsers } from '../services/fetchtRegister';
+import { getKey, setKey } from '../services/LocalStorage';
 import ContextGlobal from './ContextGlobal';
 
 export default function ProviderGlobal({ children }) {
@@ -9,6 +10,7 @@ export default function ProviderGlobal({ children }) {
   const [order, setOrder] = useState({});
   const [orders, setOrders] = useState([]);
   const [sellers, setSellers] = useState([]);
+  const [users, setUsers] = useState([]);
   const { Provider } = ContextGlobal;
 
   function removeFromCart(product) {
@@ -26,6 +28,13 @@ export default function ProviderGlobal({ children }) {
     // }
     setKey('carrinho', cart);
   }
+
+  const updateUsers = async () => {
+    const { token } = getKey('user');
+    const data = await getUsers(token);
+    setUsers(data);
+    return data;
+  };
   /*
   function updateToCart(products) {
     if (!products) {
@@ -70,11 +79,14 @@ export default function ProviderGlobal({ children }) {
     order,
     orders,
     sellers,
+    users,
     setCart,
     setTotal,
     setOrder,
     setOrders,
     setSellers,
+    setUsers,
+    updateUsers,
     removeFromCart,
     updateToCart,
     clearCart,
