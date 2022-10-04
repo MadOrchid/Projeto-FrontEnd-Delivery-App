@@ -77,22 +77,8 @@ html, body
   color: #c07803;
 }
 
-input, select {
-  outline: none;
-}
-
 ::placeholder {
   color: #afafaf;
-}
-
-button {
-  opacity: 0.8;
-  transition: 0.5s;
-}
-
-button:hover {
-  opacity: 1;
-  transition: 0.5s;
 }
 
 :disabled {
@@ -102,5 +88,19 @@ button:hover {
 
 :disabled:hover {
   opacity: 0.8;
+  transition: 0.5s;
+}
+
+input, select {
+  outline: none;
+}
+
+button {
+  opacity: 0.8;
+  transition: 0.5s;
+}
+
+button:hover {
+  opacity: 1;
   transition: 0.5s;
 }
