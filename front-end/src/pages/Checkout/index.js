@@ -8,7 +8,6 @@ import '../../styles/pages/checkout.css';
 
 function Checkout() {
   const { cart, total, removeFromCart, sellers, setSellers } = useContext(ContextGlobal);
-  // const [sellers, setSeller] = useState([]);
   const [products, setProducts] = useState([]);
   const [sale, setSale] = useState({
     userId: getKey('keyUser'),

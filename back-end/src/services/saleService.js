@@ -1,5 +1,4 @@
 const moment = require('moment');
-const { Op } = require('sequelize');
 const Joi = require('joi');
 const ApiError = require('../middlewares/ApiError');
 const { Sale } = require('../database/models');
@@ -33,13 +32,6 @@ const saleService = {
   createOrder: async (
     { sale, products }) => {
     const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber } = sale;
-    //  await serviceSale.validateSale(sale);
-    // let userId = 0;
-    // if ([userId].includes(sale)) {
-    //   userId = sale.userId
-    // } else {
-    //   userId = await saleService.findUSer(userName);
-    // }
     const status = 'Pendente';
     const saleDate = moment().format();
     const { dataValues } = await Sale.create(
@@ -65,8 +57,8 @@ const saleService = {
   },
 
   findByUserId: async (id) => {
-    const sale = await Sale.findAll({
-      where: { [Op.or]: [{ userId: id }, { sellerId: id }] },
+    const [sale] = await Sale.findAll({
+      where: { userId: id },
       include: [{ 
       model: User,
       as: 'user', 
@@ -75,10 +67,9 @@ const saleService = {
     { model: Product,
       as: 'products',
     }] });
-
-  if (!sale) throw new ApiError(404, 'Sale not found');  
-
-  return sale;
+  const { dataValues } = sale;
+  
+  return dataValues;
   },
 
   orderUpdateStatus: async ({ id, status }) => {

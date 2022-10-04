@@ -6,7 +6,7 @@ import ContextGlobal from './ContextGlobal';
 export default function ProviderGlobal({ children }) {
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState(0);
-  const [order, setOrder] = useState([]);
+  const [order, setOrder] = useState({});
   const [orders, setOrders] = useState([]);
   const [sellers, setSellers] = useState([]);
   const { Provider } = ContextGlobal;
@@ -54,9 +54,14 @@ export default function ProviderGlobal({ children }) {
 
   function dateConvert(date) {
     const TEN = 10;
+    // const TWO = 2;
     const dateUSA = new Date(date.substring(0, TEN));
     return new Intl.DateTimeFormat('pt-BR')
       .format(dateUSA);
+    // const dia = teste.substring(TWO, 0);
+    // const mesAno = teste.substring(TWO, TEN);
+    // console.log('Teste de data ', `0${Number(dia) + 1}${mesAno}`);
+    // return `0${Number(dia) + 1}${mesAno}`;
   }
 
   const value = {

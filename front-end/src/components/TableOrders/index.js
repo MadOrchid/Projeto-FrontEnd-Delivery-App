@@ -23,7 +23,7 @@ function TableOrders() {
         </tr>
       </tbody>
       <tbody style={ { textAlign: 'center' } }>
-        { products.map((ord, index) => (
+        { !!products && products.map((ord, index) => (
           <tr key={ index }>
             <td data-testid={ `${ItemNumber}-${index}` } id="id">
               { index + 1 }

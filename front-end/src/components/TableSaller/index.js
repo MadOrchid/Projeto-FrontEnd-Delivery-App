@@ -9,7 +9,6 @@ function TableSaller() {
   const SubTotal = 'seller_order_details__element-order-table-sub-total';
   const { order } = useContext(ContextGlobal);
   const { products } = order;
-  console.log(order);
 
   return (
     <table style={ { width: '750px' } }>
@@ -23,7 +22,7 @@ function TableSaller() {
         </tr>
       </tbody>
       <tbody style={ { textAlign: 'center' } }>
-        { products.map((ord, index) => (
+        { !!products && products.map((ord, index) => (
           <tr key={ index }>
             <td
               data-testid={ `${ItemNumber}-${index}` }

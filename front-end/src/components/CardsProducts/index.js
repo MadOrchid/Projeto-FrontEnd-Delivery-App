@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ContextGlobal from '../../context/ContextGlobal';
 import { api } from '../../services/fetchtRegister';
+
 import '../../styles/components/cards-products.css';
+
 
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);

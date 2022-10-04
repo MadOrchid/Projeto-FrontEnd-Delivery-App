@@ -37,7 +37,7 @@ function HearderProducts() {
       <button
         type="button"
         alt="Produtos"
-        data-testid="customer_products__element-navbar-link-products"
+        data-testid="customer_products__element-navbar-link-orders"
         onClick={ () => { history.push('/seller/orders'); } }
       >
         PEDIDOS

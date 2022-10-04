@@ -23,7 +23,9 @@ function RegisterForm() {
         setError(true);
         setErrorMessage(e.message);
       });
-    localStorage.setItem('user', JSON.stringify(data));
+    const { id, dataName } = data;
+    localStorage.setItem('user', JSON.stringify(dataName));
+    localStorage.setItem('keyUser', JSON.stringify(id));
     history.push('/customer/products');
   }
 

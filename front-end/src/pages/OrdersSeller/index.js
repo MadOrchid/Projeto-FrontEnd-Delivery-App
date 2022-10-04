@@ -37,7 +37,7 @@ function OrdersSeller() {
               Pedido:
               {' '}
               <span
-                data-testid={ `seller_orders__element-order-id-${id}` }
+                data-testid={ `seller_orders__element-order-id-${order.id}` }
               >
                 { order.id }
               </span>
@@ -50,7 +50,7 @@ function OrdersSeller() {
             </h3>
 
             <h3
-              data-testid={ `seller_orders__element-delivery-status-${id}` }
+              data-testid={ `seller_orders__element-delivery-status-${order.id}` }
             >
               { order.status }
             </h3>

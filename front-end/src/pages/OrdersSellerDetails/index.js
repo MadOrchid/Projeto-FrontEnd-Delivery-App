@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import HearderProducts from '../../components/HeaderProducts';
@@ -14,22 +15,37 @@ function OrdersSellerDetails() {
   const DispatchCheck = 'seller_order_details__button-dispatch-check';
   const TotalPrice = 'seller_order_details__element-order-total-price';
 
-  const { order, setOrder } = useContext(ContextGlobal);
-  const { status, setStatus } = useState('');
+  const { order, setOrder, dateConvert } = useContext(ContextGlobal);
+  const [status, setStatus] = useState('Pendente');
+  const [disabled, setDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
   const history = useHistory();
   const { token } = getKey('user');
+
+  const disabledButtonStatus = () => {
+    if (status === 'Preparando' || order.status === 'Preparando') {
+      return setDisabled(false);
+    }
+    if (status === 'Pendente' || order.status === 'Pendente') {
+      return setIsDisabled(false);
+    }
+    setDisabled(true);
+    setIsDisabled(true);
+  };
 
   useEffect(() => {
     const updateOrder = async () => {
       const { pathname } = history.location;
-      const getId = pathname.match(/(\d+)/);
+      const [getId] = pathname.match(/(\d+)/);
       const { data } = await api
-        .get(`sale/${getId[0]}`, { headers: { Authorization: token } });
+        .get(`sale/${getId}`, { headers: { Authorization: token } });
       setOrder(data);
       setStatus(data.status);
     };
     updateOrder();
   }, []);
+
+  useEffect(() => disabledButtonStatus(), [status, order]);
 
   return (
     <>
@@ -39,21 +55,23 @@ function OrdersSellerDetails() {
         <h3>
           Pedido:
           {' '}
-          <span data-testid={ OrderId }>{ order.id }</span>
+          <span data-testid={ OrderId }>{ !!order.id && order.id }</span>
         </h3>
 
         <h3 data-testid={ OrderDate }>
-          {}
+          { !!order.saleDate && dateConvert(order.saleDate) }
         </h3>
 
         <h3 data-testid={ Status }>{ status }</h3>
 
         <button
           type="button"
+          disabled={ isDisabled }
           data-testid={ PreparingCheck }
           onClick={ () => {
-            updateStatus({ id: order.id, status: 'Preparando ', token });
+            updateStatus({ id: order.id, status: 'Preparando', token });
             setStatus('Preparando');
+            setIsDisabled(true);
           } }
         >
           PREPARANDO PEDIDO
@@ -62,9 +80,14 @@ function OrdersSellerDetails() {
         <button
           type="button"
           data-testid={ DispatchCheck }
-          onClick={ () => updateStatus({
-            id: order.id, status: 'Em Trânsito', token,
-          }) }
+          disabled={ disabled }
+          onClick={ () => {
+            updateStatus({
+              id: order.id, status: 'Em Trânsito', token,
+            });
+            setStatus('Em Trânsito');
+            setIsDisabled(true);
+          } }
         >
           SAIU PARA ENTREGA
         </button>
@@ -75,7 +98,7 @@ function OrdersSellerDetails() {
         Total:
         {' '}
         <span data-testid={ TotalPrice }>
-          { order.totalPrice.toString().replace('.', ',') }
+          { !!order.totalPrice && order.totalPrice.toString().replace('.', ',') }
         </span>
       </h2>
     </>
