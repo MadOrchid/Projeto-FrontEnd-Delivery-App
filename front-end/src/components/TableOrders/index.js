@@ -7,12 +7,13 @@ function TableOrders() {
   const UnitPrice = 'customer_order_details__element-order-table-unit-price';
   const SubTotal = 'customer_order_details__element-order-table-sub-total';
   const TableQuantity = 'customer_order_details__element-order-table-quantity';
+  const TotalPrice = 'customer_order_details__element-order-total-price';
   const { order } = useContext(ContextGlobal);
   const { products } = order;
 
   return (
-    <table style={ { width: '750px' } }>
-      <tbody style={ { textAlign: 'center' } }>
+    <table>
+      <tbody>
         <tr>
           <th>Item</th>
           <th>Descrição</th>
@@ -24,19 +25,19 @@ function TableOrders() {
       <tbody style={ { textAlign: 'center' } }>
         { !!products && products.map((ord, index) => (
           <tr key={ index }>
-            <td data-testid={ `${ItemNumber}-${index}` }>
+            <td data-testid={ `${ItemNumber}-${index}` } id="id">
               { index + 1 }
             </td>
-            <td data-testid={ `${TableName}-${index}` }>
+            <td data-testid={ `${TableName}-${index}` } id="name">
               { ord.name }
             </td>
-            <td data-testid={ `${TableQuantity}-${index}` }>
+            <td data-testid={ `${TableQuantity}-${index}` } id="quantity">
               { ord.SalesProducts.quantity }
             </td>
-            <td data-testid={ `${UnitPrice}-${index}` }>
+            <td data-testid={ `${UnitPrice}-${index}` } id="unitPrice">
               { `R$ ${ord.price.toString().replace('.', ',')}` }
             </td>
-            <td data-testid={ `${SubTotal}-${index}` }>
+            <td data-testid={ `${SubTotal}-${index}` } id="subTotal">
               {
                 (ord.SalesProducts.quantity * ord.price)
                   .toFixed(2).toString().replace('.', ',')
@@ -45,6 +46,14 @@ function TableOrders() {
           </tr>
         ))}
       </tbody>
+      <h1>
+        Total: R$
+        {' '}
+        <span data-testid={ TotalPrice }>
+          { console.log(order) }
+          { order.totalPrice.toString().replace('.', ',') }
+        </span>
+      </h1>
     </table>
   );
 }

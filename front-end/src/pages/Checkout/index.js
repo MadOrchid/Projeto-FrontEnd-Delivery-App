@@ -4,6 +4,7 @@ import HearderProducts from '../../components/HeaderProducts';
 import ContextGlobal from '../../context/ContextGlobal';
 import { getSeller, saveSale } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
+import '../../styles/pages/checkout.css';
 
 function Checkout() {
   const { cart, total, removeFromCart, sellers, setSellers } = useContext(ContextGlobal);
@@ -42,115 +43,140 @@ function Checkout() {
   return (
     <>
       <HearderProducts />
-      <h3>Finalizar Pedido</h3>
-
-      <section>
-        {cart.length > 0 && cart
-          .map((item, index) => (
-            <div
-              key={ item.id }
-            >
-              <h3
-                data-testid={
-                  `customer_checkout__element-order-table-item-number-${index}`
-                }
-              >
-                Item:
-                {' '}
-                { index + 1 }
-              </h3>
-              <h3
-                data-testid={ `customer_checkout__element-order-table-name-${index}` }
-              >
-                Produto:
-                {' '}
-                { item.name }
-
-              </h3>
-              <h3
-                data-testid={ `customer_checkout__element-order-table-quantity-${index}` }
-              >
-                Quantidade:
-                {' '}
-                { item.qtd }
-
-              </h3>
-              <h3
-                data-testid={
-                  `customer_checkout__element-order-table-unit-price-${index}`
-                }
-              >
-                Preço: R$
-                { item.price.replace(/\./, ',') }
-
-              </h3>
-              <h3>
-                Subtotal:
-                {' '}
-                R$
-                <span
+      <h1 id="title">Finalizar Pedido</h1>
+      <table className="table">
+        <tbody style={ { textAlign: 'center' } }>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Subtotal</th>
+            <th>Remover Item</th>
+          </tr>
+        </tbody>
+        <tbody style={ { textAlign: 'center' } }>
+          {cart.length > 0 && cart
+            .map((item, index) => (
+              <tr key={ item.id }>
+                <td
+                  id="id"
                   data-testid={
-                    `customer_checkout__element-order-table-sub-total-${index}`
+                    `customer_checkout__element-order-table-item-number-${index}`
                   }
                 >
-                  {
-                    (item.price * item.qtd).toFixed(2).toString().replace(/\./, ',')
+                  { index + 1 }
+                </td>
+                <td
+                  id="name"
+                  data-testid={ `customer_checkout__element-order-table-name-${index}` }
+                >
+                  { item.name }
+                </td>
+                <td
+                  id="quantity"
+                  data-testid={
+                    `customer_checkout__element-order-table-quantity-${index}`
                   }
-                </span>
-              </h3>
-              <button
-                data-testid={ `customer_checkout__element-order-table-remove-${index}` }
-                type="button"
-                onClick={ () => {
-                  removeFromCart(item);
-                } }
-              >
-                REMOVE
-              </button>
-            </div>
-          )) }
-      </section>
-      <section>
-        <div>
-          <h3>Detalhes e Endereço para entrega</h3>
-          <select
-            data-testid="customer_checkout__select-seller"
-            name="sellerId"
-            onChange={ (e) => setSale({ ...sale, sellerId: Number(e.target.value) }) }
-          >
-            {sellers && sellers.map((seller) => (
-              <option
-                key={ seller.id }
-                value={ seller.id }
-              >
-                {seller.name}
-              </option>
-            ))}
+                >
+                  { item.qtd }
+                </td>
+                <td
+                  id="unitPrice"
+                  data-testid={
+                    `customer_checkout__element-order-table-unit-price-${index}`
+                  }
+                >
+                  R$
+                  {' '}
+                  { item.price.replace(/\./, ',') }
+                </td>
+                <td id="subTotal">
+                  R$
+                  {' '}
+                  <span
+                    data-testid={
+                      `customer_checkout__element-order-table-sub-total-${index}`
+                    }
+                  >
+                    {
+                      (item.price * item.qtd).toFixed(2).toString().replace(/\./, ',')
+                    }
+                  </span>
+                </td>
+                <td id="remove">
+                  <button
+                    data-testid={
+                      `customer_checkout__element-order-table-remove-${index}`
+                    }
+                    type="button"
+                    onClick={ () => {
+                      removeFromCart(item);
+                    } }
+                  >
+                    Remover
+                  </button>
+                </td>
+              </tr>
+            )) }
+        </tbody>
+        <h1
+          data-testid="customer_checkout__element-order-total-price"
+        >
+          Total: R$
+          { total.toFixed(2).replace(/\./, ',') }
+        </h1>
+      </table>
 
-          </select>
-          <input
-            data-testid="customer_checkout__input-address"
-            placeholder="Endereço de entrega"
-            type="text"
-            name="deliveryAddress"
-            onChange={ (e) => setSale({ ...sale, deliveryAddress: e.target.value }) }
-          />
-          <input
-            data-testid="customer_checkout__input-address-number"
-            placeholder="Número de entrega"
-            type="text"
-            name="deliveryNumber"
-            onChange={ (e) => setSale({ ...sale, deliveryNumber: e.target.value }) }
-          />
-          <h3
-            data-testid="customer_checkout__element-order-total-price"
-          >
-            Total: R$
-            { total.toFixed(2).replace(/\./, ',') }
-          </h3>
+      <section id="addressDetails">
+        <h1>Detalhes e Endereço para entrega</h1>
+        <div id="informationSeller">
+          <label htmlFor="sellerId">
+            P. Vendedor(a) Responsável:
+            <select
+              data-testid="customer_checkout__select-seller"
+              name="sellerId"
+              onChange={ (e) => setSale({ ...sale, sellerId: Number(e.target.value) }) }
+              id="sellerId"
+            >
+              {sellers && sellers.map((seller) => (
+                <option
+                  key={ seller.id }
+                  value={ seller.id }
+                >
+                  {seller.name}
+                </option>
+              )) }
+            </select>
+          </label>
+
+          <label htmlFor="deliveryAddress">
+            Endereço:
+            <input
+              data-testid="customer_checkout__input-address"
+              placeholder="Travessa Santa Birita de Meu Rei"
+              type="text"
+              name="deliveryAddress"
+              id="deliveryAddress"
+              onChange={ (e) => setSale({ ...sale, deliveryAddress: e.target.value }) }
+            />
+          </label>
+
+          <label htmlFor="deliveryNumber">
+            Número:
+            <input
+              data-testid="customer_checkout__input-address-number"
+              placeholder="123"
+              type="number"
+              name="deliveryNumber"
+              id="deliveryNumber"
+              onChange={ (e) => setSale({ ...sale, deliveryNumber: e.target.value }) }
+            />
+          </label>
           <button
             type="button"
             data-testid="customer_checkout__button-submit-order"
+            id="submitOrder"
             onClick={ handleSubmit }
           >
             Finalizar Pedido

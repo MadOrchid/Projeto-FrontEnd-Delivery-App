@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import '../../styles/components/header.css';
 
 function HearderProducts() {
   const data = JSON.parse(localStorage.getItem('user'));
@@ -8,7 +9,7 @@ function HearderProducts() {
 
   const headerUser = () => (
     <>
-      <li>
+      <li alt="Produtos">
         <button
           type="button"
           alt="Produtos"
@@ -18,10 +19,10 @@ function HearderProducts() {
           PRODUTOS
         </button>
       </li>
-      <li>
+      <li alt="Meus Pedidos">
         <button
           type="button"
-          alt="Produtos"
+          alt="MEUS PEDIDOS"
           data-testid="customer_products__element-navbar-link-orders"
           onClick={ () => { history.push('/customer/orders'); } }
         >
@@ -32,7 +33,7 @@ function HearderProducts() {
   );
 
   const headerSeller = () => (
-    <li>
+    <li alt="Produtos">
       <button
         type="button"
         alt="Produtos"
@@ -45,29 +46,32 @@ function HearderProducts() {
   );
 
   return (
-    <nav style={ { display: 'inline-block' } }>
-      <ul>
+    <nav>
+      <ul id="headerPedido">
         {
           data.role === 'seller'
             ? headerSeller()
             : headerUser()
         }
+      </ul>
+      <ul id="headerLogout">
         <li
           data-testid="customer_products__element-navbar-user-full-name"
+          alt="Nome do usuario"
         >
           { saveNameUser }
         </li>
-        <li>
+        <li alt="Sair customer">
           <button
             type="button"
-            alt="Produtos"
+            alt="Sair customer"
             data-testid="customer_products__element-navbar-link-logout"
             onClick={ () => {
               localStorage.clear();
               history.push('/login');
             } }
           >
-            Sair customer
+            Sair
           </button>
         </li>
       </ul>
