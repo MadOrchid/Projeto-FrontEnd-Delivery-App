@@ -5,7 +5,6 @@ import { api } from '../../services/fetchtRegister';
 
 import '../../styles/components/cards-products.css';
 
-
 function CardsProducts() {
   const [valueTotal, setValueTotal] = useState(0.00);
   const [isDisabled, setIsDisabled] = useState(true);

@@ -5,13 +5,11 @@ import ContextGlobal from '../../context/ContextGlobal';
 import { api } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 import '../../styles/pages/orders-client.css';
-
 function OrdersClient() {
   const {
     orders, setOrders, setOrder, dateConvert,
   } = useContext(ContextGlobal);
   const history = useHistory();
-
   useEffect(() => {
     const updateOrders = async () => {
       const { token } = getKey('user');
@@ -22,19 +20,14 @@ function OrdersClient() {
     };
     updateOrders();
   }, []);
-
   return (
     <>
       <HearderProducts />
-
       <div>
         { orders.length > 0 && orders.map((sale) => (
-
-
       <h1 className="tittlePage">Meus Pedidos</h1>
       <main id="mainOrders">
         { orders.map((sale) => (
-
           <button
             type="button"
             key={ sale.id }
@@ -74,5 +67,4 @@ function OrdersClient() {
     </>
   );
 }
-
 export default OrdersClient;
