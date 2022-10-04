@@ -52,3 +52,45 @@
     transform: rotate(-10deg);
   }
 }
+
+html, body 
+{ 
+ height: 100%;
+ overflow-x: hidden
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: #dd7d27;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d99525;
+  border-radius: 20px;
+}
+
+::selection {
+  background: #fff;
+  color: #d99525;
+}
+
+input, select {
+  outline: none;
+}
+
+::placeholder {
+  color: #afafaf;
+}
+
+button {
+  opacity: 0.8;
+  transition: 0.5s;
+}
+
+button:hover {
+  opacity: 1;
+  transition: 0.5s;
+}

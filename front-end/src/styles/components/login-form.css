@@ -3,13 +3,14 @@ button[alt="Entrar"] {
   margin: 10px;
   padding: 10px;
   width: 243px;
-  background: #ff8f00;
+  background: #dd7d27;
   font-size: 20px;
   text-transform: uppercase;
   color: white;
   border: none;
   border-radius: 5px;
   transition: 0.5s;
+  opacity: 0.8;
 }
   
 button[alt="Cadastrar"] {
@@ -24,8 +25,9 @@ button[alt="Cadastrar"] {
   border-radius: 5px;
   font-weight: 600;
   transition: 0.5s;
+  opacity: 0.8;
 }
-  
+
 label {
   display: flex;
   flex-direction: column;
@@ -61,7 +63,7 @@ input#email, input#password {
 }
   
 button[alt="Entrar"]:hover {
-  background: orange;
+  background: #dd7d27;
   transition: 0.5s;
 }
 

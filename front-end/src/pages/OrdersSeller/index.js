@@ -23,8 +23,7 @@ function OrdersSeller() {
   return (
     <>
       <HearderProducts />
-      <h1>Detalhes do Pedido</h1>
-      <section>
+      <main id="mainOrders">
         { orders.map((order) => (
           <button
             type="button"
@@ -71,7 +70,7 @@ function OrdersSeller() {
             </p>
           </button>
         ))}
-      </section>
+      </main>
     </>
   );
 }

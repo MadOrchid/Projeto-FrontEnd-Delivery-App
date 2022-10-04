@@ -1,0 +1,189 @@
+table {
+  margin: 0 auto;
+  width: 88vw;
+  height: 400px;
+  position: relative;
+  /* background: #626262; */
+  padding: 20px 16px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 20px #b1b1b1;
+}
+
+tbody {
+  height: 20px;
+  margin: 16px 0px;
+}
+
+tr {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+td {
+  /* background: #dd7d27; */
+  padding: 4px 0px;
+  font-size: x-large;
+  font-weight: 500;
+}
+
+td#id {
+  width: 20px;
+  background: #d9ba25;
+  flex-grow: 0.1;
+  /* padding: 13px; */
+  border-radius: 8px 0px 0 8px;
+}
+
+td#name {
+  width: 250px;
+  flex-grow: 3;
+  background: aliceblue;
+  text-align: initial;
+  padding-left: 8px;
+}
+
+td#quantity {
+  flex-grow: 0.2;
+  background: #dd7d27;
+  color: white;
+  width: 100px;
+}
+
+#unitPrice {
+  flex-grow: 0.2;
+  background: #6d2a03;
+  color: white;
+  width: 100px;
+}
+
+td#subTotal {
+  flex-grow: 0.2;
+  background: #306fcf;
+  color: white;
+  width: 100px;
+}
+
+td#remove {
+  flex-grow: 0.4;
+  background: #d9ba25;
+  border-radius: 0 8px 8px 0;
+}
+
+td#remove button {
+  font-size: x-large;
+  width: 100%;
+  color: white;
+  background: transparent;
+  font-weight: 600;
+  border: none;
+  opacity: 0.6;
+}
+
+table h1 {
+  position: absolute;
+  right: 0px;
+  /* top: 0px; */
+  margin: 0;
+  bottom: 0px;
+  margin: 0px 16px 12px 0px;
+  background-color: #dd7d27;
+  color: white;
+  z-index: 999;
+  padding: 4px 20px;
+  border-radius: 6px 20px 6px 20px;
+}
+
+h1#title {
+  background: transparent;
+  color: black;
+  display: flex;
+  justify-content: flex-start;
+  margin: 20px 0 8px 116px;
+  width: 88vw;
+  right: 39px;
+  width: 100%;
+  text-align: left;
+  font-size: x-large;
+}
+
+th {
+  flex-grow: 0.1;
+}
+
+th + th {
+  flex-grow: 10;
+}
+
+th + th + th {
+  flex-grow: 1;
+}
+
+section#addressDetails {
+  display: flex;
+  flex-direction: column;
+  width: 88vw;
+  align-items: center;
+  margin: 0 auto;
+}
+
+section#addressDetails h1 {
+  right: 39px;
+  width: 100%;
+  text-align: left;
+}
+
+div#informationSeller {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  /* background: #626262; */
+  position: relative;
+  height: 300px;
+  box-shadow: 0px 2px 20px #b1b1b1;
+}
+
+div#informationSeller label {
+  margin: 10px 28px 0 28px;
+}
+
+label[for="sellerId"] {
+  flex-grow: 0.1;
+}
+
+#sellerId, #deliveryAddress, #deliveryNumber {
+  width: 100%;
+  font-size: medium;
+  padding: 7px 0 7px 7px;
+  border: 1px solid #cfcfcf;
+  border-radius: 3px;
+  border-top: 2px solid #cfcfcf;
+  border-bottom: 2px solid #cfcfcf;
+}
+
+label[for="deliveryAddress"] {
+  flex-grow: 0.6;
+}
+
+label[for="deliveryNumber"] {
+  flex-grow: 0.1;
+}
+
+#submitOrder {
+  margin: 0px 0px 50px 0px;
+  font-size: larger;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: white;
+  background: #dd7d27;
+  border: none;
+  padding: 15px 54px;
+  border-radius: 8px;
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+  transform: translate(50%, 50%);
+}
+
+td#remove button:hover { opacity: 1; }
