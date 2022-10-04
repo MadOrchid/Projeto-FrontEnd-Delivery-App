@@ -16,6 +16,11 @@ const customerPriceId = 'customer_orders__element-card-price-1';
 const customerAddressId = 'customer_orders__element-card-address-1';
 const customerDateId = 'customer_orders__element-order-date-1';
 const customerStatusId = 'customer_orders__element-delivery-status-1';
+const sellerOrderId = 'seller_orders__element-order-id-1';
+const sellerPriceId = 'seller_orders__element-card-price-1';
+const sellerAddressId = 'seller_orders__element-card-address-1';
+const sellerDateId = 'seller_orders__element-order-date-1';
+const sellerStatusId = 'seller_orders__element-delivery-status-1';
 
 module.exports = {
   userLoginEmailInputId,
@@ -36,4 +41,9 @@ module.exports = {
   customerAddressId,
   customerDateId,
   customerStatusId,
+  sellerOrderId,
+  sellerPriceId,
+  sellerAddressId,
+  sellerDateId,
+  sellerStatusId,
 };

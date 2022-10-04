@@ -5,13 +5,14 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { api } from "../../services/fetchtRegister";
 import ContextGlobal from "../../context/ContextGlobal";
-import OrdersClient from "../../pages/OrdersClient";
+import OrdersSeller from "../../pages/OrdersSeller";
 import { saleByIdMock, userWithToken } from "../mocks";
 import {
-  customerDateId,
-  customerOrderId,
-  customerPriceId,
-  customerStatusId,
+  sellerAddressId,
+  sellerDateId,
+  sellerOrderId,
+  sellerPriceId,
+  sellerStatusId,
 } from "../constants";
 
 jest.mock("../../services/fetchtRegister");
@@ -35,20 +36,23 @@ describe("Orders client page:", () => {
       <ContextGlobal.Provider
         value={{ orders: saleByIdMock, setOrders, setOrder, dateConvert }}
       >
-        <OrdersClient />
+        <OrdersSeller />
       </ContextGlobal.Provider>
     );
     await waitFor(() => expect(api.get).toHaveBeenCalled());
-    const orderId = screen.getByTestId(customerOrderId);
-    const price = screen.getByTestId(customerPriceId);
-    const date = screen.getByTestId(customerDateId);
-    const status = screen.getByTestId(customerStatusId);
+    const orderId = screen.getByTestId(sellerOrderId);
+    const price = screen.getByTestId(sellerPriceId);
+    const date = screen.getByTestId(sellerDateId);
+    const address = screen.getByTestId(sellerAddressId);
+    const status = screen.getByTestId(sellerStatusId);
     expect(orderId).toBeInTheDocument();
     expect(orderId).toBeVisible();
     expect(price).toBeInTheDocument();
     expect(price).toBeVisible();
     expect(date).toBeInTheDocument();
     expect(date).toBeVisible();
+    expect(address).toBeInTheDocument();
+    expect(address).toBeVisible();
     expect(status).toBeInTheDocument();
     expect(status).toBeVisible();
   });
@@ -63,17 +67,17 @@ describe("Orders client page:", () => {
         value={{ orders: saleByIdMock, setOrders, setOrder, dateConvert }}
       >
         <Router history={history}>
-          <OrdersClient />
+          <OrdersSeller />
         </Router>
       </ContextGlobal.Provider>
     );
     await waitFor(() => expect(api.get).toHaveBeenCalled());
-    const orderId = screen.getByTestId(customerOrderId);
+    const orderId = screen.getByTestId(sellerOrderId);
     expect(orderId).toBeInTheDocument();
     expect(orderId).toBeVisible();
     userEvent.click(orderId);
     await waitFor(() => {
-      expect(history.location.pathname).toBe("/customer/orders/1");
+      expect(history.location.pathname).toBe("/seller/orders/1");
     });
 
 
