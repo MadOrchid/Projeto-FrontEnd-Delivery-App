@@ -1,16 +1,20 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ContextGlobal from '../../context/ContextGlobal';
 import { api } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
+import { emailRagex, minName, minPassword } from '../../services/utilits';
+
+const clearData = {
+  name: '',
+  email: '',
+  password: '',
+  role: 'customer',
+};
 
 function FromAdmin() {
-  const { setUpdate, update } = useContext(ContextGlobal);
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    role: 'customer',
-  });
+  const { updateUsers } = useContext(ContextGlobal);
+  const [data, setData] = useState(clearData);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
 
@@ -19,7 +23,8 @@ function FromAdmin() {
     try {
       await api.post('admin', data, { headers: { Authorization: token } });
       setError(false);
-      setUpdate(!update);
+      updateUsers();
+      setData(clearData);
     } catch (e) {
       setError(true);
       setErrorMessage(e.message);
@@ -31,10 +36,19 @@ function FromAdmin() {
     [event.target.name]: event.target.value,
   });
 
+  useEffect(() => {
+    if (data.name.length >= minName && emailRagex.test(data.email)
+    && data.password.length >= minPassword) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [data]);
+
   return (
     <div>
       <h1>Cadastrar novo usuário</h1>
-      <from>
+      <form>
         <label htmlFor="name">
           Nome
           <input
@@ -51,7 +65,7 @@ function FromAdmin() {
           <input
             type="email"
             name="email"
-            placeHolder="Email"
+            placeholder="Email"
             data-testid="admin_manage__input-email"
             onChange={ handleChange }
             value={ data.email }
@@ -62,7 +76,7 @@ function FromAdmin() {
           <input
             type="password"
             name="password"
-            placeHolder="Senha"
+            placeholder="Senha"
             data-testid="admin_manage__input-password"
             value={ data.password }
             onChange={ handleChange }
@@ -79,7 +93,8 @@ function FromAdmin() {
           <option value="customer">Comprador</option>
         </select>
         <button
-          type="submit"
+          disabled={ isDisabled }
+          type="button"
           data-testid="admin_manage__button-register"
           onClick={ handleRegister }
         >
@@ -94,7 +109,7 @@ function FromAdmin() {
             </span>
           )}
         </div>
-      </from>
+      </form>
     </div>
   );
 }

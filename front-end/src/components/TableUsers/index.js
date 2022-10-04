@@ -1,19 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ContextGlobal from '../../context/ContextGlobal';
-import { getUsers, deleteUser } from '../../services/fetchtRegister';
+import { deleteUser } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function TableUser() {
-  const { setUpdate, update } = useContext(ContextGlobal);
-  const [users, setUsers] = useState([]);
+  const { users, updateUsers } = useContext(ContextGlobal);
+  const [usersTable, setUsersTable] = useState([]);
   const { token } = getKey('user');
+
   useEffect(() => {
-    const updateUsers = async () => {
-      const data = await getUsers(token);
-      setUsers(data);
-    };
-    updateUsers();
-  }, [update]);
+    updateUsers().then(() => setUsersTable(users));
+  }, [users]);
 
   return (
     <div>
@@ -28,35 +25,36 @@ function TableUser() {
           </tr>
         </tbody>
         <tbody>
-          { users.length > 0 && users.map((user, index) => (
-            <>
-              <tr key={ index }>
-                <td
-                  data-testid={ `admin_manage__element-user-table-item-number-${index}` }
-                >
-                  {index + 1}
-                </td>
-                <td data-testid={ `admin_manage__element-user-table-name-${index}` }>
-                  {user.name}
-                </td>
-                <td data-testid={ `admin_manage__element-user-table-email-${index}` }>
-                  {user.email}
-                </td>
-                <td data-testid={ `admin_manage__element-user-table-role-${index}` }>
-                  {user.role}
-                </td>
-              </tr>
-              <button
-                type="button"
-                data-testid={ `admin_manage__element-user-table-remove-${index}` }
-                onClick={ () => {
-                  deleteUser({ token, id: user.id });
-                  setUpdate(!update);
-                } }
+          { usersTable.length > 0 && usersTable.map((user, index) => (
+            <tr key={ index }>
+              <td
+                data-testid={ `admin_manage__element-user-table-item-number-${index}` }
               >
-                Excluir
-              </button>
-            </>
+                {index + 1}
+              </td>
+              <td data-testid={ `admin_manage__element-user-table-name-${index}` }>
+                {user.name}
+              </td>
+              <td data-testid={ `admin_manage__element-user-table-email-${index}` }>
+                {user.email}
+              </td>
+              <td data-testid={ `admin_manage__element-user-table-role-${index}` }>
+                {user.role}
+              </td>
+              <td>
+                <button
+                  type="button"
+                  data-testid={ `admin_manage__element-user-table-remove-${index}` }
+                  onClick={ () => {
+                    deleteUser({ token, id: user.id });
+                    updateUsers();
+                  } }
+                >
+                  Excluir
+                </button>
+
+              </td>
+            </tr>
           ))}
         </tbody>
       </table>
