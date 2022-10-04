@@ -42,6 +42,17 @@ const userService = {
     return users;
   },
 
+  listUsers: async () => {
+    const users = await User.findAll({
+      where: { 
+        [Op.or]: [{ role: 'customer' }, { role: 'seller' }], 
+      },
+      attributes: { exclude: ['password'] },
+      raw: true,
+    });
+    return users;
+  },
+
   create: async ({ email, password, name }) => {
     const role = 'customer';
     const md5Hash = md5(password);
@@ -54,6 +65,28 @@ const userService = {
     const result = { ...userObj, token, id };
     return result;
   },
+
+  createAdmin: async ({ email, password, name, role }) => {
+    if (role !== 'customer' && role !== 'seller' && role !== 'administrator') {
+      throw new ApiError(400, 'invalid role');
+    }
+    const md5Hash = md5(password);
+    const userObj = { email, role, name };
+    const { dataValues } = await User.create({ 
+      email, password: md5Hash, role, name,
+    });
+    const { id } = dataValues;
+    const token = jwtService.createToken(userObj);
+    const result = { ...userObj, token, id };
+    return result;
+  },
+
+  delete: async (id) => {
+    await User.destroy({
+     where: { id },
+   });
+ },
+
 };
 
 module.exports = userService;

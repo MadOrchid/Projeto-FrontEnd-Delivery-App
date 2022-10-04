@@ -7,8 +7,9 @@ import { getKey } from '../../services/LocalStorage';
 import '../../styles/pages/orders-client.css';
 
 function OrdersClient() {
-  const { orders, setOrders, setOrder, dateConvert } = useContext(ContextGlobal);
-  // const [saleData, setSalesData] = useState([]);
+  const {
+    orders, setOrders, setOrder, dateConvert,
+  } = useContext(ContextGlobal);
   const history = useHistory();
 
   useEffect(() => {
@@ -25,9 +26,15 @@ function OrdersClient() {
   return (
     <>
       <HearderProducts />
+
+      <div>
+        { orders.length > 0 && orders.map((sale) => (
+
+
       <h1 className="tittlePage">Meus Pedidos</h1>
       <main id="mainOrders">
         { orders.map((sale) => (
+
           <button
             type="button"
             key={ sale.id }
