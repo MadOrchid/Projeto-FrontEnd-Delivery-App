@@ -11,6 +11,11 @@ const registerButtonId = 'common_register__button-register';
 const registerNameInputMock = 'User de teste';
 const registerEmailInputMock = 'userteste@deliveryapp.com';
 const registerPasswordInputMock = 'teste@123';
+const customerOrderId = 'customer_orders__element-order-id-1';
+const customerPriceId = 'customer_orders__element-card-price-1';
+const customerAddressId = 'customer_orders__element-card-address-1';
+const customerDateId = 'customer_orders__element-order-date-1';
+const customerStatusId = 'customer_orders__element-delivery-status-1';
 
 module.exports = {
   userLoginEmailInputId,
@@ -26,4 +31,9 @@ module.exports = {
   registerNameInputMock,
   registerEmailInputMock,
   registerPasswordInputMock,
+  customerOrderId,
+  customerPriceId,
+  customerAddressId,
+  customerDateId,
+  customerStatusId,
 };
