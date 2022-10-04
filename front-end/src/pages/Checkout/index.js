@@ -14,10 +14,6 @@ function Checkout() {
     totalPrice: Number(total.toFixed(2)),
     deliveryAddress: '',
     deliveryNumber: '',
-    /* products: cart.map((p) => ({
-      productId: p.id,
-      quantity: p.qtd,
-    })), */
   });
 
   const history = useHistory();

@@ -7,7 +7,6 @@ import { getKey } from '../../services/LocalStorage';
 
 function OrdersClient() {
   const { orders, setOrders, setOrder, dateConvert } = useContext(ContextGlobal);
-  // const [saleData, setSalesData] = useState([]);
   const history = useHistory();
 
   /*
@@ -32,7 +31,7 @@ function OrdersClient() {
     <>
       <HearderProducts />
       <div>
-        { orders.map((sale) => (
+        { orders.length > 0 && orders.map((sale) => (
 
           <button
             type="button"
