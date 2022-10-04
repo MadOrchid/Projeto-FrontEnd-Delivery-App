@@ -73,8 +73,8 @@ html, body
 }
 
 ::selection {
-  background: #fff;
-  color: #d99525;
+  background: rgb(235, 197, 144);
+  color: #c07803;
 }
 
 input, select {
@@ -92,5 +92,15 @@ button {
 
 button:hover {
   opacity: 1;
+  transition: 0.5s;
+}
+
+:disabled {
+  opacity: 0.8;
+  transition: 0.5s;
+}
+
+:disabled:hover {
+  opacity: 0.8;
   transition: 0.5s;
 }

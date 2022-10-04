@@ -1,4 +1,4 @@
-table {
+.table {
   margin: 0 auto;
   width: 88vw;
   height: 400px;
@@ -108,16 +108,14 @@ h1#title {
 }
 
 th {
-  flex-grow: 0.1;
+  flex-grow: 0.8;
 }
 
-th + th {
-  flex-grow: 10;
-}
-
-th + th + th {
-  flex-grow: 1;
-}
+tr :nth-child(1) { flex-grow: 0.1; }
+tr :nth-child(2) { flex-grow: 8; }
+tr :nth-child(3) { flex-grow: 0.8; }
+tr :nth-child(4) { flex-grow: 0.8; }
+tr :nth-child(5) { flex-grow: 0.8; }
 
 section#addressDetails {
   display: flex;

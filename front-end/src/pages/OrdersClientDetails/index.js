@@ -5,13 +5,13 @@ import TableOrders from '../../components/TableOrders';
 import ContextGlobal from '../../context/ContextGlobal';
 import { api, getSeller, updateStatus } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
+import '../../styles/components/table-orders.css';
 
 function OrdersClientDetails() {
   const OrderId = 'customer_order_details__element-order-details-label-order-id';
   const SellerName = 'customer_order_details__element-order-details-label-seller-name';
   const OrderDate = 'customer_order_details__element-order-details-label-order-date';
   const Status = 'customer_order_details__element-order-details-label-delivery-status';
-  const TotalPrice = 'customer_order_details__element-order-total-price';
   const DeliveryCheck = 'customer_order_details__button-delivery-check';
   const { order, setOrder, setSellers, dateConvert } = useContext(ContextGlobal);
   const [seller, setSeller] = useState({ name: '' });
@@ -19,12 +19,6 @@ function OrdersClientDetails() {
   const [isDisabled, setIsDisabled] = useState(true);
   const { token } = getKey('user');
   const history = useHistory();
-  const style = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '750px',
-    backgroundColor: 'pink',
-  };
 
   const updateSellers = async () => {
     const data = await getSeller();
@@ -60,52 +54,47 @@ function OrdersClientDetails() {
   return (
     <>
       <HearderProducts />
-      <h1>Detalhes do Pedido</h1>
-      <section style={ style }>
-        <h3 data-testid={ OrderId }>
-          Pedido:
-          {' '}
-          { order.id }
-        </h3>
+      <div id="father">
+        <h1 id="tittleTable">Detalhes do Pedido</h1>
+        <main className="table">
+          <section>
+            <h3 data-testid={ OrderId } id="orderId">
+              Pedido:
+              {' 000'}
+              { order.id }
+            </h3>
 
-        <h3 data-testid={ SellerName }>
-          P. Vend:
-          {' '}
-          { seller.name }
-        </h3>
+            <h3 data-testid={ SellerName } id="sellerName">
+              P. Vend:
+              {' '}
+              { seller.name }
+            </h3>
 
-        <h3 data-testid={ OrderDate }>
-          { dateConvert(order.saleDate) }
-        </h3>
+            <h3 data-testid={ OrderDate } id="orderDate">
+              { dateConvert(order.saleDate) }
+            </h3>
 
-        <h3 data-testid={ Status }>
-          Status:
-          {' '}
-          { status }
-        </h3>
+            <h3 data-testid={ Status } id="status">
+              { status }
+            </h3>
 
-        <button
-          type="button"
-          data-testid={ DeliveryCheck }
-          onClick={ () => {
-            updateStatus({ token, id: order.id, status: 'Entregue' });
-            setStatus('Entregue');
-          } }
-          disabled={ isDisabled }
-        >
-          MARCAR COMO ENTREGUE
-        </button>
-      </section>
-      <TableOrders />
-
-      <h2>
-        Total: R$
-        {' '}
-        <span data-testid={ TotalPrice }>
-          { console.log(order) }
-          { order.totalPrice.toString().replace('.', ',') }
-        </span>
-      </h2>
+            <button
+              type="button"
+              id="deliveryCheck"
+              alt="Entregue"
+              data-testid={ DeliveryCheck }
+              onClick={ () => {
+                updateStatus({ token, id: order.id, status: 'Entregue' });
+                setStatus('Entregue');
+              } }
+              disabled={ isDisabled }
+            >
+              MARCAR COMO ENTREGUE
+            </button>
+          </section>
+          <TableOrders />
+        </main>
+      </div>
     </>
   );
 }

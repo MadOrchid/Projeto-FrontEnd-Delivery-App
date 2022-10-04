@@ -22,6 +22,16 @@
   margin: 28px;
 }
 
+.tittlePage {
+  text-align: center;
+  font-family: revert;
+  color: #dd7d27;
+  font-size: xxx-large;
+  text-shadow: 3px 1px #e9af7c;
+  text-decoration: underline;
+  font-family: 'Lemonada', cursive;
+}
+
 main#mainOrders h2 {
   background: #9aff00;
   width: 200px;
@@ -46,4 +56,9 @@ div#orderDatePrice p {
 
 main#mainOrders span {
   font-size: x-large;
+}
+
+
+#mainOrders button:hover {
+ opacity: 1;
 }

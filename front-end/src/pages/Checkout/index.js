@@ -49,7 +49,7 @@ function Checkout() {
     <>
       <HearderProducts />
       <h1 id="title">Finalizar Pedido</h1>
-      <table>
+      <table className="table">
         <tbody style={ { textAlign: 'center' } }>
           <tr>
             <th>Item</th>
