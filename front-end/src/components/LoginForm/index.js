@@ -3,6 +3,7 @@ import { useHistory /* , useNavigate */ } from 'react-router-dom';
 import { api } from '../../services/fetchtRegister';
 import { setKey } from '../../services/LocalStorage';
 import { emailRagex, minPassword } from '../../services/utilits';
+import '../../styles/components/login-form.css';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
@@ -49,10 +50,7 @@ function LoginForm() {
   }, [email, password]);
 
   return (
-    <section>
-
-      <h1>Login</h1>
-
+    <section id="containerLogin">
       <label htmlFor="email">
         E-mail
         <input
@@ -62,6 +60,7 @@ function LoginForm() {
           value={ email }
           data-testid="common_login__input-email"
           onChange={ (e) => setEmail(e.target.value) }
+          placeholder="email@trybirita.com.br"
         />
       </label>
 
@@ -74,6 +73,7 @@ function LoginForm() {
           value={ password }
           data-testid="common_login__input-password"
           onChange={ (e) => setPassword(e.target.value) }
+          placeholder="***********"
         />
       </label>
 
@@ -89,7 +89,7 @@ function LoginForm() {
 
       <button
         type="button"
-        alt="Emtrar"
+        alt="Cadastrar"
         data-testid="common_login__button-register"
         onClick={ handleClickRegister }
       >
