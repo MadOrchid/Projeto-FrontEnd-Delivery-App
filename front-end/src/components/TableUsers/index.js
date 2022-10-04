@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import ContextGlobal from '../../context/ContextGlobal';
 import { getUsers, deleteUser } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function TableUser() {
+  const { setUpdate, update } = useContext(ContextGlobal);
   const [users, setUsers] = useState([]);
   const { token } = getKey('user');
   useEffect(() => {
@@ -11,7 +13,7 @@ function TableUser() {
       setUsers(data);
     };
     updateUsers();
-  }, []);
+  }, [update]);
 
   return (
     <div>
@@ -47,7 +49,10 @@ function TableUser() {
               <button
                 type="button"
                 data-testid={ `admin_manage__element-user-table-remove-${index}` }
-                onClick={ () => deleteUser({ token, id: user.id }) }
+                onClick={ () => {
+                  deleteUser({ token, id: user.id });
+                  setUpdate(!update);
+                } }
               >
                 Excluir
               </button>

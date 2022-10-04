@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import ContextGlobal from '../../context/ContextGlobal';
 import { api } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function FromAdmin() {
+  const { setUpdate, update } = useContext(ContextGlobal);
   const [data, setData] = useState({
     name: '',
     email: '',
@@ -17,6 +19,7 @@ function FromAdmin() {
     try {
       await api.post('admin', data, { headers: { Authorization: token } });
       setError(false);
+      setUpdate(!update);
     } catch (e) {
       setError(true);
       setErrorMessage(e.message);
@@ -72,8 +75,8 @@ function FromAdmin() {
           onChange={ handleChange }
         >
           <option value="administrator">Administrador</option>
-          <option value="seller">Vendendor</option>
-          <option value="costumer">Comprador</option>
+          <option value="seller">Vendedor</option>
+          <option value="customer">Comprador</option>
         </select>
         <button
           type="submit"

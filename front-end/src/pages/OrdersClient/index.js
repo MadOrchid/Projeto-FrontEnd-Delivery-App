@@ -6,7 +6,9 @@ import { api } from '../../services/fetchtRegister';
 import { getKey } from '../../services/LocalStorage';
 
 function OrdersClient() {
-  const { orders, setOrders, setOrder, dateConvert } = useContext(ContextGlobal);
+  const {
+    orders, setOrders, setOrder, dateConvert,
+  } = useContext(ContextGlobal);
   const history = useHistory();
 
   /*
